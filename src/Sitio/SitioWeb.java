@@ -28,12 +28,25 @@ public class SitioWeb {
 		usuarios.remove(usuario);
 	}
 	
+// Metodo para chequear si el propietario está registrado
+    public boolean estaRegistrado(Usuario propietario) {
+        return usuarios.stream().anyMatch(usuario -> usuario.getEmail().equals(propietario.getEmail()));
+    }
+    
+    
+	
 //Metodos de inmueble
 	public List<Inmueble> getInmuebles() {
 		return this.inmuebles;
 	}
-	public void addInmueble (Inmueble inmueble) {
-		inmuebles.add(inmueble);
+	public Boolean addInmueble (Inmueble inmueble) {
+		if (estaRegistrado(inmueble.getPropietario())) {
+            inmuebles.add(inmueble);
+            return true; // Indica que el inmueble fue agregado
+        } else {
+            System.out.println("El propietario no está registrado en el sitio.");
+            return false; // Indica que el inmueble no fue agregado
+        }
 	}
 	
 	public void removeInmueble (Inmueble inmueble) {

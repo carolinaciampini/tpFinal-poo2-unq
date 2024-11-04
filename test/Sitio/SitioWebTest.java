@@ -14,8 +14,7 @@ import usuarios.Usuario;
 
 class SitioWebTest {
 	private SitioWeb sitio;
-	private Usuario usuario1;
-	private Propietario propietario;
+	private Propietario usuario1;
 	private Inmueble inmueble;
 	
 
@@ -23,19 +22,40 @@ class SitioWebTest {
 	void setUp() throws Exception {
 		sitio = new SitioWeb();
 		usuario1 = new Propietario("Abril", "abru@gmail.com", "1111111");
-		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario);
+		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), usuario1, (double) 90000);
 	}
 
 	@Test
-	void testCantidadUsuarios() {
+	void testAddUsuarios() {
 		sitio.addUsuario(usuario1);
 		assertEquals(sitio.getUsuarios().size(), 1);
 	}
 	
 	@Test
-	void testCantidadInmuebles() {
-		sitio.addInmueble(inmueble);
-		assertEquals(sitio.getInmuebles().size(), 1);
+	void testRemoveUsuarios() {
+		sitio.addUsuario(usuario1);
+		sitio.removeUsuario(usuario1);
+		assertEquals(sitio.getUsuarios().size(), 0);
 	}
+	
+	@Test
+	void testAltaDeInmuebleFallido() {
+		assertEquals(sitio.addInmueble(inmueble), false);
+	}
+	
+	@Test
+	void testAltaDeInmuebleExitoso() {
+		sitio.addUsuario(usuario1);
+		assertEquals(sitio.addInmueble(inmueble), true);
+	}
+	
+	@Test
+	void testRemoveInmueble() {
+		sitio.addUsuario(usuario1);
+		sitio.addInmueble(inmueble);
+		sitio.removeInmueble(inmueble);
+		assertEquals(sitio.getInmuebles().size(), 0);
+	}
+	
 
 }
