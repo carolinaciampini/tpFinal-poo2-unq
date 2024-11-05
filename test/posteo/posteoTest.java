@@ -1,44 +1,60 @@
 package posteo;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import enums.FormaDePago;
-import enums.Servicio;
 import inmueble.Inmueble;
-import usuarios.Propietario;
+import periodo.PeriodoManager;
+import reserva.Reserva;
+
 
 class posteoTest {
-	private Propietario propietario;
 	private Inmueble inmueble;
-	private Servicio servicio;
-	private FormaDePago formaDePago;
+	private Reserva reserva;
 	private Posteo posteo;
 	private PeriodoManager periodo;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		propietario = new Propietario("Abril", "abru@gmail.com", "1111111");
-		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
-		servicio = Servicio.AGUA;
-		formaDePago = FormaDePago.EFECTIVO;
-		posteo = new Posteo(inmueble, 9000, periodo);
+    	inmueble = mock(Inmueble.class);
+    	periodo = mock(PeriodoManager.class);
+    	reserva = mock(Reserva.class);
+		posteo = new Posteo(inmueble, 9000.0, periodo);
 	}
 
 	@Test
-	void testGetInmueble() {
+	void testGettersDePosteo() {
 		assertEquals(posteo.getInmueble(), inmueble);
+		assertEquals(posteo.getPeiodoManager(), periodo);
+		assertEquals(posteo.getPrecioBase(), 9000.0);
 	}
 	
 	@Test
-	void testCrearReserva() {
-		posteo.crearReserva(inmueble, propietario, LocalDate.of(2024, 12, 10), LocalDate.of(2024, 12, 15), formaDePago);
-		assertEquals(posteo.getReservas().size(), 1);
+	void testPrecioParaUnaReserva() {
+	  
+	    LocalDate fechaEntrada = LocalDate.of(2024, 11, 1);
+	    LocalDate fechaSalida = LocalDate.of(2024, 11, 3); // 2 noches
+	    reserva = mock(Reserva.class);
+	   
+	
+	    when(reserva.getFechaEntrada()).thenReturn(fechaEntrada);
+	    when(reserva.getFechaSalida()).thenReturn(fechaSalida);
+	    
+	    // Se mockea el comportamiento del PeriodoManager
+	    when(periodo.calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida)).thenReturn(18000.0); 
+
+	    
+	    Double precioCalculado = posteo.getPrecioParaReserva(reserva);
+	    assertEquals(18000.0, precioCalculado);
+	    verify(periodo).calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida);
 	}
+
 
 }
