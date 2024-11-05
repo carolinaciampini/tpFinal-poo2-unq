@@ -6,7 +6,7 @@ import java.util.List;
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
 
-public class FiltroPrecio extends CriterioBusqueda  {
+public class FiltroPrecio implements Criterio  {
 	private Double precioMin;
 	private Double precioMax;
 	
@@ -16,8 +16,8 @@ public class FiltroPrecio extends CriterioBusqueda  {
 	    }
 	 
 	 @Override
-	    public Boolean cumple(Inmueble inmueble, SitioWeb s) {
-	        Double precio = inmueble.getPrecio();
+	    public Boolean cumple(Posteo p, SitioWeb s) {
+	        Double precio = p.getPrecio();
 	        boolean cumpleMin = (precioMin == null) || (precio >= precioMin);
 	        boolean cumpleMax = (precioMax == null) || (precio <= precioMax);
 	        return cumpleMin && cumpleMax;

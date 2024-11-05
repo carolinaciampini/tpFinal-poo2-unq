@@ -6,7 +6,7 @@ import Sitio.SitioWeb;
 import inmueble.Inmueble;
 
 
-public class FiltroFecha {
+public class FiltroFecha implements Criterio{
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 
@@ -17,11 +17,11 @@ public class FiltroFecha {
 	}
     
 	@Override
-    public Boolean cumple(Inmueble inmueble, SitioWeb sitio) {
-        List<Reserva> reservas = sitio.getReservas(inmueble);
+    public Boolean cumple(Posteo p, SitioWeb sitio) {
+        List<Posteo> reservas = sitio.getReservasDe(p); // filtra por posteo, y despues agarra las reservas 
         for (Reserva reserva : reservas) {
-            LocalDate reservaInicio = reserva.getFechaInicio();
-            LocalDate reservaFin = reserva.getFechaFin();
+            LocalDate reservaInicio = reserva.getFechaEntrada();
+            LocalDate reservaFin = reserva.getFechaSalida();
 
             
             if ((fechaInicio.isBefore(reservaFin) && fechaFin.isAfter(reservaInicio)) ||

@@ -3,7 +3,7 @@ package filtros;
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
 
-public class FiltroHuespedes extends CriterioBusqueda {
+public class FiltroHuespedes implements Criterio {
 	private int minHuespedes;
 
     public FiltroHuespedes(int minHuespedes) {
@@ -11,7 +11,7 @@ public class FiltroHuespedes extends CriterioBusqueda {
     }
 
     @Override
-    public Boolean cumple(Inmueble inmueble, SitioWeb s) {
-        return inmueble.getHuespedes() >= minHuespedes;
+    public Boolean cumple(Posteo p, SitioWeb s) {
+        return p.getHuespedes() >= minHuespedes;
     }
 }
