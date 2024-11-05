@@ -25,7 +25,7 @@ public class FilterManager {
         this.criterios.add(new FiltroCiudad(ciudad));
 	}
 	
-	public void agregarFiltro(Criterio c)}{
+	public void agregarFiltro(Criterio c){
 		this.criterios.add(c);
 	
 	}

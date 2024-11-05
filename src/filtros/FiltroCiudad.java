@@ -2,6 +2,7 @@ package filtros;
 
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
+import posteo.Posteo;
 
 public class FiltroCiudad implements Criterio {
 	private String ciudad;

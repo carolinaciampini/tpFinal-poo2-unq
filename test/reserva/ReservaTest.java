@@ -1,72 +1,58 @@
 package reserva;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import enums.FormaDePago;
-import enums.Servicio;
 import inmueble.Inmueble;
 import posteo.Posteo;
-import usuarios.Propietario;
+import usuarios.Inquilino;
 import usuarios.Usuario;
 
-class ReservaTest {
-		private Posteo posteo;
-		private Inmueble inmueble;
-		private Usuario inquilino;
-		private Propietario propietario;
-		private LocalDate fechaEntrada;
-		private LocalDate fechaSalida;
-		private FormaDePago formaDePago;
-		private Reserva reserva;
-		private Servicio servicio;
-		
-	@BeforeEach
-	void setUp() throws Exception {
-		propietario = new Propietario("Abril", "abru@gmail.com", "1111111");
-		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
-		servicio = Servicio.AGUA;
-		formaDePago = FormaDePago.EFECTIVO;
-		posteo = new Posteo(inmueble);
-		reserva = new Reserva(posteo, inmueble, inquilino, fechaEntrada, fechaEntrada, formaDePago);
-		
-	}
+public class ReservaTest {
+    private Posteo posteoInmueble;
+    private Reserva reserva;
+    private Usuario inq;
+    private Inmueble i;
 
-	@Test
-	void testGetPosteo() {
-		assertEquals(reserva.getPosteo(), posteo);
-	}
-	
-	@Test
-	void testGetInmueble() {
-		assertEquals(reserva.getInmueble(), inmueble);
-	}
-	
-	@Test
-	void testGetInquilino() {
-		assertEquals(reserva.getInquilino(), inquilino);
-	}
-	
-	@Test
-	void testGetFechaEntrada() {
-		assertEquals(reserva.getFechaEntrada(), fechaEntrada);
-	}
-	
-	@Test
-	void testGetFechaSalida() {
-		assertEquals(reserva.getFechaSalida(), fechaSalida);
-	}
-	
-	@Test
-	void testGetFormaDePago() {
-		assertEquals(reserva.getFormaDePago(), formaDePago);
-	}
+    @BeforeEach
+    void setUp() {
+    	inq = mock(Inquilino.class);
+    	i = mock(Inmueble.class);
+    	posteoInmueble = mock(Posteo.class);
 
+        reserva = new Reserva(posteoInmueble, i, inq, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO);
+        when(posteoInmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
+        
+    }
+    
+    @Test
+    void testGettersDeLaReserva() {
+        
+        assertEquals(posteoInmueble, reserva.getPosteo());
+        assertEquals(i, reserva.getInmueble());
+        assertEquals(inq, reserva.getInquilino());
+        assertEquals(LocalDate.of(2024, 11, 1), reserva.getFechaEntrada());
+        assertEquals(LocalDate.of(2024, 11, 2), reserva.getFechaSalida());
+        assertEquals(FormaDePago.EFECTIVO, reserva.getFormaDePago());
+      
+    }
+    @Test
+    void testCalcularPrecioTotalDeLaReserva() {
+    	
+    	 Double precioTotal = reserva.getPrecioTotal();
+         Double precioEsperado = 140.0; 
+         assertEquals(precioEsperado, precioTotal);
+    }
+    
+    
+   
 
-
+    
 }

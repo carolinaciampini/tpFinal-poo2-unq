@@ -48,6 +48,10 @@ public class Reserva {
 	public FormaDePago getFormaDePago() {
 		return formaDePago;
 	}
+	
+	public Double getPrecioTotal() {
+		return getPosteo().getPrecioParaReserva(this);
+	}
 
 
 }

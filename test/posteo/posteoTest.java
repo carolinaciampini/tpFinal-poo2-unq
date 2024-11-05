@@ -19,6 +19,7 @@ class posteoTest {
 	private Servicio servicio;
 	private FormaDePago formaDePago;
 	private Posteo posteo;
+	private PeriodoManager periodo;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -26,7 +27,7 @@ class posteoTest {
 		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
 		servicio = Servicio.AGUA;
 		formaDePago = FormaDePago.EFECTIVO;
-		posteo = new Posteo(inmueble);
+		posteo = new Posteo(inmueble, 9000, periodo);
 	}
 
 	@Test

@@ -8,6 +8,7 @@ import excepciones.UsuarioYaExistenteException;
 import usuarios.Usuario;
 import inmueble.Inmueble;
 import posteo.Posteo;
+import reserva.Reserva;
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
@@ -18,7 +19,7 @@ public class SitioWeb {
 		this.posteos = new ArrayList<>();
 	}
 
-//Metodos de usuario
+
 	
 	public List<Usuario> getUsuarios() {
 		return usuarios;
@@ -39,7 +40,7 @@ public class SitioWeb {
 		return posteos;
 	}
 	
-// Metodo para chequear si el usuario está registrado
+
     public boolean estaRegistrado(Usuario usuario) {
         return usuarios.stream().anyMatch(u -> u.getEmail().equals(usuario.getEmail()));
     }
@@ -62,5 +63,9 @@ public class SitioWeb {
 	
 	public void removePosteo (Inmueble inmueble) {
 		posteos.removeIf(posteo -> posteo.getInmueble().equals(inmueble));
+	}
+
+	public List<Reserva> getReservasDe(Posteo p) {
+		return p.getReservas();
 	}
 }

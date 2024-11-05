@@ -1,10 +1,12 @@
 package filtros;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
 import posteo.Posteo;
+import reserva.Reserva;
 
 
 public class FiltroFecha implements Criterio{
@@ -19,7 +21,7 @@ public class FiltroFecha implements Criterio{
     
 	@Override
     public Boolean cumple(Posteo p, SitioWeb sitio) {
-        List<Posteo> reservas = sitio.getReservasDe(p); // filtra por posteo, y despues agarra las reservas 
+        List<Reserva> reservas = sitio.getReservasDe(p); // filtra por posteo, y despues agarra las reservas 
         for (Reserva reserva : reservas) {
             LocalDate reservaInicio = reserva.getFechaEntrada();
             LocalDate reservaFin = reserva.getFechaSalida();

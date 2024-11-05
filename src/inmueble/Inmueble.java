@@ -11,6 +11,7 @@ import usuarios.Propietario;
 
 public class Inmueble {
 	private String tipoInmueble;
+	private Integer capacidad;
 	private Double superficie;
 	private String pais;
 	private String ciudad;
@@ -21,7 +22,7 @@ public class Inmueble {
 	private LocalTime checkout;
 	private List<FormaDePago> formasDePago;
 	private Propietario propietario;
-	private Double precioBase;
+	//private Double precioBase;
 	private PoliticaCancelacion politica;
 	/*Falta el precio*/
 
@@ -37,7 +38,7 @@ public class Inmueble {
 		this.checkout = checkout;
 		this.formasDePago = new ArrayList<>();
 		this.propietario = propietario;
-		this.precioBase = precioBase;
+		//this.precioBase = precioBase;
 	}
 	
 
@@ -45,6 +46,10 @@ public class Inmueble {
 public Propietario getPropietario () {
 	return this.propietario;
 	}
+
+public Integer getCapacidad() {
+	return this.capacidad;
+}
 
 public String getTipoInmueble() {
 	return tipoInmueble;
@@ -95,9 +100,9 @@ public void addFormaDePago(FormaDePago formadepago) {
 }
 //--
 
-public Double getPrecioBase() {
-	return precioBase;
-}
+//public Double getPrecioBase() {
+	//return precioBase;
+//}
 
 
 /* fotos
