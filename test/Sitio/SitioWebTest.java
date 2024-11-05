@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Sitio.SitioWeb;
+import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import inmueble.Inmueble;
 import usuarios.Propietario;
@@ -48,22 +49,24 @@ class SitioWebTest {
 	}
 	
 	@Test
-	void testAltaDeInmuebleFallido() {
-		assertEquals(sitio.addInmueble(inmueble), false);
+	void testAltaDeInmuebleFallido() throws PropietarioNoRegistradoExcepcion {
+		
+		assertThrows(PropietarioNoRegistradoExcepcion.class, () ->  sitio.darDeAltaInmueble(inmueble));
 	}
 	
 	@Test
-	void testAltaDeInmuebleExitoso() throws UsuarioYaExistenteException {
+	void testAltaDeInmuebleExitoso() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		sitio.addUsuario(usuario1);
-		assertEquals(sitio.addInmueble(inmueble), true);
+		sitio.darDeAltaInmueble(inmueble);
+		assertTrue(sitio.tienePosteo(inmueble));
 	}
 	
 	@Test
-	void testRemoveInmueble() throws UsuarioYaExistenteException {
+	void testRemoveInmueble() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		sitio.addUsuario(usuario1);
-		sitio.addInmueble(inmueble);
-		sitio.removeInmueble(inmueble);
-		assertEquals(sitio.getInmuebles().size(), 0);
+		sitio.darDeAltaInmueble(inmueble);
+		sitio.removePosteo(inmueble);
+		assertEquals(sitio.getPosteos().size(), 0);
 	}
 	
 

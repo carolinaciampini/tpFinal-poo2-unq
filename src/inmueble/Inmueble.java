@@ -38,7 +38,6 @@ public class Inmueble {
 		this.formasDePago = new ArrayList<>();
 		this.propietario = propietario;
 		this.precioBase = precioBase;
-		
 	}
 	
 

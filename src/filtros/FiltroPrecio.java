@@ -5,6 +5,7 @@ import java.util.List;
 
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
+import posteo.Posteo;
 
 public class FiltroPrecio implements Criterio  {
 	private Double precioMin;

@@ -3,23 +3,25 @@ package Sitio;
 import java.util.ArrayList;
 import java.util.List;
 
+import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import usuarios.Usuario;
 import inmueble.Inmueble;
+import posteo.Posteo;
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
-	private List<Inmueble> inmuebles;
+	private List <Posteo> posteos;
 	
 	public SitioWeb () {
 		this.usuarios = new ArrayList <>() ;
-		this.inmuebles = new ArrayList<>();
+		this.posteos = new ArrayList<>();
 	}
 
 //Metodos de usuario
 	
 	public List<Usuario> getUsuarios() {
-		return this.usuarios;
+		return usuarios;
 	}
 	
 	public void addUsuario (Usuario usuario) throws UsuarioYaExistenteException{
@@ -33,28 +35,32 @@ public class SitioWeb {
 		usuarios.remove(usuario);
 	}
 	
+	public List<Posteo> getPosteos() {
+		return posteos;
+	}
+	
 // Metodo para chequear si el usuario está registrado
     public boolean estaRegistrado(Usuario usuario) {
         return usuarios.stream().anyMatch(u -> u.getEmail().equals(usuario.getEmail()));
     }
     
-    
+
 	
-//Metodos de inmueble
-	public List<Inmueble> getInmuebles() {
-		return this.inmuebles;
-	}
-	public Boolean addInmueble (Inmueble inmueble) {
+	public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
 		if (estaRegistrado(inmueble.getPropietario())) {
-            inmuebles.add(inmueble);
-            return true; // Indica que el inmueble fue agregado
+            posteos.add(new Posteo(inmueble));
         } else {
-            System.out.println("El propietario no está registrado en el sitio.");
-            return false; // Indica que el inmueble no fue agregado
+        	throw new PropietarioNoRegistradoExcepcion();
         }
 	}
 	
-	public void removeInmueble (Inmueble inmueble) {
-		inmuebles.remove(inmueble);
+// metodo para ver si el inmueble tiene un posteo
+	public boolean tienePosteo(Inmueble inmueble) {
+		return posteos.stream().anyMatch(p -> p.getInmueble().equals(p.getInmueble()));
+	}
+
+	
+	public void removePosteo (Inmueble inmueble) {
+		posteos.removeIf(posteo -> posteo.getInmueble().equals(inmueble));
 	}
 }

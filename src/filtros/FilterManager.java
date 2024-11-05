@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Sitio.SitioWeb;
+import posteo.Posteo;
 
 public class FilterManager {
 	private LocalDate fechaEntrada;

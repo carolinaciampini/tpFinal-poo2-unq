@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
+import posteo.Posteo;
 
 
 public class FiltroFecha implements Criterio{
