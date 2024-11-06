@@ -45,11 +45,10 @@ public class SitioWeb {
         return usuarios.stream().anyMatch(u -> u.getEmail().equals(usuario.getEmail()));
     }
     
-
 	
 	public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
 		if (estaRegistrado(inmueble.getPropietario())) {
-            posteos.add(new Posteo(inmueble));
+            posteos.add(new Posteo(inmueble, null, null));
         } else {
         	throw new PropietarioNoRegistradoExcepcion();
         }

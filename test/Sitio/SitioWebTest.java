@@ -1,6 +1,8 @@
 package Sitio;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalTime;
 
@@ -23,8 +25,10 @@ class SitioWebTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		sitio = new SitioWeb();
-		usuario1 = new Propietario("Abril", "abru@gmail.com", "1111111");
-		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), usuario1, (double) 90000);
+		inmueble = mock(Inmueble.class);
+		usuario1 = mock(Propietario.class);
+		when(usuario1.getEmail()).thenReturn("abru@gmail.com");	
+
 	}
 
 	@Test
@@ -56,17 +60,17 @@ class SitioWebTest {
 	
 	@Test
 	void testAltaDeInmuebleExitoso() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
-		sitio.addUsuario(usuario1);
-		sitio.darDeAltaInmueble(inmueble);
-		assertTrue(sitio.tienePosteo(inmueble));
+		sitio.addUsuario(usuario1); // Añadir propietario antes de alta inmueble
+        sitio.darDeAltaInmueble(inmueble);
+        assertTrue(sitio.tienePosteo(inmueble));
 	}
 	
 	@Test
 	void testRemoveInmueble() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		sitio.addUsuario(usuario1);
-		sitio.darDeAltaInmueble(inmueble);
-		sitio.removePosteo(inmueble);
-		assertEquals(sitio.getPosteos().size(), 0);
+        sitio.darDeAltaInmueble(inmueble);
+        sitio.removePosteo(inmueble);
+        assertEquals(0, sitio.getPosteos().size());
 	}
 	
 
