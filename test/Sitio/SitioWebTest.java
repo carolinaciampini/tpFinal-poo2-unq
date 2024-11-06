@@ -42,8 +42,12 @@ class SitioWebTest {
 		 when(inmueble.getPropietario()).thenReturn(usuario1); 
 		 
 		 posteo1 = mock(Posteo.class);
+		 when(posteo1.getInmueble()).thenReturn(inmueble);
 	     posteo2 = mock(Posteo.class);
+		 when(posteo2.getInmueble()).thenReturn(inmueble);
 	     posteo3 = mock(Posteo.class);
+		 when(posteo3.getInmueble()).thenReturn(inmueble);
+
 	   
 	     sitio.agregarPosteo(posteo1);
 	     sitio.agregarPosteo(posteo2);

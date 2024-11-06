@@ -10,6 +10,8 @@ import usuarios.Usuario;
 import inmueble.Inmueble;
 import posteo.Posteo;
 import reserva.Reserva;
+import mailSender.MailSender;
+import periodo.PeriodoManager;
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
@@ -48,14 +50,14 @@ public class SitioWeb {
     }
     
 	
-	public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
+    public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
 		if (estaRegistrado(inmueble.getPropietario())) {
             posteos.add(new Posteo(inmueble, null, null, null));
         } else {
         	throw new PropietarioNoRegistradoExcepcion();
         }
 	}
-	
+
 	public void agregarPosteo(Posteo p) {
 		this.posteos.add(p);
 	}

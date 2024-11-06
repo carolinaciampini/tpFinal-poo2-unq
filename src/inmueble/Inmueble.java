@@ -6,8 +6,10 @@ import java.util.List;
 
 import enums.FormaDePago;
 import enums.Servicio;
-import politicaDeCancelacion.PoliticaCancelacion;
+import estrategiaCancelacion.EstrategiaCancelacion;
 import usuarios.Propietario;
+import mailSender.MailSender;
+import periodo.PeriodoManager;
 
 public class Inmueble {
 	private String tipoInmueble;
