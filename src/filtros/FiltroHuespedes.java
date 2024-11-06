@@ -12,7 +12,7 @@ public class FiltroHuespedes implements Criterio {
     }
 
     @Override
-    public Boolean cumple(Posteo p, SitioWeb s) {
+    public Boolean cumple(Posteo p) {
         return p.getHuespedes() >= minHuespedes;
     }
 }

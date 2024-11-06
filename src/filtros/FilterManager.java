@@ -3,6 +3,7 @@ package filtros;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import Sitio.SitioWeb;
 import posteo.Posteo;
@@ -30,14 +31,25 @@ public class FilterManager {
 	
 	}
 	
-	public List<Posteo> filtrar(SitioWeb s){
-		List<Posteo> resultados = s.getPosteos();
+	public List<Posteo> filtrar(List<Posteo> posteos) {
+	    return posteos.stream()
+	            .filter(posteo -> criterios.stream().allMatch(c -> c.cumple(posteo)))  
+	            .collect(Collectors.toList()); 
+	}
 
-        
-        for (Criterio criterio : criterios) {
-            resultados.removeIf(posteo -> !criterio.cumple(posteo, s));
-        }
+	public LocalDate getFechaEntrada() {
+		return fechaEntrada;
+	}
 
-        return resultados;
-    	}
+	public LocalDate getFechaSalida() {
+		return fechaSalida;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public List<Criterio> getCriterios() {
+		return criterios;
+	}
 }

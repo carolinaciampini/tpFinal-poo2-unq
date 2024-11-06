@@ -22,9 +22,6 @@ public class Inmueble {
 	private LocalTime checkout;
 	private List<FormaDePago> formasDePago;
 	private Propietario propietario;
-	//private Double precioBase;
-	private PoliticaCancelacion politica;
-	/*Falta el precio*/
 
 	public Inmueble (String tipoDeInmueble, Double superficie, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) { 
 		this.tipoInmueble = tipoDeInmueble;
@@ -43,61 +40,61 @@ public class Inmueble {
 	
 
 
-public Propietario getPropietario () {
-	return this.propietario;
+	public Propietario getPropietario () {
+		return this.propietario;
 	}
-
-public Integer getCapacidad() {
-	return this.capacidad;
-}
-
-public String getTipoInmueble() {
-	return tipoInmueble;
-}
-
-public Double getSuperficie() {
-	return superficie;
-}
-
-public String getPais() {
-	return pais;
-}
-
-public String getCiudad() {
-	return ciudad;
-}
-
-public String getDireccion() {
-	return direccion;
-}
-
-// Servicios
-public List<Servicio> getServicios() {
-	return servicios;
-}
-
-public void addServicio(Servicio servicio) {
-	this.servicios.add(servicio);
-}
-//--
-
-
-public LocalTime getCheckin() {
-	return checkin;
-}
-
-public LocalTime getCheckout() {
-	return checkout;
-}
-
-// formas de pago
-public List<FormaDePago> getFormasDePago() {
-	return formasDePago;
-}
-
-public void addFormaDePago(FormaDePago formadepago) {
-	this.formasDePago.add(formadepago);
-}
+	
+	public Integer getCapacidad() {
+		return this.capacidad;
+	}
+	
+	public String getTipoInmueble() {
+		return tipoInmueble;
+	}
+	
+	public Double getSuperficie() {
+		return superficie;
+	}
+	
+	public String getPais() {
+		return pais;
+	}
+	
+	public String getCiudad() {
+		return ciudad;
+	}
+	
+	public String getDireccion() {
+		return direccion;
+	}
+	
+	// Servicios
+	public List<Servicio> getServicios() {
+		return servicios;
+	}
+	
+	public void addServicio(Servicio servicio) {
+		this.servicios.add(servicio);
+	}
+	//--
+	
+	
+	public LocalTime getCheckin() {
+		return checkin;
+	}
+	
+	public LocalTime getCheckout() {
+		return checkout;
+	}
+	
+	// formas de pago
+	public List<FormaDePago> getFormasDePago() {
+		return formasDePago;
+	}
+	
+	public void addFormaDePago(FormaDePago formadepago) {
+		this.formasDePago.add(formadepago);
+	}
 //--
 
 //public Double getPrecioBase() {

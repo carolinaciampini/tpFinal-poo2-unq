@@ -12,7 +12,7 @@ public class FiltroCiudad implements Criterio {
     }
     
     @Override
-    public Boolean cumple(Posteo p, SitioWeb s) {
+    public Boolean cumple(Posteo p) {
         return p.getCiudad().equals(ciudad);
     }
 }

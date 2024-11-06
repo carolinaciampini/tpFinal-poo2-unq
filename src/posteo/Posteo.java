@@ -62,15 +62,12 @@ public class Posteo {
 		for (Reserva reserva : reservas) {
 			if (reserva.sePisa(fechaEntrada, fechaSalida)) {
 					return false; 
-		} 
-	}
-		return true;  
+			} 
 		}
+		return true;  
+	}
 	
 	
-	
-	
-
 	public int getHuespedes() {
 		return this.inmueble.getCapacidad();
 	}
@@ -99,8 +96,10 @@ public class Posteo {
 		}
 	}
 	
+	
 
 	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva) {
 		return estrategiaCancelacion.calcularPenalizacion(hoy, reserva, this);
 	}
+	
 }

@@ -17,7 +17,7 @@ public class FiltroPrecio implements Criterio  {
 	    }
 	 
 	 @Override
-	    public Boolean cumple(Posteo p, SitioWeb s) {
+	    public Boolean cumple(Posteo p) {
 	        Double precio = p.getPrecioBase();
 	        boolean cumpleMin = (precioMin == null) || (precio >= precioMin);
 	        boolean cumpleMax = (precioMax == null) || (precio <= precioMax);

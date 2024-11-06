@@ -5,6 +5,7 @@ import java.util.List;
 
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
+import filtros.FilterManager;
 import usuarios.Usuario;
 import inmueble.Inmueble;
 import posteo.Posteo;
@@ -40,6 +41,7 @@ public class SitioWeb {
 		return posteos;
 	}
 	
+	
 
     public boolean estaRegistrado(Usuario usuario) {
         return usuarios.stream().anyMatch(u -> u.getEmail().equals(usuario.getEmail()));
@@ -54,9 +56,13 @@ public class SitioWeb {
         }
 	}
 	
+	public void agregarPosteo(Posteo p) {
+		this.posteos.add(p);
+	}
+	
 // metodo para ver si el inmueble tiene un posteo
 	public boolean tienePosteo(Inmueble inmueble) {
-		return posteos.stream().anyMatch(p -> p.getInmueble().equals(p.getInmueble()));
+		return posteos.stream().anyMatch(p -> p.getInmueble().equals(inmueble));
 	}
 
 	
@@ -66,5 +72,11 @@ public class SitioWeb {
 
 	public List<Reserva> getReservasDe(Posteo p) {
 		return p.getReservas();
+	}
+	
+	// FILTROS
+	
+	public List<Posteo> filtrarPosteos(FilterManager filter){
+		return filter.filtrar(this.getPosteos());
 	}
 }
