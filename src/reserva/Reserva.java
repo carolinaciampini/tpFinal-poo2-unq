@@ -1,9 +1,12 @@
 package reserva;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import enums.FormaDePago;
+import estadoReserva.EstadoReserva;
 import inmueble.Inmueble;
+import mailSender.MailSender;
 import posteo.Posteo;
 import usuarios.Usuario;
 
@@ -14,6 +17,8 @@ public class Reserva {
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
 	private FormaDePago formaDePago;
+	private EstadoReserva estadoReserva;
+
 
 	
 	public Reserva(Posteo posteo, Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago) {
@@ -52,7 +57,23 @@ public class Reserva {
 	public Double getPrecioTotal() {
 		return getPosteo().getPrecioParaReserva(this);
 	}
-
-
+	
+	public boolean sePisa (LocalDate fechaEntrada, LocalDate fechaSalida) {
+		return (fechaEntrada. isBefore(this.fechaSalida)
+		&&
+		fechaSalida.isAfter(this.fechaEntrada));
+		}
+	
+	public EstadoReserva getEstadoReserva() {
+		return estadoReserva;
+	}
+	
+	public void setEstadoReserva(EstadoReserva estadoNuevo) {
+		this.estadoReserva = estadoNuevo;
+	}
+	
+	public int getCantidadDeDias() {
+        return (int) ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
+	}
 }
 

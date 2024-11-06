@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import inmueble.Inmueble;
+import mailSender.MailSender;
 import periodo.PeriodoManager;
 import reserva.Reserva;
 
@@ -20,13 +21,15 @@ class posteoTest {
 	private Reserva reserva;
 	private Posteo posteo;
 	private PeriodoManager periodo;
+	private MailSender mailSender;
 
 	@BeforeEach
 	void setUp() throws Exception {
+		mailSender = mock(MailSender.class);
     	inmueble = mock(Inmueble.class);
     	periodo = mock(PeriodoManager.class);
     	reserva = mock(Reserva.class);
-		posteo = new Posteo(inmueble, 9000.0, periodo);
+		posteo = new Posteo(inmueble, 9000.0, mailSender, periodo);
 	}
 
 	@Test
