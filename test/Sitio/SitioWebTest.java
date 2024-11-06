@@ -27,12 +27,21 @@ class SitioWebTest {
 		sitio = new SitioWeb();
 		inmueble = mock(Inmueble.class);
 		usuario1 = mock(Propietario.class);
-		when(usuario1.getEmail()).thenReturn("abru@gmail.com");	
+		 when(usuario1.getEmail()).thenReturn("abru@gmail.com");
+		 when(inmueble.getPropietario()).thenReturn(usuario1); 
+	
 
+	}
+	
+	@Test
+	void testAltaDeInmuebleFallido() throws PropietarioNoRegistradoExcepcion {
+		
+		assertThrows(PropietarioNoRegistradoExcepcion.class, () ->  sitio.darDeAltaInmueble(inmueble));
 	}
 
 	@Test
 	void testAddUsuarios() throws UsuarioYaExistenteException {
+		
 		sitio.addUsuario(usuario1);
 		assertEquals(sitio.getUsuarios().size(), 1);
 	}
@@ -40,8 +49,7 @@ class SitioWebTest {
 	@Test
 	void testAddUsuarioExistenteLanzaExcepcion() throws UsuarioYaExistenteException {
 	    sitio.addUsuario(usuario1);
-	    
-	    assertThrows(UsuarioYaExistenteException.class, () -> sitio.addUsuario(usuario1));
+	   assertThrows(UsuarioYaExistenteException.class, () -> sitio.addUsuario(usuario1));
 	   
 	}
 	
@@ -52,15 +60,11 @@ class SitioWebTest {
 		assertEquals(sitio.getUsuarios().size(), 0);
 	}
 	
-	@Test
-	void testAltaDeInmuebleFallido() throws PropietarioNoRegistradoExcepcion {
-		
-		assertThrows(PropietarioNoRegistradoExcepcion.class, () ->  sitio.darDeAltaInmueble(inmueble));
-	}
+	
 	
 	@Test
 	void testAltaDeInmuebleExitoso() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
-		sitio.addUsuario(usuario1); // Añadir propietario antes de alta inmueble
+		sitio.addUsuario(usuario1); // Añadir propietario antes de alta inmueble		
         sitio.darDeAltaInmueble(inmueble);
         assertTrue(sitio.tienePosteo(inmueble));
 	}
