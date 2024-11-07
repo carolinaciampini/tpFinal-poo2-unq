@@ -7,6 +7,7 @@ import java.util.List;
 import enums.FormaDePago;
 import enums.Servicio;
 import estrategiaCancelacion.EstrategiaCancelacion;
+import excepciones.LimiteFotosAlcanzado;
 import usuarios.Propietario;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
@@ -103,24 +104,25 @@ public class Inmueble {
 //public Double getPrecioBase() {
 	//return precioBase;
 //}
+	
 
 
-/* fotos
 public String[] getFotos() {
 	return fotos;
 }
 
-public boolean addFoto(String foto) {
+public void addFoto(String foto) throws LimiteFotosAlcanzado{
 	// Busco la primera posición vacía (0) para insertar la foo
     for (int i = 0; i < fotos.length; i++) {
         if (fotos[i] == null) {  // Si encuentro una posición vacía
             fotos[i] = foto;  // agrego a la foto en esa posición
-            return true;  // Se agrego
+            return;
         }
+        
     }
-    System.out.println("Límite de usuarios alcanzado. No se puede agregar más usuarios.");
-    return false;  // No se pudo agregar
+      // No se pudo agregar
+    throw new LimiteFotosAlcanzado();
+
 }
-*/
 
 }
