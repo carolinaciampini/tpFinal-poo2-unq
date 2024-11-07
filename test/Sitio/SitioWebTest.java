@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import Sitio.SitioWeb;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
+import filtros.Criterio;
 import filtros.FilterManager;
+import filtros.FiltroHuespedes;
 import inmueble.Inmueble;
 import posteo.Posteo;
 import reserva.Reserva;
@@ -132,6 +134,7 @@ class SitioWebTest {
       
 	}
 	
+<<<<<<< Updated upstream
 	/*@Test
 	void testGetReservas() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		sitio.addUsuario(usuario1);
@@ -139,5 +142,39 @@ class SitioWebTest {
         assertEquals(1, sitio.getReservasDe(posteo1).size());
 	}*/
 	
+=======
+	@Test 
+	void testFiltrarPosteosConCiudadFechasYHuespedes() {
+		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
+	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
+	     String ciudad = "Buenos Aires";
+	        
+	     filterManager = new FilterManager(fechaEntrada, fechaSalida, ciudad);
+	     FiltroHuespedes f = new FiltroHuespedes(5);
+	     filterManager.agregarFiltro(f);
+		
+        when(posteo1.getCiudad()).thenReturn("Buenos Aires");
+        when(posteo1.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
+        when(posteo1.getHuespedes()).thenReturn(5);
+
+        when(posteo2.getCiudad()).thenReturn("Buenos Aires");
+        when(posteo2.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
+        when(posteo1.getHuespedes()).thenReturn(3);
+
+        when(posteo3.getCiudad()).thenReturn("Cordoba");
+        when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
+        when(posteo1.getHuespedes()).thenReturn(2);
+
+       
+        List<Posteo> resultados = sitio.filtrarPosteos(filterManager);
+
+       
+        assertEquals(1, resultados.size());  
+        assertTrue(resultados.contains(posteo1));  
+        assertFalse(resultados.contains(posteo2)); 
+        assertFalse(resultados.contains(posteo3)); 
+      
+	}
+>>>>>>> Stashed changes
 
 }
