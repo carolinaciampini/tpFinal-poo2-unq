@@ -18,6 +18,7 @@ import excepciones.UsuarioYaExistenteException;
 import filtros.Criterio;
 import filtros.FilterManager;
 import filtros.FiltroHuespedes;
+import filtros.FiltroPrecio;
 import inmueble.Inmueble;
 import posteo.Posteo;
 import reserva.Reserva;
@@ -134,15 +135,7 @@ class SitioWebTest {
       
 	}
 	
-<<<<<<< Updated upstream
-	/*@Test
-	void testGetReservas() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
-		sitio.addUsuario(usuario1);
-        sitio.darDeAltaInmueble(inmueble);
-        assertEquals(1, sitio.getReservasDe(posteo1).size());
-	}*/
-	
-=======
+
 	@Test 
 	void testFiltrarPosteosConCiudadFechasYHuespedes() {
 		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
@@ -159,13 +152,13 @@ class SitioWebTest {
 
         when(posteo2.getCiudad()).thenReturn("Buenos Aires");
         when(posteo2.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
-        when(posteo1.getHuespedes()).thenReturn(3);
+        when(posteo2.getHuespedes()).thenReturn(3);
 
         when(posteo3.getCiudad()).thenReturn("Cordoba");
         when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
-        when(posteo1.getHuespedes()).thenReturn(2);
+        when(posteo3.getHuespedes()).thenReturn(2);
 
-       
+        
         List<Posteo> resultados = sitio.filtrarPosteos(filterManager);
 
        
@@ -175,6 +168,38 @@ class SitioWebTest {
         assertFalse(resultados.contains(posteo3)); 
       
 	}
->>>>>>> Stashed changes
+	
+	@Test
+	void testFiltrarPosteosConCiudadFechasYPrecios() {
+		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
+	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
+	     String ciudad = "Buenos Aires";
+	        
+	     filterManager = new FilterManager(fechaEntrada, fechaSalida, ciudad);
+	     FiltroPrecio f = new FiltroPrecio(1000.00, 1500.00);
+	     filterManager.agregarFiltro(f);
+		
+       when(posteo1.getCiudad()).thenReturn("Buenos Aires");
+       when(posteo1.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
+       when(posteo1.getPrecioBase()).thenReturn(1000.00);
+
+       when(posteo2.getCiudad()).thenReturn("Buenos Aires");
+       when(posteo2.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
+       
+
+       when(posteo3.getCiudad()).thenReturn("Cordoba");
+       when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
+      
+
+       System.out.println(filterManager.getCriterios());
+       List<Posteo> resultados = sitio.filtrarPosteos(filterManager);
+
+      
+       assertEquals(2, resultados.size());  
+       assertTrue(resultados.contains(posteo1));  
+       assertFalse(resultados.contains(posteo2)); 
+       //assertFalse(resultados.contains(posteo3)); 
+     
+	}
 
 }
