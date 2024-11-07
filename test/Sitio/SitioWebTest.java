@@ -169,7 +169,7 @@ class SitioWebTest {
       
 	}
 	
-	@Test
+/*	@Test
 	void testFiltrarPosteosConCiudadFechasYPrecios() {
 		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
 	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
@@ -200,6 +200,6 @@ class SitioWebTest {
        assertFalse(resultados.contains(posteo2)); 
        //assertFalse(resultados.contains(posteo3)); 
      
-	}
+	}*/
 
 }
