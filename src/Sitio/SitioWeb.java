@@ -10,8 +10,7 @@ import usuarios.Usuario;
 import inmueble.Inmueble;
 import posteo.Posteo;
 import reserva.Reserva;
-import mailSender.MailSender;
-import periodo.PeriodoManager;
+
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
@@ -72,8 +71,8 @@ public class SitioWeb {
 		posteos.removeIf(posteo -> posteo.getInmueble().equals(inmueble));
 	}
 
-	public List<Reserva> getReservasDe(Posteo p) {
-		return p.getReservas();
+	public List<Reserva> getReservasDe(Posteo posteo) {
+		return posteo.getReservas();
 	}
 	
 	// FILTROS

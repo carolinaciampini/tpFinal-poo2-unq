@@ -1,6 +1,7 @@
 package reserva;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,6 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import enums.FormaDePago;
+import estadoReserva.Aprobada;
+import estadoReserva.EstadoReserva;
+import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import posteo.Posteo;
 import usuarios.Inquilino;
@@ -20,6 +24,7 @@ public class ReservaTest {
     private Reserva reserva;
     private Usuario inquilino;
     private Inmueble inmueble;
+
 
     @BeforeEach
     void setUp() {
@@ -32,6 +37,7 @@ public class ReservaTest {
         
     }
     
+    
     @Test
     void testGettersDeLaReserva() {
         
@@ -43,12 +49,22 @@ public class ReservaTest {
         assertEquals(FormaDePago.EFECTIVO, reserva.getFormaDePago());
       
     }
+    
+   @Test
+   void testCantidadDias() {
+	   assertEquals(1, reserva.getCantidadDeDias());
+   }
     @Test
     void testCalcularPrecioTotalDeLaReserva() {
     	
     	 Double precioTotal = reserva.getPrecioTotal();
          Double precioEsperado = 140.0; 
          assertEquals(precioEsperado, precioTotal);
+    }
+    
+    @Test
+    void testSePisa () {
+    	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
     
     

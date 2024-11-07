@@ -18,6 +18,7 @@ import excepciones.UsuarioYaExistenteException;
 import filtros.FilterManager;
 import inmueble.Inmueble;
 import posteo.Posteo;
+import reserva.Reserva;
 import usuarios.Propietario;
 import usuarios.Usuario;
 
@@ -25,12 +26,12 @@ class SitioWebTest {
 	private SitioWeb sitio;
 	private Propietario usuario1;
 	private Inmueble inmueble;
-	private Inmueble inmueble1;
-	private Inmueble inmueble2;
 	private FilterManager filterManager;
 	private Posteo posteo1;
 	private Posteo posteo2;
 	private Posteo posteo3;
+	private Reserva reserva1;
+	private Reserva reserva2;
 	
 
 	@BeforeEach
@@ -52,7 +53,12 @@ class SitioWebTest {
 	     sitio.agregarPosteo(posteo1);
 	     sitio.agregarPosteo(posteo2);
 	     sitio.agregarPosteo(posteo3);
+	     
+	     reserva1 = mock(Reserva.class);
+	     reserva2 = mock(Reserva.class);
+
 	}
+	
 	
 	@Test
 	void testAltaDeInmuebleFallido() throws PropietarioNoRegistradoExcepcion {
@@ -125,5 +131,13 @@ class SitioWebTest {
         assertFalse(resultados.contains(posteo3)); 
       
 	}
+	
+	/*@Test
+	void testGetReservas() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		sitio.addUsuario(usuario1);
+        sitio.darDeAltaInmueble(inmueble);
+        assertEquals(1, sitio.getReservasDe(posteo1).size());
+	}*/
+	
 
 }

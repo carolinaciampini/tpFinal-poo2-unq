@@ -20,60 +20,65 @@ class InmuebleTest {
 	void setUp() throws Exception {
 		propietario = mock(Propietario.class);
 
-		inmueble = new Inmueble ("Quinta", (double) 123, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		inmueble = new Inmueble ("Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
 	}
 
 	@Test
+	void testGetCapacidad() {
+		assertEquals(5, inmueble.getCapacidad());
+	}
+	@Test
 	void testGetPropietario() {
-		assertEquals(inmueble.getPropietario(), propietario);	
+		assertEquals(propietario, inmueble.getPropietario());	
 		}
 	
 	@Test
 	void testTipoInmueble() {
-		assertEquals(inmueble.getTipoInmueble(), "Quinta");	
+		assertEquals( "Quinta", inmueble.getTipoInmueble());	
 		}
 	
 	@Test
 	void testSuperficie() {
-		assertEquals(inmueble.getSuperficie(), (double)123);	
+		assertEquals((double)123, inmueble.getSuperficie());	
 		}
+	
 	
 	@Test
 	void testPais() {
-		assertEquals(inmueble.getPais(), "Argentina");	
+		assertEquals("Argentina", inmueble.getPais());	
 		}
 	
 	@Test
 	void testCiudad() {
-		assertEquals(inmueble.getCiudad(), "Hudson");	
+		assertEquals("Hudson", inmueble.getCiudad());	
 		}
 	
 	@Test
 	void testDireccion() {
-		assertEquals(inmueble.getDireccion(), "Calle 163 123");	
+		assertEquals("Calle 163 123", inmueble.getDireccion());	
 		}
 	
 	@Test
 	void testCheckin() {
-		assertEquals(inmueble.getCheckin(), LocalTime.of(14,0));	
+		assertEquals(LocalTime.of(14,0), inmueble.getCheckin());	
 		}
 	
 	@Test
 	void testCheckOut() {
-		assertEquals(inmueble.getCheckout(), LocalTime.of(10,0));	
+		assertEquals(LocalTime.of(10,0), inmueble.getCheckout());	
 		}
 	
 	
 	@Test
 	void testServicios() {
 		inmueble.addServicio(Servicio.AGUA);
-		assertEquals(inmueble.getServicios().size(), 1);
+		assertEquals(1, inmueble.getServicios().size());
 	}
 	
 	@Test
 	void testFormasDePagos() {
 		inmueble.addFormaDePago(FormaDePago.EFECTIVO);
-		assertEquals(inmueble.getFormasDePago().size(), 1);
+		assertEquals(1, inmueble.getFormasDePago().size());
 	}
 
 	

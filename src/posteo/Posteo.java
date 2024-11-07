@@ -91,7 +91,7 @@ public class Posteo {
 				if (estaDisponible (siguiente.getFechaEntrada(), siguiente.getFechaSalida())) {
 					reservas.add(siguiente);
 					colaDeEspera.remove(0);
-					/*Enviar mail al usuario*/
+					mailSender.enviarMail(siguiente.getInquilino().getEmail(), "Tu reserva fue procesada", "Felicitaciones, como hubo una cancelacion tu reserva pudo ser realizada");
 			}
 		}
 	}

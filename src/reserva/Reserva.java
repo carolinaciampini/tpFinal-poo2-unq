@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
+import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import mailSender.MailSender;
 import posteo.Posteo;
@@ -28,6 +29,7 @@ public class Reserva {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.formaDePago = formaPago;
+		this.estadoReserva = new Solicitada();
 	}
 
 	public Posteo getPosteo() {

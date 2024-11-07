@@ -25,9 +25,10 @@ public class Inmueble {
 	private List<FormaDePago> formasDePago;
 	private Propietario propietario;
 
-	public Inmueble (String tipoDeInmueble, Double superficie, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) { 
+	public Inmueble (String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) { 
 		this.tipoInmueble = tipoDeInmueble;
 		this.superficie = superficie;
+		this.capacidad = capacidad;
 		this.pais = pais;
 		this.ciudad = ciudad;
 		this.direccion = direccion;
