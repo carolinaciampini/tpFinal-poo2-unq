@@ -66,9 +66,6 @@ public class ReservaTest {
     void testSePisa () {
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
-    
-    
-   
 
     
 }

@@ -60,11 +60,12 @@ public class Reserva {
 		return getPosteo().getPrecioParaReserva(this);
 	}
 	
-	public boolean sePisa (LocalDate fechaEntrada, LocalDate fechaSalida) {
+	public boolean sePisa(LocalDate fechaEntrada, LocalDate fechaSalida) {
+	    // Verificamos que no haya solapamiento
 		return (fechaEntrada. isBefore(this.fechaSalida)
-		&&
-		fechaSalida.isAfter(this.fechaEntrada));
-		}
+				&&
+				fechaSalida.isAfter(this.fechaEntrada));
+	}
 	
 	public EstadoReserva getEstadoReserva() {
 		return estadoReserva;
@@ -76,6 +77,10 @@ public class Reserva {
 	
 	public int getCantidadDeDias() {
         return (int) ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
+	}
+	
+	public void cancelarReserva(LocalDate fecha) {
+		estadoReserva.cancelarReserva(this);
 	}
 }
 
