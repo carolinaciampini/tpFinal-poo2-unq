@@ -7,13 +7,12 @@ import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
+import inmuebless.InmueblessREEMPLAZO;
 import mailSender.MailSender;
-import posteo.Posteo;
 import usuarios.Usuario;
 
 public class Reserva {
-	private Posteo posteo;
-	private Inmueble inmueble;
+	private InmueblessREEMPLAZO posteo;
 	private Usuario inquilino;
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
@@ -22,9 +21,8 @@ public class Reserva {
 
 
 	
-	public Reserva(Posteo posteo, Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago) {
+	public Reserva(InmueblessREEMPLAZO posteo, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago) {
 		this.posteo = posteo;
-		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
@@ -32,13 +30,10 @@ public class Reserva {
 		this.estadoReserva = new Solicitada();
 	}
 
-	public Posteo getPosteo() {
+	public InmueblessREEMPLAZO getPosteo() {
 		return posteo;
 	}
 
-	public Inmueble getInmueble() {
-		return inmueble;
-	}
 
 	public Usuario getInquilino() {
 		return inquilino;

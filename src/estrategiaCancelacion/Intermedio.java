@@ -3,12 +3,12 @@ package estrategiaCancelacion;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import posteo.Posteo;
+import inmuebless.InmueblessREEMPLAZO;
 import reserva.Reserva;
 
 public class Intermedio implements EstrategiaCancelacion{
 	
-	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva, Posteo posteo) {
+	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva, InmueblessREEMPLAZO posteo) {
 		 
 		int diasFaltantes = (int) ChronoUnit.DAYS.between(hoy, reserva.getFechaEntrada());
 		if (diasFaltantes < 10) {

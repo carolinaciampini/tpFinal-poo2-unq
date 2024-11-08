@@ -20,7 +20,7 @@ import filtros.FilterManager;
 import filtros.FiltroHuespedes;
 import filtros.FiltroPrecio;
 import inmueble.Inmueble;
-import posteo.Posteo;
+import inmuebless.InmueblessREEMPLAZO;
 import reserva.Reserva;
 import usuarios.Propietario;
 import usuarios.Usuario;
@@ -30,9 +30,9 @@ class SitioWebTest {
 	private Propietario usuario1;
 	private Inmueble inmueble;
 	private FilterManager filterManager;
-	private Posteo posteo1;
-	private Posteo posteo2;
-	private Posteo posteo3;
+	private InmueblessREEMPLAZO posteo1;
+	private InmueblessREEMPLAZO posteo2;
+	private InmueblessREEMPLAZO posteo3;
 	private Reserva reserva1;
 	private Reserva reserva2;
 	
@@ -45,12 +45,9 @@ class SitioWebTest {
 		 when(usuario1.getEmail()).thenReturn("abru@gmail.com");
 		 when(inmueble.getPropietario()).thenReturn(usuario1); 
 		 
-		 posteo1 = mock(Posteo.class);
-		 when(posteo1.getInmueble()).thenReturn(inmueble);
-	     posteo2 = mock(Posteo.class);
-		 when(posteo2.getInmueble()).thenReturn(inmueble);
-	     posteo3 = mock(Posteo.class);
-		 when(posteo3.getInmueble()).thenReturn(inmueble);
+		 posteo1 = mock(InmueblessREEMPLAZO.class);
+	     posteo2 = mock(InmueblessREEMPLAZO.class);
+	     posteo3 = mock(InmueblessREEMPLAZO.class);
 
 	   
 	     sitio.agregarPosteo(posteo1);
@@ -96,16 +93,8 @@ class SitioWebTest {
 	void testAltaDeInmuebleExitoso() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		sitio.addUsuario(usuario1); // Añadir propietario antes de alta inmueble		
         sitio.darDeAltaInmueble(inmueble);
-        assertTrue(sitio.tienePosteo(inmueble));
-	}
+        assertEquals(1, sitio.getInmuebles().size());	}
 	
-	@Test
-	void testRemoveInmueble() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
-		sitio.addUsuario(usuario1);
-        sitio.darDeAltaInmueble(inmueble);
-        sitio.removePosteo(inmueble);
-        assertEquals(0, sitio.getPosteos().size());
-	};
 	
 	@Test 
 	void testFiltrarPosteosConCiudadYFechas() {
@@ -125,7 +114,7 @@ class SitioWebTest {
         when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
 
        
-        List<Posteo> resultados = sitio.filtrarPosteos(filterManager);
+        List<InmueblessREEMPLAZO> resultados = sitio.filtrarPosteos(filterManager);
 
        
         assertEquals(1, resultados.size());  
@@ -159,7 +148,7 @@ class SitioWebTest {
         when(posteo3.getHuespedes()).thenReturn(2);
 
         
-        List<Posteo> resultados = sitio.filtrarPosteos(filterManager);
+        List<InmueblessREEMPLAZO> resultados = sitio.filtrarPosteos(filterManager);
 
        
         assertEquals(1, resultados.size());  

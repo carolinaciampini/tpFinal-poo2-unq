@@ -8,17 +8,17 @@ import excepciones.UsuarioYaExistenteException;
 import filtros.FilterManager;
 import usuarios.Usuario;
 import inmueble.Inmueble;
-import posteo.Posteo;
+import inmuebless.InmueblessREEMPLAZO;
 import reserva.Reserva;
 
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
-	private List <Posteo> posteos;
+	private List <InmueblessREEMPLAZO> inmuebles;
 	
 	public SitioWeb () {
 		this.usuarios = new ArrayList <>() ;
-		this.posteos = new ArrayList<>();
+		this.inmuebles = new ArrayList<>();
 	}
 
 
@@ -38,8 +38,8 @@ public class SitioWeb {
 		usuarios.remove(usuario);
 	}
 	
-	public List<Posteo> getPosteos() {
-		return posteos;
+	public List<InmueblessREEMPLAZO> getInmuebles() {
+		return inmuebles;
 	}
 	
 	
@@ -51,33 +51,23 @@ public class SitioWeb {
 	
     public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
 		if (estaRegistrado(inmueble.getPropietario())) {
-            posteos.add(new Posteo(inmueble, null, null, null, null));
+            inmuebles.add(new InmueblessREEMPLAZO(null, null, null, null, null, null, null, null, null, null, null, null, null));
         } else {
         	throw new PropietarioNoRegistradoExcepcion();
         }
 	}
 
-	public void agregarPosteo(Posteo p) {
-		this.posteos.add(p);
+	public void agregarPosteo(InmueblessREEMPLAZO p) {
+		this.inmuebles.add(p);
 	}
 	
-// metodo para ver si el inmueble tiene un posteo
-	public boolean tienePosteo(Inmueble inmueble) {
-		return posteos.stream().anyMatch(p -> p.getInmueble().equals(inmueble));
-	}
-
-	
-	public void removePosteo (Inmueble inmueble) {
-		posteos.removeIf(posteo -> posteo.getInmueble().equals(inmueble));
-	}
-
-	public List<Reserva> getReservasDe(Posteo posteo) {
+	public List<Reserva> getReservasDe(InmueblessREEMPLAZO posteo) {
 		return posteo.getReservas();
 	}
 	
 	// FILTROS
 	
-	public List<Posteo> filtrarPosteos(FilterManager filter){
-		return filter.filtrar(this.getPosteos());
+	public List<InmueblessREEMPLAZO> filtrarPosteos(FilterManager filter){
+		return filter.filtrar(this.getInmuebles());
 	}
 }

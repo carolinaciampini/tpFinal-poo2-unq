@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,19 +16,21 @@ import enums.Servicio;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import inmueble.Inmueble;
+import inmuebless.InmueblessREEMPLAZO;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
 import reserva.Reserva;
 import usuarios.Inquilino;
+import usuarios.Propietario;
 import usuarios.Usuario;
 
 
 class posteoTest {
-	private Inmueble inmueble;
 	private Usuario inquilino;
 	private Usuario inquilino2;
 	private Usuario inquilino3;
 	private Usuario inquilino4;
+	private Propietario propietario;
 
 	
 	private Reserva reserva;
@@ -37,7 +40,7 @@ class posteoTest {
 	private Reserva reserva5;
 
 	
-	private Posteo posteo;
+	private InmueblessREEMPLAZO inmuebleR;
 	private PeriodoManager periodo;
 	private MailSender mailSender;
 	
@@ -45,6 +48,7 @@ class posteoTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		propietario = mock(Propietario.class);
 		mailSender = mock(MailSender.class);
 		estrategia = mock(Gratuito.class);
 		
@@ -54,39 +58,34 @@ class posteoTest {
 		
 		inquilino3 = mock(Inquilino.class);
 		inquilino4 = mock(Inquilino.class);
-
-		
-    	inmueble = mock(Inmueble.class);
-    	when(inmueble.getCiudad()).thenReturn("Quilmes");
     	
     	periodo = mock(PeriodoManager.class);
     	
-    	posteo = new Posteo (inmueble, 9000.0, mailSender, periodo);
+    	inmuebleR = new InmueblessREEMPLAZO (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
     			
-		when(posteo.getHuespedes()).thenReturn(5);
     	
-    	reserva = new Reserva (posteo, inmueble, inquilino, LocalDate.of(2024, 10, 15),LocalDate.of(2024, 10, 20), FormaDePago.EFECTIVO);
+    	reserva = new Reserva (inmuebleR, inquilino, LocalDate.of(2024, 10, 15),LocalDate.of(2024, 10, 20), FormaDePago.EFECTIVO);
     	
-    	reserva2 = new Reserva(posteo, inmueble,inquilino, LocalDate.of(2024, 10, 8),LocalDate.of(2024, 10, 16), FormaDePago.EFECTIVO );
+    	reserva2 = new Reserva(inmuebleR, inquilino, LocalDate.of(2024, 10, 8),LocalDate.of(2024, 10, 16), FormaDePago.EFECTIVO );
     	
-    	reserva3 = new Reserva(posteo, inmueble,inquilino, LocalDate.of(2024, 10, 14),LocalDate.of(2024, 10, 21), FormaDePago.EFECTIVO );
+    	reserva3 = new Reserva(inmuebleR, inquilino, LocalDate.of(2024, 10, 14),LocalDate.of(2024, 10, 21), FormaDePago.EFECTIVO );
     	
-    	reserva4 = new Reserva(posteo, inmueble,inquilino, LocalDate.of(2024, 10, 18),LocalDate.of(2024, 10, 23), FormaDePago.EFECTIVO );
+    	reserva4 = new Reserva(inmuebleR, inquilino, LocalDate.of(2024, 10, 18),LocalDate.of(2024, 10, 23), FormaDePago.EFECTIVO );
     	
-    	reserva5 = new Reserva (posteo, inmueble, inquilino, LocalDate.of(2024, 10, 10),LocalDate.of(2024, 10, 15), FormaDePago.EFECTIVO);
+    	reserva5 = new Reserva (inmuebleR, inquilino, LocalDate.of(2024, 10, 10),LocalDate.of(2024, 10, 15), FormaDePago.EFECTIVO);
 	}
 	
 	@Test
 	void testSeConcretaLaSegundaaReservaDeLaColaDeEspera() {
-		posteo.crearReserva(reserva5);
-		posteo.crearReserva(reserva4);
-		assertEquals(2, posteo.getReservas().size());
-		posteo.crearReserva(reserva3);
-		posteo.crearReserva(reserva2);
-		assertEquals(2, posteo.getColaDeEspera().size());
+		inmuebleR.crearReserva(reserva5);
+		inmuebleR.crearReserva(reserva4);
+		assertEquals(2, inmuebleR.getReservas().size());
+		inmuebleR.crearReserva(reserva3);
+		inmuebleR.crearReserva(reserva2);
+		assertEquals(2, inmuebleR.getColaDeEspera().size());
 		reserva5.cancelarReserva(LocalDate.now());		
-		assertEquals(2, posteo.getReservas().size());
-		assertEquals(1, posteo.getColaDeEspera().size());
+		assertEquals(2, inmuebleR.getReservas().size());
+		assertEquals(1, inmuebleR.getColaDeEspera().size());
 		
 		verify(mailSender).enviarMail("abru@gmail.com","Tu reserva fue procesada", 
                "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
@@ -94,66 +93,54 @@ class posteoTest {
 		
 		
 	}
-	
 
 	@Test
-	void testCrearReserva() {
-		posteo.crearReserva(reserva);
-		assertEquals(1, posteo.getReservas().size());
-		assertTrue(posteo.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11)));
-		assertFalse(posteo.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 17)));
-		
-	}
-/*	
-	
-	@Test
 	void testGetHuespedes() {
-		assertEquals(5, posteo.getHuespedes());
+		assertEquals(5, inmuebleR.getHuespedes());
 	}
 	
 	@Test
 	void testCrearReserva() {
-		posteo.crearReserva(reserva);
-		assertEquals(1, posteo.getReservas().size());
-		assertTrue(posteo.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11)));
-		assertFalse(posteo.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 17)));
+		inmuebleR.crearReserva(reserva);
+		assertEquals(1, inmuebleR.getReservas().size());
+		assertTrue(inmuebleR.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11)));
+		assertFalse(inmuebleR.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 17)));
 		
 	}
 	
 	 @Test
 	void testGetCantidadDeReservasEnLaColaDeEspera() {
-		posteo.crearReserva(reserva);
-		posteo.crearReserva(reserva2);
-		assertEquals(1, posteo.getColaDeEspera().size());
+		inmuebleR.crearReserva(reserva);
+		inmuebleR.crearReserva(reserva2);
+		assertEquals(1, inmuebleR.getColaDeEspera().size());
 	}
 
 	@Test
 	void testGetMailSender() {
-		assertEquals(mailSender, posteo.getMailSender());
+		assertEquals(mailSender, inmuebleR.getMailSender());
 	}
 	
 	@Test
 	void testGetColaDeEspera() {
-		assertEquals(0, posteo.getColaDeEspera().size());
+		assertEquals(0, inmuebleR.getColaDeEspera().size());
 	}
 	
 	@Test 
 	void testGetCiudad () {
-		assertEquals("Quilmes", posteo.getCiudad());
+		assertEquals("Quilmes", inmuebleR.getCiudad());
 	}
 	
 	@Test
 	void testGetReserva() {
-		assertEquals(0, posteo.getReservas().size());
+		assertEquals(0, inmuebleR.getReservas().size());
 	}
 	
 	
 	
 	@Test
 	void testGettersDePosteo() {
-		assertEquals(posteo.getInmueble(), inmueble);
-		assertEquals(posteo.getPeiodoManager(), periodo);
-		assertEquals(posteo.getPrecioBase(), 9000.0);
+		assertEquals(inmuebleR.getPeiodoManager(), periodo);
+		assertEquals(inmuebleR.getPrecioBase(), 9000.0);
 	}
 	
 	@Test
@@ -171,9 +158,8 @@ class posteoTest {
 	    when(periodo.calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida)).thenReturn(18000.0); 
 
 	    
-	    Double precioCalculado = posteo.getPrecioParaReserva(reserva);
+	    Double precioCalculado = inmuebleR.getPrecioParaReserva(reserva);
 	    assertEquals(18000.0, precioCalculado);
 	    verify(periodo).calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida);
 	}
-*/
 }

@@ -2,7 +2,7 @@ package filtros;
 
 import Sitio.SitioWeb;
 import inmueble.Inmueble;
-import posteo.Posteo;
+import inmuebless.InmueblessREEMPLAZO;
 
 public class FiltroCiudad implements Criterio {
 	private String ciudad;
@@ -12,7 +12,7 @@ public class FiltroCiudad implements Criterio {
     }
     
     @Override
-    public Boolean cumple(Posteo p) {
+    public Boolean cumple(InmueblessREEMPLAZO p) {
         return p.getCiudad().equals(ciudad);
     }
 }
