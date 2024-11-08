@@ -11,14 +11,13 @@ import estadoReserva.Aprobada;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
-import inmueble.Inmueble;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
 import reserva.Reserva;
 import usuarios.Propietario;
 import usuarios.Usuario;
 
-public class InmueblessREEMPLAZO {
+public class Inmuebless {
 	private List <Reserva> reservas;
 	private PeriodoManager periodoManager;
 	private Double precioBase;
@@ -40,7 +39,7 @@ public class InmueblessREEMPLAZO {
 	private List<FormaDePago> formasDePago;
 	private Propietario propietario;
 
-	public InmueblessREEMPLAZO(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) {
+	public Inmuebless(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) {
 		this.reservas = new ArrayList<>();
 		this.precioBase = precio;
 		this.periodoManager = periodo;

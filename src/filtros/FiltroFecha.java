@@ -4,8 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import Sitio.SitioWeb;
-import inmueble.Inmueble;
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 import reserva.Reserva;
 
 
@@ -19,7 +18,7 @@ public class FiltroFecha implements Criterio{
     }
 
     @Override
-    public Boolean cumple(InmueblessREEMPLAZO posteo) {
+    public Boolean cumple(Inmuebless posteo) {
         return posteo.estaDisponible(fechaEntrada, fechaSalida);
     }
 }

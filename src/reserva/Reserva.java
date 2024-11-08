@@ -6,13 +6,12 @@ import java.time.temporal.ChronoUnit;
 import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
-import inmueble.Inmueble;
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 import mailSender.MailSender;
 import usuarios.Usuario;
 
 public class Reserva {
-	private InmueblessREEMPLAZO posteo;
+	private Inmuebless posteo;
 	private Usuario inquilino;
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
@@ -21,7 +20,7 @@ public class Reserva {
 
 
 	
-	public Reserva(InmueblessREEMPLAZO posteo, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago) {
+	public Reserva(Inmuebless posteo, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago) {
 		this.posteo = posteo;
 		this.inquilino = inquilino;
 		this.fechaEntrada = fechaEntrada;
@@ -30,7 +29,7 @@ public class Reserva {
 		this.estadoReserva = new Solicitada();
 	}
 
-	public InmueblessREEMPLAZO getPosteo() {
+	public Inmuebless getPosteo() {
 		return posteo;
 	}
 

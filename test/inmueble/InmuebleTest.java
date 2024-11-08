@@ -12,17 +12,24 @@ import enums.FormaDePago;
 import enums.Servicio;
 import excepciones.LimiteFotosAlcanzado;
 import excepciones.PropietarioNoRegistradoExcepcion;
+import inmuebless.Inmuebless;
+import mailSender.MailSender;
+import periodo.PeriodoManager;
 import usuarios.Propietario;
 
 class InmuebleTest {
 	private Propietario propietario;
-	private Inmueble inmueble;
+	private Inmuebless inmueble;
+	private MailSender mail;
+	private PeriodoManager periodo;
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		mail = mock(MailSender.class);
+		periodo = mock(PeriodoManager.class);
 		propietario = mock(Propietario.class);
 
-		inmueble = new Inmueble ("Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		inmueble = new Inmuebless ((double) 90000, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
 	
 	}
 

@@ -1,10 +1,10 @@
 package filtros;
 
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 
 public interface Criterio {
 		
-	public Boolean cumple(InmueblessREEMPLAZO p);
+	public Boolean cumple(Inmuebless p);
 		
 }
 

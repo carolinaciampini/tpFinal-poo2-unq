@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Sitio.SitioWeb;
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 
 public class FilterManager {
 	private LocalDate fechaEntrada;
@@ -31,7 +31,7 @@ public class FilterManager {
 	
 	}
 	
-	public List<InmueblessREEMPLAZO> filtrar(List<InmueblessREEMPLAZO> posteos) {
+	public List<Inmuebless> filtrar(List<Inmuebless> posteos) {
 	    return posteos.stream()
 	            .filter(posteo -> criterios.stream().allMatch(c -> c.cumple(posteo)))  
 	            .collect(Collectors.toList()); 

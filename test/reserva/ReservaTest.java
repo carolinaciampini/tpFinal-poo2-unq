@@ -14,23 +14,22 @@ import enums.FormaDePago;
 import estadoReserva.Aprobada;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
-import inmueble.Inmueble;
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 import usuarios.Inquilino;
 import usuarios.Usuario;
 
 public class ReservaTest {
-    private InmueblessREEMPLAZO posteoInmueble;
+    private Inmuebless posteoInmueble;
     private Reserva reserva;
     private Usuario inquilino;
-    private Inmueble inmueble;
+    private Inmuebless inmueble;
 
 
     @BeforeEach
     void setUp() {
     	inquilino = mock(Inquilino.class);
-    	inmueble = mock(Inmueble.class);
-    	posteoInmueble = mock(InmueblessREEMPLAZO.class);
+    	inmueble = mock(Inmuebless.class);
+    	posteoInmueble = mock(Inmuebless.class);
 
         reserva = new Reserva(posteoInmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO);
         when(posteoInmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);

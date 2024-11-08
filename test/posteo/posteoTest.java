@@ -15,8 +15,7 @@ import enums.FormaDePago;
 import enums.Servicio;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
-import inmueble.Inmueble;
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
 import reserva.Reserva;
@@ -40,7 +39,7 @@ class posteoTest {
 	private Reserva reserva5;
 
 	
-	private InmueblessREEMPLAZO inmuebleR;
+	private Inmuebless inmuebleR;
 	private PeriodoManager periodo;
 	private MailSender mailSender;
 	
@@ -61,7 +60,7 @@ class posteoTest {
     	
     	periodo = mock(PeriodoManager.class);
     	
-    	inmuebleR = new InmueblessREEMPLAZO (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+    	inmuebleR = new Inmuebless (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
     			
     	
     	reserva = new Reserva (inmuebleR, inquilino, LocalDate.of(2024, 10, 15),LocalDate.of(2024, 10, 20), FormaDePago.EFECTIVO);

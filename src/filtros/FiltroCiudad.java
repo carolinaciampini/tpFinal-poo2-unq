@@ -1,8 +1,7 @@
 package filtros;
 
 import Sitio.SitioWeb;
-import inmueble.Inmueble;
-import inmuebless.InmueblessREEMPLAZO;
+import inmuebless.Inmuebless;
 
 public class FiltroCiudad implements Criterio {
 	private String ciudad;
@@ -12,7 +11,7 @@ public class FiltroCiudad implements Criterio {
     }
     
     @Override
-    public Boolean cumple(InmueblessREEMPLAZO p) {
+    public Boolean cumple(Inmuebless p) {
         return p.getCiudad().equals(ciudad);
     }
 }
