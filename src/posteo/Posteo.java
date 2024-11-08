@@ -7,6 +7,7 @@ import java.util.List;
 import enums.FormaDePago;
 import estadoReserva.Aprobada;
 import estrategiaCancelacion.EstrategiaCancelacion;
+import estrategiaCancelacion.Gratuito;
 import inmueble.Inmueble;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
@@ -22,16 +23,17 @@ public class Posteo {
 	private EstrategiaCancelacion estrategiaCancelacion;
 	private MailSender mailSender;
 
-	public Posteo(Inmueble inmueble, Double precio, MailSender mailSender, PeriodoManager periodo, EstrategiaCancelacion estrategia) {
+	public Posteo(Inmueble inmueble, Double precio, MailSender mailSender, PeriodoManager periodo) {
 		this.reservas = new ArrayList<>();
 		this.inmueble = inmueble;
 		this.precioBase = precio;
 		this.periodoManager = periodo;
 		this.colaDeEspera = new ArrayList<>();
-		this.estrategiaCancelacion = estrategia;
+		this.estrategiaCancelacion = new Gratuito(); ;
 		this.mailSender = mailSender;
 	}
 	
+
 	public MailSender getMailSender() {
 		return mailSender;
 	}

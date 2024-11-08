@@ -61,18 +61,19 @@ class posteoTest {
     	
     	periodo = mock(PeriodoManager.class);
     	
-    	posteo = new Posteo(inmueble, 9000.0, mailSender, periodo, estrategia);
+    	posteo = new Posteo (inmueble, 9000.0, mailSender, periodo);
+    			
 		when(posteo.getHuespedes()).thenReturn(5);
     	
     	reserva = new Reserva (posteo, inmueble, inquilino, LocalDate.of(2024, 10, 15),LocalDate.of(2024, 10, 20), FormaDePago.EFECTIVO);
     	
-    	reserva2 = new Reserva(posteo, inmueble,inquilino2, LocalDate.of(2024, 10, 8),LocalDate.of(2024, 10, 16), FormaDePago.EFECTIVO );
+    	reserva2 = new Reserva(posteo, inmueble,inquilino, LocalDate.of(2024, 10, 8),LocalDate.of(2024, 10, 16), FormaDePago.EFECTIVO );
     	
-    	reserva3 = new Reserva(posteo, inmueble,inquilino3, LocalDate.of(2024, 10, 14),LocalDate.of(2024, 10, 21), FormaDePago.EFECTIVO );
+    	reserva3 = new Reserva(posteo, inmueble,inquilino, LocalDate.of(2024, 10, 14),LocalDate.of(2024, 10, 21), FormaDePago.EFECTIVO );
     	
-    	reserva4 = new Reserva(posteo, inmueble,inquilino4, LocalDate.of(2024, 10, 18),LocalDate.of(2024, 10, 23), FormaDePago.EFECTIVO );
+    	reserva4 = new Reserva(posteo, inmueble,inquilino, LocalDate.of(2024, 10, 18),LocalDate.of(2024, 10, 23), FormaDePago.EFECTIVO );
     	
-    	reserva5 = new Reserva (posteo, inmueble, inquilino4, LocalDate.of(2024, 10, 10),LocalDate.of(2024, 10, 15), FormaDePago.EFECTIVO);
+    	reserva5 = new Reserva (posteo, inmueble, inquilino, LocalDate.of(2024, 10, 10),LocalDate.of(2024, 10, 15), FormaDePago.EFECTIVO);
 	}
 	
 	@Test
@@ -88,7 +89,7 @@ class posteoTest {
 		assertEquals(1, posteo.getColaDeEspera().size());
 		
 		verify(mailSender).enviarMail("abru@gmail.com","Tu reserva fue procesada", 
-                "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
+               "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
 		
 		
 		
