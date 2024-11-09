@@ -5,7 +5,7 @@ import reserva.Reserva;
 public class Cancelada extends EstadoReserva {
 	
 	public void procesarReserva (Reserva reserva) {
-		reserva.getPosteo().procesarColaEspera();
+		reserva.getInmueble().procesarColaEspera();
 	}
 	
 	@Override

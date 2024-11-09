@@ -7,13 +7,13 @@ import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.FilterManager;
 import usuarios.Usuario;
-import inmuebless.Inmuebless;
+import inmuebless.Inmueble;
 import reserva.Reserva;
 
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
-	private List <Inmuebless> inmuebles;
+	private List <Inmueble> inmuebles;
 	
 	public SitioWeb () {
 		this.usuarios = new ArrayList <>() ;
@@ -37,7 +37,7 @@ public class SitioWeb {
 		usuarios.remove(usuario);
 	}
 	
-	public List<Inmuebless> getInmuebles() {
+	public List<Inmueble> getInmuebles() {
 		return inmuebles;
 	}
 	
@@ -48,25 +48,25 @@ public class SitioWeb {
     }
     
 	
-    public void darDeAltaInmueble (Inmuebless inmueble) throws PropietarioNoRegistradoExcepcion {
+    public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
 		if (estaRegistrado(inmueble.getPropietario())) {
-            inmuebles.add(new Inmuebless(null, null, null, null, null, null, null, null, null, null, null, null, null));
+            inmuebles.add(new Inmueble(null, null, null, null, null, null, null, null, null, null, null, null, null));
         } else {
         	throw new PropietarioNoRegistradoExcepcion();
         }
 	}
 
-	public void agregarPosteo(Inmuebless p) {
-		this.inmuebles.add(p);
+	public void agregarInmueble(Inmueble i) {
+		this.inmuebles.add(i);
 	}
 	
-	public List<Reserva> getReservasDe(Inmuebless posteo) {
-		return posteo.getReservas();
+	public List<Reserva> getReservasDe(Inmueble inmueble) {
+		return inmueble.getReservas();
 	}
 	
 	// FILTROS
 	
-	public List<Inmuebless> filtrarPosteos(FilterManager filter){
+	public List<Inmueble> filtrarInmuebles(FilterManager filter){
 		return filter.filtrar(this.getInmuebles());
 	}
 }

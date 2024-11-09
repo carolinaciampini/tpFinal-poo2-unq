@@ -12,14 +12,14 @@ import enums.FormaDePago;
 import enums.Servicio;
 import excepciones.LimiteFotosAlcanzado;
 import excepciones.PropietarioNoRegistradoExcepcion;
-import inmuebless.Inmuebless;
+import inmuebless.Inmueble;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
 import usuarios.Propietario;
 
 class InmuebleTest {
 	private Propietario propietario;
-	private Inmuebless inmueble;
+	private Inmueble inmueble;
 	private MailSender mail;
 	private PeriodoManager periodo;
 	
@@ -29,7 +29,7 @@ class InmuebleTest {
 		periodo = mock(PeriodoManager.class);
 		propietario = mock(Propietario.class);
 
-		inmueble = new Inmuebless ((double) 90000, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		inmueble = new Inmueble ((double) 90000, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
 	
 	}
 

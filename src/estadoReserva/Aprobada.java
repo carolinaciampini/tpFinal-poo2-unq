@@ -8,11 +8,11 @@ public class Aprobada extends EstadoReserva{
 	
 	public void cancelarReserva (Reserva reserva) {
 		reserva.setEstadoReserva(new Cancelada());
-    	reserva.getPosteo().getReservas().remove(reserva);
+    	reserva.getInmueble().getReservas().remove(reserva);
 
-		reserva.getPosteo().procesarColaEspera();
+		reserva.getInmueble().procesarColaEspera();
 
-		reserva.getPosteo().calcularPenalizacion(LocalDate.now(), reserva);
+		reserva.getInmueble().calcularPenalizacion(LocalDate.now(), reserva);
 	}
 
 	public void finalizarReserva (Reserva reserva) {
@@ -21,7 +21,7 @@ public class Aprobada extends EstadoReserva{
 	
 	@Override
 	public void enviarMail(Reserva reserva) {
-		reserva.getPosteo().getMailSender().enviarMail(reserva.getInquilino().getEmail(), "Tu reserva ha sido aprobada", "¡Felicitaciones! tu reserva fue aprobada");
+		reserva.getInmueble().getMailSender().enviarMail(reserva.getInquilino().getEmail(), "Tu reserva ha sido aprobada", "¡Felicitaciones! tu reserva fue aprobada");
 	}
 
 }

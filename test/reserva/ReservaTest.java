@@ -14,25 +14,23 @@ import enums.FormaDePago;
 import estadoReserva.Aprobada;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
-import inmuebless.Inmuebless;
+import inmuebless.Inmueble;
 import usuarios.Inquilino;
 import usuarios.Usuario;
 
 public class ReservaTest {
-    private Inmuebless posteoInmueble;
+    private Inmueble inmueble;
     private Reserva reserva;
     private Usuario inquilino;
-    private Inmuebless inmueble;
 
 
     @BeforeEach
     void setUp() {
     	inquilino = mock(Inquilino.class);
-    	inmueble = mock(Inmuebless.class);
-    	posteoInmueble = mock(Inmuebless.class);
+    	inmueble = mock(Inmueble.class);
 
-        reserva = new Reserva(posteoInmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO);
-        when(posteoInmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
+        reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO);
+        when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
         
     }
     
@@ -40,7 +38,7 @@ public class ReservaTest {
     @Test
     void testGettersDeLaReserva() {
         
-        assertEquals(posteoInmueble, reserva.getPosteo());
+        assertEquals(inmueble, reserva.getInmueble());
         assertEquals(inquilino, reserva.getInquilino());
         assertEquals(LocalDate.of(2024, 11, 1), reserva.getFechaEntrada());
         assertEquals(LocalDate.of(2024, 11, 2), reserva.getFechaSalida());

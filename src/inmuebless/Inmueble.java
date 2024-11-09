@@ -17,7 +17,7 @@ import reserva.Reserva;
 import usuarios.Propietario;
 import usuarios.Usuario;
 
-public class Inmuebless {
+public class Inmueble {
 	private List <Reserva> reservas;
 	private PeriodoManager periodoManager;
 	private Double precioBase;
@@ -39,7 +39,7 @@ public class Inmuebless {
 	private List<FormaDePago> formasDePago;
 	private Propietario propietario;
 
-	public Inmuebless(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) {
+	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) {
 		this.reservas = new ArrayList<>();
 		this.precioBase = precio;
 		this.periodoManager = periodo;

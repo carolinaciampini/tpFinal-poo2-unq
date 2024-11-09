@@ -19,7 +19,7 @@ import filtros.Criterio;
 import filtros.FilterManager;
 import filtros.FiltroHuespedes;
 import filtros.FiltroPrecio;
-import inmuebless.Inmuebless;
+import inmuebless.Inmueble;
 import reserva.Reserva;
 import usuarios.Propietario;
 import usuarios.Usuario;
@@ -27,11 +27,11 @@ import usuarios.Usuario;
 class SitioWebTest {
 	private SitioWeb sitio;
 	private Propietario usuario1;
-	private Inmuebless inmueble;
+	private Inmueble inmueble;
 	private FilterManager filterManager;
-	private Inmuebless posteo1;
-	private Inmuebless posteo2;
-	private Inmuebless posteo3;
+	private Inmueble inmueble2;
+	private Inmueble inmueble3;
+	private Inmueble inmueble4;
 	private Reserva reserva1;
 	private Reserva reserva2;
 	
@@ -39,19 +39,19 @@ class SitioWebTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		sitio = new SitioWeb();
-		inmueble = mock(Inmuebless.class);
+		inmueble = mock(Inmueble.class);
 		usuario1 = mock(Propietario.class);
 		 when(usuario1.getEmail()).thenReturn("abru@gmail.com");
 		 when(inmueble.getPropietario()).thenReturn(usuario1); 
 		 
-		 posteo1 = mock(Inmuebless.class);
-	     posteo2 = mock(Inmuebless.class);
-	     posteo3 = mock(Inmuebless.class);
+		 inmueble2 = mock(Inmueble.class);
+	     inmueble3 = mock(Inmueble.class);
+	     inmueble4 = mock(Inmueble.class);
 
 	   
-	     sitio.agregarPosteo(posteo1);
-	     sitio.agregarPosteo(posteo2);
-	     sitio.agregarPosteo(posteo3);
+	     sitio.agregarInmueble(inmueble2);
+	     sitio.agregarInmueble(inmueble3);
+	     sitio.agregarInmueble(inmueble4);
 	     
 	     reserva1 = mock(Reserva.class);
 	     reserva2 = mock(Reserva.class);
@@ -87,8 +87,8 @@ class SitioWebTest {
 	}
 	
 	
-	
-	/*@Test
+	/*
+	@Test
 	void testAltaDeInmuebleExitoso() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		sitio.addUsuario(usuario1); // Añadir propietario antes de alta inmueble		
         sitio.darDeAltaInmueble(inmueble);
@@ -96,36 +96,36 @@ class SitioWebTest {
 	*/
 	
 	@Test 
-	void testFiltrarPosteosConCiudadYFechas() {
+	void testFiltrarInmueblesConCiudadYFechas() {
 		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
 	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
 	     String ciudad = "Buenos Aires";
 	        
 	     filterManager = new FilterManager(fechaEntrada, fechaSalida, ciudad);
 		
-        when(posteo1.getCiudad()).thenReturn("Buenos Aires");
-        when(posteo1.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
+        when(inmueble2.getCiudad()).thenReturn("Buenos Aires");
+        when(inmueble2.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
 
-        when(posteo2.getCiudad()).thenReturn("Buenos Aires");
-        when(posteo2.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
+        when(inmueble3.getCiudad()).thenReturn("Buenos Aires");
+        when(inmueble3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
 
-        when(posteo3.getCiudad()).thenReturn("Cordoba");
-        when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
+        when(inmueble4.getCiudad()).thenReturn("Cordoba");
+        when(inmueble4.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
 
        
-        List<Inmuebless> resultados = sitio.filtrarPosteos(filterManager);
+        List<Inmueble> resultados = sitio.filtrarInmuebles(filterManager);
 
        
         assertEquals(1, resultados.size());  
-        assertTrue(resultados.contains(posteo1));  
-        assertFalse(resultados.contains(posteo2)); 
-        assertFalse(resultados.contains(posteo3)); 
+        assertTrue(resultados.contains(inmueble2));  
+        assertFalse(resultados.contains(inmueble3)); 
+        assertFalse(resultados.contains(inmueble4)); 
       
 	}
 	
 
 	@Test 
-	void testFiltrarPosteosConCiudadFechasYHuespedes() {
+	void testFiltrarInmueblesConCiudadFechasYHuespedes() {
 		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
 	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
 	     String ciudad = "Buenos Aires";
@@ -134,31 +134,31 @@ class SitioWebTest {
 	     FiltroHuespedes f = new FiltroHuespedes(5);
 	     filterManager.agregarFiltro(f);
 		
-        when(posteo1.getCiudad()).thenReturn("Buenos Aires");
-        when(posteo1.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
-        when(posteo1.getHuespedes()).thenReturn(5);
+        when(inmueble2.getCiudad()).thenReturn("Buenos Aires");
+        when(inmueble2.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
+        when(inmueble2.getHuespedes()).thenReturn(5);
 
-        when(posteo2.getCiudad()).thenReturn("Buenos Aires");
-        when(posteo2.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
-        when(posteo2.getHuespedes()).thenReturn(3);
+        when(inmueble3.getCiudad()).thenReturn("Buenos Aires");
+        when(inmueble3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
+        when(inmueble3.getHuespedes()).thenReturn(3);
 
-        when(posteo3.getCiudad()).thenReturn("Cordoba");
-        when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
-        when(posteo3.getHuespedes()).thenReturn(2);
+        when(inmueble4.getCiudad()).thenReturn("Cordoba");
+        when(inmueble4.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
+        when(inmueble4.getHuespedes()).thenReturn(2);
 
         
-        List<Inmuebless> resultados = sitio.filtrarPosteos(filterManager);
+        List<Inmueble> resultados = sitio.filtrarInmuebles(filterManager);
 
        
         assertEquals(1, resultados.size());  
-        assertTrue(resultados.contains(posteo1));  
-        assertFalse(resultados.contains(posteo2)); 
-        assertFalse(resultados.contains(posteo3)); 
+        assertTrue(resultados.contains(inmueble2));  
+        assertFalse(resultados.contains(inmueble3)); 
+        assertFalse(resultados.contains(inmueble4)); 
       
 	}
 	
 /*	@Test
-	void testFiltrarPosteosConCiudadFechasYPrecios() {
+	void testFiltrarInmueblesConCiudadFechasYPrecios() {
 		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
 	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
 	     String ciudad = "Buenos Aires";
@@ -167,16 +167,16 @@ class SitioWebTest {
 	     FiltroPrecio f = new FiltroPrecio(1000.00, 1500.00);
 	     filterManager.agregarFiltro(f);
 		
-       when(posteo1.getCiudad()).thenReturn("Buenos Aires");
-       when(posteo1.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
-       when(posteo1.getPrecioBase()).thenReturn(1000.00);
+       when(inmueble2.getCiudad()).thenReturn("Buenos Aires");
+       when(inmueble2.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
+       when(inmueble2.getPrecioBase()).thenReturn(1000.00);
 
-       when(posteo2.getCiudad()).thenReturn("Buenos Aires");
-       when(posteo2.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
+       when(inmueble3.getCiudad()).thenReturn("Buenos Aires");
+       when(inmueble3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
        
 
-       when(posteo3.getCiudad()).thenReturn("Cordoba");
-       when(posteo3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
+       when(inmueble4.getCiudad()).thenReturn("Cordoba");
+       when(inmueble4.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
       
 
        System.out.println(filterManager.getCriterios());

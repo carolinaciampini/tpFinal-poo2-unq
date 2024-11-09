@@ -2,12 +2,12 @@ package estrategiaCancelacion;
 
 import java.time.LocalDate;
 
-import inmuebless.Inmuebless;
+import inmuebless.Inmueble;
 import reserva.Reserva;
 
 public class SinCancelacion implements EstrategiaCancelacion {
 	
-	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva, Inmuebless posteo) {
+	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva, Inmueble posteo) {
 		return posteo.getPrecioParaReserva(reserva);
 	}
 }
