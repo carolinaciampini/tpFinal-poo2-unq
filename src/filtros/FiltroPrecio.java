@@ -18,8 +18,8 @@ public class FiltroPrecio implements Criterio  {
 	 @Override
 	    public Boolean cumple(Inmueble inmueble, Filtro f) {
 	        Double precio = inmueble.precioSugeridoPara(f.getFechaEntrada(), f.getFechaSalida());
-	        boolean cumpleMin = (precioMin == null) || (precio >= precioMin);
-	        boolean cumpleMax = (precioMax == null) || (precio <= precioMax);
+	        boolean cumpleMin =  precio >= precioMin;
+	        boolean cumpleMax =  precio <= precioMax;
 	        return cumpleMin && cumpleMax;
 	    }
 	

@@ -75,47 +75,49 @@ class InmuebleTest {
    			
 	}
 	
-	/*
 	@Test
-	void testSeConcretaLaSegundaaReservaDeLaColaDeEspera() {
+	void testProcesarColaDeEspera() {
 		when(reserva5.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 8));
 	    when(reserva5.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
-	    when(reserva4.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 12));
-	    when(reserva4.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 15));
-	    when(reserva3.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 10));
-	    when(reserva3.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
-	    when(reserva2.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 14));
-	    when(reserva2.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 17));
-		when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false);
-	    when(reserva4.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false);
-	    when(reserva3.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapará
-	    when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapará
+	    when(reserva2.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 9));
+	    when(reserva2.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
 	    
-	    when(reserva3.getInquilino()).thenReturn(inquilino);
+		when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true);
+		when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); 
+	    
+	    when(reserva2.getInquilino()).thenReturn(inquilino);
+	    when(reserva5.getInmueble()).thenReturn(inmuebleR);
 		
-	 
-	    inmuebleR.crearReserva(reserva5); // Debe agregarse normalmente
-	    inmuebleR.crearReserva(reserva4); // Debe agregarse normalmente
-	    assertEquals(2, inmuebleR.getReservas().size());
-
-	    inmuebleR.crearReserva(reserva3); // Debe ir a la cola de espera
-	    inmuebleR.crearReserva(reserva2); // ""
-	    assertEquals(2, inmuebleR.getColaDeEspera().size());
-
-	    reserva5.cancelarReserva(LocalDate.now());
-
-
-	    assertEquals(2, inmuebleR.getReservas().size()); // reserva4 y reserva3 deberían estar confirmadas
-	    assertEquals(1, inmuebleR.getColaDeEspera().size()); // Solo queda reserva2 en espera
-
+	    inmuebleR.crearReserva(reserva5); 
+	    inmuebleR.crearReserva(reserva2);
 	   
+	    // mockeo comportamiento para que se cancele una reserva
+	    when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false);
+	    when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false); 
+	    inmuebleR.procesarColaEspera();
 	    verify(mailSender).enviarMail("abru@gmail.com", "Tu reserva fue procesada",
 	            "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
-	
-		
-		
 	}
-	*/
+	
+	@Test
+	void testSePuedenEncolarReservas() {
+		when(reserva5.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 8));
+	    when(reserva5.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
+	    when(reserva2.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 9));
+	    when(reserva2.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
+	    
+		when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true);
+		when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapará
+	    
+	    when(reserva2.getInquilino()).thenReturn(inquilino);
+	    when(reserva5.getInmueble()).thenReturn(inmuebleR);
+		
+	    inmuebleR.crearReserva(reserva5); 
+	    inmuebleR.crearReserva(reserva2);
+	    assertEquals(1, inmuebleR.getReservas().size());
+	    assertEquals(1, inmuebleR.getColaDeEspera().size());		
+	}
+	
 	
 	
 	@Test

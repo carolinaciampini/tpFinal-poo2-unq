@@ -84,7 +84,7 @@ public class Inmueble {
 			reserva.setEstadoReserva(new Aprobada());
 		} else {
 			Reserva reservaPendiente = reserva;
-			colaDeEspera.add(reservaPendiente);
+			colaDeEspera.addLast(reservaPendiente);
 		}
 	}
 	
@@ -103,7 +103,8 @@ public class Inmueble {
 	            return false; 
 	        }
 	    }
-	    return true;  
+	    return true; 
+	     
 	}
 	
 	

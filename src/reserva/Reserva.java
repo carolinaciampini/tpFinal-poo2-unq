@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import enums.FormaDePago;
+import estadoReserva.Cancelada;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
@@ -72,6 +73,7 @@ public class Reserva {
 	}
 	
 	public void cancelarReserva(LocalDate fecha) {
+		estadoReserva = new Cancelada();
 		estadoReserva.cancelarReserva(this);
 	}
 }

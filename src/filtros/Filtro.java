@@ -11,7 +11,6 @@ import inmueble.Inmueble;
 public class Filtro {
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
-	private String ciudad;
 	private List<Criterio> criterios;
 	
 	
@@ -19,11 +18,15 @@ public class Filtro {
 		super();
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
-		this.ciudad = ciudad;
-		this.criterios = new ArrayList<Criterio>();
+		this.criterios = this.filtrosObligatorios(ciudad, fechaEntrada, fechaSalida);
+	}
+	
+	public List<Criterio> filtrosObligatorios(String ciudad, LocalDate fechaEntrada, LocalDate fechaSalida){
+		List<Criterio> lista = new ArrayList<Criterio>();
+		lista.add(new FiltroFecha(fechaEntrada, fechaSalida));
+		lista.add(new FiltroCiudad(ciudad));
+		return lista;
 		
-		this.criterios.add(new FiltroFecha(fechaEntrada, fechaSalida));
-        this.criterios.add(new FiltroCiudad(ciudad));
 	}
 	
 	public void agregarFiltro(Criterio c){
@@ -34,7 +37,7 @@ public class Filtro {
 	public List<Inmueble> filtrar(List<Inmueble> posteos) {
 	    return posteos.stream()
 	            .filter(posteo -> criterios.stream().allMatch(c -> c.cumple(posteo, this)))  
-	            .collect(Collectors.toList()); 
+	            .toList();
 	}
 
 	public LocalDate getFechaEntrada() {
@@ -45,11 +48,4 @@ public class Filtro {
 		return fechaSalida;
 	}
 
-	public String getCiudad() {
-		return ciudad;
-	}
-
-	public List<Criterio> getCriterios() {
-		return criterios;
-	}
 }
