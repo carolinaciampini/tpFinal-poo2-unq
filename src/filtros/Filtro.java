@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import Sitio.SitioWeb;
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 
-public class FilterManager {
+public class Filtro {
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
 	private String ciudad;
 	private List<Criterio> criterios;
 	
 	
-	public FilterManager(LocalDate fechaEntrada, LocalDate fechaSalida, String ciudad) {
+	public Filtro(LocalDate fechaEntrada, LocalDate fechaSalida, String ciudad) {
 		super();
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
@@ -33,7 +33,7 @@ public class FilterManager {
 	
 	public List<Inmueble> filtrar(List<Inmueble> posteos) {
 	    return posteos.stream()
-	            .filter(posteo -> criterios.stream().allMatch(c -> c.cumple(posteo)))  
+	            .filter(posteo -> criterios.stream().allMatch(c -> c.cumple(posteo, this)))  
 	            .collect(Collectors.toList()); 
 	}
 

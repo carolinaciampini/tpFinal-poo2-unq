@@ -3,7 +3,7 @@ package estrategiaCancelacion;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 import reserva.Reserva;
 
 public class Intermedio implements EstrategiaCancelacion{

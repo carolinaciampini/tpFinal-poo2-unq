@@ -5,9 +5,9 @@ import java.util.List;
 
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
-import filtros.FilterManager;
+import filtros.Filtro;
+import inmueble.Inmueble;
 import usuarios.Usuario;
-import inmuebless.Inmueble;
 import reserva.Reserva;
 
 
@@ -66,7 +66,7 @@ public class SitioWeb {
 	
 	// FILTROS
 	
-	public List<Inmueble> filtrarInmuebles(FilterManager filter){
+	public List<Inmueble> filtrarInmuebles(Filtro filter){
 		return filter.filtrar(this.getInmuebles());
 	}
 }

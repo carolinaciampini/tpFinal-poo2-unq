@@ -1,4 +1,4 @@
-package inmuebless;
+package inmueble;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +14,6 @@ import excepciones.LimiteFotosAlcanzado;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
 import reserva.Reserva;
-import usuarios.Propietario;
 import usuarios.Usuario;
 
 public class Inmueble {
@@ -25,7 +24,6 @@ public class Inmueble {
 	private EstrategiaCancelacion estrategiaCancelacion;
 	private MailSender mailSender;
 	
-//atributos inmuebleviejo
 	private String tipoInmueble;
 	private Integer capacidad;
 	private Double superficie;
@@ -37,9 +35,9 @@ public class Inmueble {
 	private LocalTime checkin;
 	private LocalTime checkout;
 	private List<FormaDePago> formasDePago;
-	private Propietario propietario;
+	private Usuario propietario;
 
-	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Propietario propietario, Double precioBase) {
+	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Usuario propietario, Double precioBase) {
 		this.reservas = new ArrayList<>();
 		this.precioBase = precio;
 		this.periodoManager = periodo;
@@ -47,7 +45,7 @@ public class Inmueble {
 		this.estrategiaCancelacion = new Gratuito(); ;
 		this.mailSender = mailSender;
 		
-//constructor  inmuebleviejo
+
 		this.tipoInmueble = tipoDeInmueble;
 		this.superficie = superficie;
 		this.capacidad = capacidad;
@@ -135,23 +133,27 @@ public class Inmueble {
 	            reservas.add(siguiente); // Agregar la reserva a la lista de reservas
 	            colaDeEspera.remove(i);  // Remover solo la reserva que se procesó correctamente
 
-	            // Enviar un correo de confirmación
+	           
 	            mailSender.enviarMail(siguiente.getInquilino().getEmail(),
 	                                  "Tu reserva fue procesada",
 	                                  "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
 
-	            break; // Detener el proceso al encontrar la primera reserva disponible
+	            break; 
 	        }
 	    }
 	}
 	
-	
-
-	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva) {
-		return estrategiaCancelacion.calcularPenalizacion(hoy, reserva, this);
+	public Double precioSugeridoPara(LocalDate fechaEntrada, LocalDate fechaSalida) {
+		return this.getPeiodoManager().calcularPrecioPorDia(precioBase, fechaEntrada, fechaSalida);
 	}
 	
-	public Propietario getPropietario () {
+	
+
+	public Double calcularPenalizacion(LocalDate fecha, Reserva reserva) {
+		return estrategiaCancelacion.calcularPenalizacion(fecha, reserva, this);
+	}
+	
+	public Usuario getPropietario () {
 		return this.propietario;
 	}
 
@@ -208,13 +210,9 @@ public class Inmueble {
 		this.formasDePago.add(formadepago);
 	}
 //--
-	
-
-
-
 	public String[] getFotos() {
-	return fotos;
-}
+		return fotos;
+	}
 
 	public void addFoto(String foto) throws LimiteFotosAlcanzado{
 // Busco la primera posición vacía (0) para insertar la foo

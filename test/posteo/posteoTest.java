@@ -15,7 +15,7 @@ import enums.FormaDePago;
 import enums.Servicio;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
 import reserva.Reserva;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Sitio.SitioWeb;
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 
 public class FiltroPrecio implements Criterio  {
 	private Double precioMin;
@@ -16,8 +16,8 @@ public class FiltroPrecio implements Criterio  {
 	    }
 	 
 	 @Override
-	    public Boolean cumple(Inmueble p) {
-	        Double precio = p.getPrecioBase();
+	    public Boolean cumple(Inmueble inmueble, Filtro f) {
+	        Double precio = inmueble.precioSugeridoPara(f.getFechaEntrada(), f.getFechaSalida());
 	        boolean cumpleMin = (precioMin == null) || (precio >= precioMin);
 	        boolean cumpleMax = (precioMax == null) || (precio <= precioMax);
 	        return cumpleMin && cumpleMax;

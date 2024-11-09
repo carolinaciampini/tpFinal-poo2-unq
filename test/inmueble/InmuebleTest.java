@@ -1,8 +1,12 @@
 package inmueble;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,27 +14,140 @@ import org.junit.jupiter.api.Test;
 
 import enums.FormaDePago;
 import enums.Servicio;
+import estrategiaCancelacion.EstrategiaCancelacion;
+import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
 import excepciones.PropietarioNoRegistradoExcepcion;
-import inmuebless.Inmueble;
 import mailSender.MailSender;
 import periodo.PeriodoManager;
+import reserva.Reserva;
+import usuarios.Inquilino;
 import usuarios.Propietario;
+import usuarios.Usuario;
 
 class InmuebleTest {
-	private Propietario propietario;
+	private Usuario inquilino;
+	private Usuario inquilino2;
+	private Usuario inquilino3;
+	private Usuario inquilino4;
+	
+	private Reserva reserva;
+	private Reserva reserva2;
+	private Reserva reserva3;
+	private Reserva reserva4;
+	private Reserva reserva5;
+	
+	private Inmueble inmuebleR;
+	private PeriodoManager periodo;
+	private MailSender mailSender;
+	
+	private EstrategiaCancelacion estrategia;
+
+	private Usuario propietario;
 	private Inmueble inmueble;
 	private MailSender mail;
-	private PeriodoManager periodo;
+
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		mail = mock(MailSender.class);
 		periodo = mock(PeriodoManager.class);
-		propietario = mock(Propietario.class);
+		propietario = mock(Usuario.class);
+		mailSender = mock(MailSender.class);
+		estrategia = mock(Gratuito.class);
+		periodo = mock(PeriodoManager.class);
 
-		inmueble = new Inmueble ((double) 90000, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		inquilino = mock(Inquilino.class);
+		when(inquilino.getEmail()).thenReturn("abru@gmail.com");
+		
+		inquilino2 = mock(Inquilino.class);
+		inquilino3 = mock(Inquilino.class);
+		inquilino4 = mock(Inquilino.class);
+		reserva2 = mock(Reserva.class);
+		reserva3 = mock(Reserva.class);
+		reserva4 = mock(Reserva.class);
+		reserva5 = mock(Reserva.class);
 	
+		
+		inmueble = new Inmueble ( 90000.0, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		inmuebleR = new Inmueble (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		
+   			
+	}
+	
+	/*
+	@Test
+	void testSeConcretaLaSegundaaReservaDeLaColaDeEspera() {
+		when(reserva5.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 8));
+	    when(reserva5.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
+	    when(reserva4.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 12));
+	    when(reserva4.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 15));
+	    when(reserva3.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 10));
+	    when(reserva3.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
+	    when(reserva2.getFechaEntrada()).thenReturn(LocalDate.of(2024, 10, 14));
+	    when(reserva2.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 17));
+		when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false);
+	    when(reserva4.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false);
+	    when(reserva3.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapará
+	    when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapará
+	    
+	    when(reserva3.getInquilino()).thenReturn(inquilino);
+		
+	 
+	    inmuebleR.crearReserva(reserva5); // Debe agregarse normalmente
+	    inmuebleR.crearReserva(reserva4); // Debe agregarse normalmente
+	    assertEquals(2, inmuebleR.getReservas().size());
+
+	    inmuebleR.crearReserva(reserva3); // Debe ir a la cola de espera
+	    inmuebleR.crearReserva(reserva2); // ""
+	    assertEquals(2, inmuebleR.getColaDeEspera().size());
+
+	    reserva5.cancelarReserva(LocalDate.now());
+
+
+	    assertEquals(2, inmuebleR.getReservas().size()); // reserva4 y reserva3 deberían estar confirmadas
+	    assertEquals(1, inmuebleR.getColaDeEspera().size()); // Solo queda reserva2 en espera
+
+	   
+	    verify(mailSender).enviarMail("abru@gmail.com", "Tu reserva fue procesada",
+	            "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
+	
+		
+		
+	}
+	*/
+	
+	
+	@Test
+	void testCrearReserva() {
+		reserva = mock(Reserva.class);
+		 when(reserva.sePisa(LocalDate.of(2024, 10, 11), LocalDate.of(2024, 10, 17))).thenReturn(false);
+		 when(reserva.sePisa(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11))).thenReturn(true);
+
+	    inmuebleR.crearReserva(reserva);
+	   
+	    assertEquals(1, inmuebleR.getReservas().size());
+	    assertFalse(inmuebleR.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11)));
+	    assertTrue(inmuebleR.estaDisponible(LocalDate.of(2024, 10, 11), LocalDate.of(2024, 10, 17)));
+		
+	}
+	
+	
+	@Test
+	void testPrecioParaUnaReserva() {
+	  
+	    LocalDate fechaEntrada = LocalDate.of(2024, 11, 1);
+	    LocalDate fechaSalida = LocalDate.of(2024, 11, 3); // 2 noches
+	    reserva = mock(Reserva.class);
+	    when(reserva.getFechaEntrada()).thenReturn(fechaEntrada);
+	    when(reserva.getFechaSalida()).thenReturn(fechaSalida);
+	    
+	    // Se mockea el comportamiento del PeriodoManager
+	    when(periodo.calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida)).thenReturn(18000.0); 
+
+	    Double precioCalculado = inmuebleR.getPrecioParaReserva(reserva);
+	    assertEquals(18000.0, precioCalculado);
+	    verify(periodo).calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida);
 	}
 
 	@Test

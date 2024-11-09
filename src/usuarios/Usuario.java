@@ -1,6 +1,6 @@
 package usuarios;
 
-public abstract class Usuario {
+public class Usuario {
 	private String nombreCompleto;
 	private String email;
 	private String telefono;

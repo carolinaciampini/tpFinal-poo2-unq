@@ -14,7 +14,7 @@ import enums.FormaDePago;
 import estadoReserva.Aprobada;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 import usuarios.Inquilino;
 import usuarios.Usuario;
 
@@ -45,7 +45,7 @@ public class ReservaTest {
         assertEquals(FormaDePago.EFECTIVO, reserva.getFormaDePago());
       
     }
-    
+   
    @Test
    void testCantidadDias() {
 	   assertEquals(1, reserva.getCantidadDeDias());

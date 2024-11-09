@@ -2,7 +2,7 @@ package estrategiaCancelacion;
 
 import java.time.LocalDate;
 
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 import reserva.Reserva;
 
 public interface EstrategiaCancelacion {

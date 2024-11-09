@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit;
 import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
-import inmuebless.Inmueble;
+import inmueble.Inmueble;
 import mailSender.MailSender;
 import usuarios.Usuario;
 
@@ -55,11 +55,9 @@ public class Reserva {
 	}
 	
 	public boolean sePisa(LocalDate fechaEntrada, LocalDate fechaSalida) {
-	    // Verificamos que no haya solapamiento
-		return (fechaEntrada. isBefore(this.fechaSalida)
-				&&
-				fechaSalida.isAfter(this.fechaEntrada));
+	    return (fechaEntrada.isBefore(this.fechaSalida) && fechaSalida.isAfter(this.fechaEntrada));
 	}
+
 	
 	public EstadoReserva getEstadoReserva() {
 		return estadoReserva;
