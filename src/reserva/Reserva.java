@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
+import estadoReserva.Finalizada;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import mailSender.MailSender;
@@ -29,6 +30,9 @@ public class Reserva {
 		this.estadoReserva = new Solicitada();
 	}
 
+	public void finalizarReserva() {
+		this.estadoReserva = new Finalizada();
+	}
 	public Inmueble getInmueble() {
 		return inmueble;
 	}

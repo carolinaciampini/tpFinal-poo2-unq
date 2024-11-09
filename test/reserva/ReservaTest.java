@@ -12,7 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import enums.FormaDePago;
 import estadoReserva.Aprobada;
+import estadoReserva.Cancelada;
 import estadoReserva.EstadoReserva;
+import estadoReserva.Finalizada;
+import estadoReserva.Rechazada;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import usuarios.Inquilino;
@@ -22,6 +25,12 @@ public class ReservaTest {
     private Inmueble inmueble;
     private Reserva reserva;
     private Usuario inquilino;
+    private Aprobada aprobado;
+    private Solicitada solicitado;
+    private Cancelada cancelada;
+    private Rechazada rechazada;
+    private Finalizada finalizada;
+    
 
 
     @BeforeEach
@@ -32,6 +41,19 @@ public class ReservaTest {
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO);
         when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
         
+        aprobado = mock(Aprobada.class);
+        solicitado = mock(Solicitada.class);
+        cancelada = mock(Cancelada.class);
+        rechazada = mock(Rechazada.class);
+        finalizada = mock(Finalizada.class);
+
+    }
+// Test de estado de reserva, aprobada        
+        @Test
+        void testFinalizarReserva () {
+        inmueble.crearReserva(reserva);        		
+        reserva.finalizarReserva();
+        assertEquals(rechazada, reserva.getEstadoReserva());
     }
     
     
