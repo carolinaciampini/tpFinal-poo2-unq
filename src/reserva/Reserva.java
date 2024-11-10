@@ -37,6 +37,14 @@ public class Reserva {
 		estadoReserva.cancelarReserva(this);
 	}
 
+	public void aceptarReserva() {
+		estadoReserva.aceptarReserva(this);
+	}
+	
+	public void rechazarReserva() {
+		estadoReserva.rechazarReserva(this);
+	}
+	
 	public void finalizarReserva() {
 		estadoReserva.finalizarReserva(this);
 	}

@@ -18,7 +18,6 @@ import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Criterio;
 import filtros.Filtro;
-import filtros.FiltroHuespedesTest;
 import filtros.FiltroPrecio;
 import inmueble.Inmueble;
 import reserva.Reserva;

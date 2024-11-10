@@ -39,27 +39,29 @@ public class ReservaTest {
     	inquilino = mock(Inquilino.class);
     	inmueble = mock(Inmueble.class);
 
+    	solicitado = mock(Solicitada.class);
+    	aprobado = mock(Aprobada.class);
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO);
         when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
+        reserva.setEstadoReserva(solicitado);
         
-        aprobado = mock(Aprobada.class);
-        solicitado = mock(Solicitada.class);
-        cancelada = mock(Cancelada.class);
-        rechazada = mock(Rechazada.class);
-        finalizada = mock(Finalizada.class);
 
     }
-// Test de estado de reserva, aprobada        
-  /*
+ 
+ 
     	@Test
-        void testFinalizarReserva () {
+        void testAceptarReserva () {
+        reserva.aceptarReserva();
+        verify(solicitado).aceptarReserva(reserva);       
         
-        inmueble.crearReserva(reserva);
-        reserva.finalizarReserva();
-
-        //verificar que a estado de reserva le llegue ese msj
+     } 
+    	
+    	@Test
+        void testRechazarReserva () {
+        reserva.rechazarReserva();
+        verify(solicitado).rechazarReserva(reserva);       
         
-     } */
+     } 
      
     @Test
     void testGettersDeLaReserva() {
