@@ -9,8 +9,8 @@ public class Cancelada extends EstadoReserva {
 	}
 	
 	@Override
-	public void enviarMail(Reserva r) {
-		// TODO Auto-generated method stub
+	public void enviarMail(Reserva reserva) {
+		reserva.getInmueble().getMailSender().enviarMail(reserva.getInmueble().getPropietario().getEmail(), "Reserva cancelada", "La reserva para tu Inmueble fue cancelada!");
 
 	}
 }
