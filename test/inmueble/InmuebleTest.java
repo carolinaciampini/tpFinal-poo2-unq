@@ -27,14 +27,10 @@ import usuarios.Usuario;
 
 class InmuebleTest {
 	private Usuario inquilino;
-	private Usuario inquilino2;
-	private Usuario inquilino3;
-	private Usuario inquilino4;
+
 	
 	private Reserva reserva;
 	private Reserva reserva2;
-	private Reserva reserva3;
-	private Reserva reserva4;
 	private Reserva reserva5;
 	
 	private Inmueble inmuebleR;
@@ -60,12 +56,8 @@ class InmuebleTest {
 		inquilino = mock(Inquilino.class);
 		when(inquilino.getEmail()).thenReturn("abru@gmail.com");
 		
-		inquilino2 = mock(Inquilino.class);
-		inquilino3 = mock(Inquilino.class);
-		inquilino4 = mock(Inquilino.class);
+	
 		reserva2 = mock(Reserva.class);
-		reserva3 = mock(Reserva.class);
-		reserva4 = mock(Reserva.class);
 		reserva5 = mock(Reserva.class);
 	
 		
@@ -177,6 +169,7 @@ class InmuebleTest {
         assertThrows(LimiteFotosAlcanzado.class, () ->  inmueble.addFoto("Foto 6"));
 	}
 	
+	
 	@Test
 	void testGetCapacidad() {
 		assertEquals(5, inmueble.getCapacidad());
@@ -235,8 +228,6 @@ class InmuebleTest {
 		assertEquals(1, inmueble.getFormasDePago().size());
 	}
 
-	
-	
 	
 	
 }

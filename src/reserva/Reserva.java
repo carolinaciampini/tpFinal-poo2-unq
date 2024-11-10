@@ -30,14 +30,28 @@ public class Reserva {
 		this.formaDePago = formaPago;
 		this.estadoReserva = new Solicitada();
 	}
+	
+
+	public void cancelarReserva(LocalDate fecha) {
+		estadoReserva = new Cancelada();
+		estadoReserva.cancelarReserva(this);
+	}
 
 	public void finalizarReserva() {
-		this.estadoReserva = new Finalizada();
+		estadoReserva.finalizarReserva(this);
 	}
+	
+	public Double getPrecioTotal() {
+		return getInmueble().getPrecioParaReserva(this);
+	}
+	
+	public boolean sePisa(LocalDate fechaEntrada, LocalDate fechaSalida) {
+	    return (fechaEntrada.isBefore(this.fechaSalida) && fechaSalida.isAfter(this.fechaEntrada));
+	}
+
 	public Inmueble getInmueble() {
 		return inmueble;
 	}
-
 
 	public Usuario getInquilino() {
 		return inquilino;
@@ -55,30 +69,17 @@ public class Reserva {
 		return formaDePago;
 	}
 	
-	public Double getPrecioTotal() {
-		return getInmueble().getPrecioParaReserva(this);
-	}
-	
-	public boolean sePisa(LocalDate fechaEntrada, LocalDate fechaSalida) {
-	    return (fechaEntrada.isBefore(this.fechaSalida) && fechaSalida.isAfter(this.fechaEntrada));
-	}
-
-	
 	public EstadoReserva getEstadoReserva() {
 		return estadoReserva;
+	}
+	
+	public int cantidadDeDias() {
+        return (int) ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
 	}
 	
 	public void setEstadoReserva(EstadoReserva estadoNuevo) {
 		this.estadoReserva = estadoNuevo;
 	}
 	
-	public int getCantidadDeDias() {
-        return (int) ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
-	}
-	
-	public void cancelarReserva(LocalDate fecha) {
-		estadoReserva = new Cancelada();
-		estadoReserva.cancelarReserva(this);
-	}
 }
 

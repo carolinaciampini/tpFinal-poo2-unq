@@ -67,5 +67,6 @@ public class FiltroTest {
 		assertTrue(this.filtro.filtrar(Arrays.asList(inmueble2, inmueble1)).contains(inmueble1));
 	    assertFalse(this.filtro.filtrar(Arrays.asList(inmueble2, inmueble1)).contains(inmueble2));
 	}
+	
 
 }

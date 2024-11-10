@@ -62,21 +62,11 @@ public class Inmueble {
 	}
 	
 
-	public MailSender getMailSender() {
-		return mailSender;
-	}
 	
 	public void setEstrategiaCancelacion(EstrategiaCancelacion estrategia) {
 		this.estrategiaCancelacion = estrategia;
 		}
 	
-	public List<Reserva> getColaDeEspera() {
-		return colaDeEspera;
-	}
-	
-	public List <Reserva> getReservas() {
-		return reservas;
-	}
 	
 	public void crearReserva (Reserva reserva) {
 		if (estaDisponible (reserva.getFechaEntrada(), reserva.getFechaSalida())) {
@@ -86,43 +76,6 @@ public class Inmueble {
 			Reserva reservaPendiente = reserva;
 			colaDeEspera.addLast(reservaPendiente);
 		}
-	}
-	
-	/*if (estaDisponible (fechaEntrada,fechaSalida)) {
-			reservas.add(new Reserva(this, inmueble, inquilino, fechaEntrada, fechaSalida, formaPago));
-		} else {
-			Reserva reservaPendiente = new Reserva (this, inmueble, inquilino, fechaEntrada, fechaSalida, formaPago);
-			colaDeEspera.add(reservaPendiente); 
-	}
-}*/
-				
-
-	public boolean estaDisponible(LocalDate fechaEntrada, LocalDate fechaSalida) {
-	    for (Reserva reserva : reservas) {
-	        if (reserva.sePisa(fechaEntrada, fechaSalida)) {
-	            return false; 
-	        }
-	    }
-	    return true; 
-	     
-	}
-	
-	
-	public int getHuespedes() {
-		return capacidad;
-	}
-
-	public Double getPrecioBase() {
-		return this.precioBase; 
-	}
-	
-	public PeriodoManager getPeiodoManager() {
-		return this.periodoManager;
-	}
-	
-	public Double getPrecioParaReserva(Reserva r) {
-		return this.getPeiodoManager()
-				.calcularPrecioPorDia(precioBase, r.getFechaEntrada(), r.getFechaSalida());
 	}
 	
 	public void procesarColaEspera() {
@@ -153,6 +106,58 @@ public class Inmueble {
 	public Double calcularPenalizacion(LocalDate fecha, Reserva reserva) {
 		return estrategiaCancelacion.calcularPenalizacion(fecha, reserva, this);
 	}
+				
+
+	public boolean estaDisponible(LocalDate fechaEntrada, LocalDate fechaSalida) {
+	    for (Reserva reserva : reservas) {
+	        if (reserva.sePisa(fechaEntrada, fechaSalida)) {
+	            return false; 
+	        }
+	    }
+	    return true; 
+	     
+	}
+	
+	public void addFoto(String foto) throws LimiteFotosAlcanzado{
+		// Busco la primera posición vacía (0) para insertar la foo
+			for (int i = 0; i < fotos.length; i++) {
+		   	 if (fotos[i] == null) {  // Si encuentro una posición vacía
+		        	fotos[i] = foto;  // agrego a la foto en esa posición
+		       	 return;
+		    	}
+		    
+			}
+		  	// No se pudo agregar
+			throw new LimiteFotosAlcanzado();
+
+		}
+	
+	
+	public int getHuespedes() {
+		return capacidad;
+	}
+
+	public Double getPrecioBase() {
+		return this.precioBase; 
+	}
+	
+	public PeriodoManager getPeiodoManager() {
+		return this.periodoManager;
+	}
+	
+	public Double getPrecioParaReserva(Reserva r) {
+		return this.getPeiodoManager()
+				.calcularPrecioPorDia(precioBase, r.getFechaEntrada(), r.getFechaSalida());
+	}
+	
+	public List<Reserva> getColaDeEspera() {
+		return colaDeEspera;
+	}
+	
+	public List <Reserva> getReservas() {
+		return reservas;
+	}
+	
 	
 	public Usuario getPropietario () {
 		return this.propietario;
@@ -183,10 +188,16 @@ public class Inmueble {
 		return direccion;
 	}
 
+	public MailSender getMailSender() {
+		return mailSender;
+	}
+	
 	// Servicios
 	public List<Servicio> getServicios() {
 		return servicios;
 	}
+	
+	
 
 	public void addServicio(Servicio servicio) {
 		this.servicios.add(servicio);
@@ -215,18 +226,6 @@ public class Inmueble {
 		return fotos;
 	}
 
-	public void addFoto(String foto) throws LimiteFotosAlcanzado{
-// Busco la primera posición vacía (0) para insertar la foo
-	for (int i = 0; i < fotos.length; i++) {
-   	 if (fotos[i] == null) {  // Si encuentro una posición vacía
-        	fotos[i] = foto;  // agrego a la foto en esa posición
-       	 return;
-    	}
-    
-	}
-  	// No se pudo agregar
-	throw new LimiteFotosAlcanzado();
-
-}
+	
 
 }

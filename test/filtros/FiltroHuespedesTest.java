@@ -19,14 +19,11 @@ public class FiltroHuespedesTest {
         
         filtroHuespedes = new FiltroHuespedes(4);
 
-       
         inmuebleCumple = mock(Inmueble.class);
         inmuebleNoCumple = mock(Inmueble.class);
 
-
         when(inmuebleCumple.getHuespedes()).thenReturn(5);
 
-     
         when(inmuebleNoCumple.getHuespedes()).thenReturn(3);
     }
     @Test

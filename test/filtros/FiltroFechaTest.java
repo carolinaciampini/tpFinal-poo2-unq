@@ -24,7 +24,6 @@ public class FiltroFechaTest {
         
         fechaEntrada = LocalDate.of(2024, 11, 10);
         fechaSalida = LocalDate.of(2024, 11, 15);
-
        
         filtroFecha = new FiltroFecha(fechaEntrada, fechaSalida);
 

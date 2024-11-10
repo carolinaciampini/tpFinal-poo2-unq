@@ -3,6 +3,7 @@ package reserva;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -49,15 +50,17 @@ public class ReservaTest {
 
     }
 // Test de estado de reserva, aprobada        
-    /*
-        @Test
+  /*
+    	@Test
         void testFinalizarReserva () {
-        inmueble.crearReserva(reserva);        		
+        
+        inmueble.crearReserva(reserva);
         reserva.finalizarReserva();
-        assertEquals(rechazada, reserva.getEstadoReserva());
-    }
-    
-   */ 
+
+        //verificar que a estado de reserva le llegue ese msj
+        
+     } */
+     
     @Test
     void testGettersDeLaReserva() {
         
@@ -66,13 +69,10 @@ public class ReservaTest {
         assertEquals(LocalDate.of(2024, 11, 1), reserva.getFechaEntrada());
         assertEquals(LocalDate.of(2024, 11, 2), reserva.getFechaSalida());
         assertEquals(FormaDePago.EFECTIVO, reserva.getFormaDePago());
-      
+ 	   assertEquals(1, reserva.cantidadDeDias());
+
     }
    
-   @Test
-   void testCantidadDias() {
-	   assertEquals(1, reserva.getCantidadDeDias());
-   }
     @Test
     void testCalcularPrecioTotalDeLaReserva() {
     	
@@ -83,6 +83,7 @@ public class ReservaTest {
     
     @Test
     void testSePisa () {
+    	
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
 

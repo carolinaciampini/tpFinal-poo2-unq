@@ -61,7 +61,7 @@ class SitioWebTest {
 	}
 
 	@Test
-	void testAddUsuarios() throws UsuarioYaExistenteException {
+	void testAddGetUsuarios() throws UsuarioYaExistenteException {
 		sitio.addUsuario(usuario1);
 		assertEquals(sitio.getUsuarios().size(), 1);
 	}
@@ -98,6 +98,5 @@ class SitioWebTest {
 		verify(filterManager).filtrar(sitio.getInmuebles());
 	}
 	
-
 }
 

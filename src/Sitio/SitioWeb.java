@@ -50,7 +50,7 @@ public class SitioWeb {
 	
     public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
 		if (estaRegistrado(inmueble.getPropietario())) {
-            inmuebles.add(new Inmueble(null, null, null, null, null, null, null, null, null, null, null, null, null));
+            inmuebles.add(inmueble);
         } else {
         	throw new PropietarioNoRegistradoExcepcion();
         }
