@@ -94,6 +94,10 @@ public class Inmueble {
 	    }
 	}
 	
+	public void eliminarReserva(Reserva reserva) {
+		reservas.remove(reserva);
+	}
+	
 	public void notificarAInquilinoEnEspera(Usuario inquilino) {
 		mailSender.enviarMail(inquilino.getEmail(),
                 "Tu reserva fue procesada",

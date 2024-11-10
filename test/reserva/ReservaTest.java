@@ -39,9 +39,7 @@ public class ReservaTest {
     void setUp() {
     	inquilino = mock(Inquilino.class);
     	propietario = mock(Usuario.class);
-    	when(propietario.getEmail()).thenReturn("abru@gmail.com");
     	inmueble = mock(Inmueble.class);
-    	when(inmueble.getPropietario()).thenReturn(propietario);
 
     	solicitado = mock(Solicitada.class);
     	aprobado = mock(Aprobada.class);
@@ -62,8 +60,10 @@ public class ReservaTest {
     	
     	@Test
         void testRechazarReserva () {
+        reserva.setEstadoReserva(aprobado);
         reserva.rechazarReserva();
-        verify(solicitado).rechazarReserva(reserva);       
+        verify(aprobado).rechazarReserva(reserva);
+        assertTrue(!inmueble.getReservas().contains(reserva));
         
      } 
      
@@ -77,13 +77,12 @@ public class ReservaTest {
     	
     	@Test
     	void testCancelarReserva () {
-        when(inmueble.getPropietario()).thenReturn(propietario);
-
     	reserva.setEstadoReserva(aprobado);	
     	reserva.cancelarReserva();
 
     	verify(aprobado).cancelarReserva(reserva);
     	}
+    	
     	
     @Test
     void testGettersDeLaReserva() {

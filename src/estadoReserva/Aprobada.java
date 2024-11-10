@@ -18,6 +18,11 @@ public class Aprobada extends EstadoReserva{
 		reserva.setEstadoReserva(new Finalizada());
 	}
 	
+	public void rechazarReserva (Reserva reserva) {
+		reserva.setEstadoReserva(new Rechazada());
+		reserva.getInmueble().eliminarReserva(reserva);
+	}
+	
 	@Override
 	public void enviarMail(Reserva reserva) {
 		reserva.getInmueble().getMailSender().enviarMail(reserva.getInquilino().getEmail(), "Tu reserva ha sido aprobada", "¡Felicitaciones! tu reserva fue aprobada");
