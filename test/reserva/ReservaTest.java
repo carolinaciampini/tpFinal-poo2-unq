@@ -52,7 +52,7 @@ public class ReservaTest {
     	@Test
         void testAceptarReserva () {
         reserva.aceptarReserva();
-        verify(solicitado).aceptarReserva(reserva);       
+        verify(solicitado).aceptarReserva(reserva);
         
      } 
     	
