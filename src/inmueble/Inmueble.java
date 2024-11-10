@@ -42,7 +42,7 @@ public class Inmueble {
 		this.precioBase = precio;
 		this.periodoManager = periodo;
 		this.colaDeEspera = new ArrayList<>();
-		this.estrategiaCancelacion = new Gratuito(); ;
+		this.estrategiaCancelacion = new Gratuito();
 		this.mailSender = mailSender;
 		
 
@@ -87,14 +87,17 @@ public class Inmueble {
 	            reservas.add(siguiente); // Agregar la reserva a la lista de reservas
 	            colaDeEspera.remove(i);  // Remover solo la reserva que se procesó correctamente
 
-	           
-	            mailSender.enviarMail(siguiente.getInquilino().getEmail(),
-	                                  "Tu reserva fue procesada",
-	                                  "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
+	            notificarAInquilinoEnEspera(siguiente.getInquilino());
 
 	            break; 
 	        }
 	    }
+	}
+	
+	public void notificarAInquilinoEnEspera(Usuario inquilino) {
+		mailSender.enviarMail(inquilino.getEmail(),
+                "Tu reserva fue procesada",
+                "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
 	}
 	
 	public Double precioSugeridoPara(LocalDate fechaEntrada, LocalDate fechaSalida) {
