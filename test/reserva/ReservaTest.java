@@ -26,6 +26,7 @@ public class ReservaTest {
     private Inmueble inmueble;
     private Reserva reserva;
     private Usuario inquilino;
+    private Usuario propietario;
     private Aprobada aprobado;
     private Solicitada solicitado;
     private Cancelada cancelada;
@@ -37,7 +38,10 @@ public class ReservaTest {
     @BeforeEach
     void setUp() {
     	inquilino = mock(Inquilino.class);
+    	propietario = mock(Usuario.class);
+    	when(propietario.getEmail()).thenReturn("abru@gmail.com");
     	inmueble = mock(Inmueble.class);
+    	when(inmueble.getPropietario()).thenReturn(propietario);
 
     	solicitado = mock(Solicitada.class);
     	aprobado = mock(Aprobada.class);
@@ -73,10 +77,12 @@ public class ReservaTest {
     	
     	@Test
     	void testCancelarReserva () {
+        when(inmueble.getPropietario()).thenReturn(propietario);
+
     	reserva.setEstadoReserva(aprobado);	
-    	LocalDate fechaCancelacion = LocalDate.now();
-    	reserva.cancelarReserva(fechaCancelacion);
-    	//verify(aprobado).cancelarReserva(reserva);
+    	reserva.cancelarReserva();
+
+    	verify(aprobado).cancelarReserva(reserva);
     	}
     	
     @Test

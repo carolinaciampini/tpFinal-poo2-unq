@@ -32,9 +32,8 @@ public class Reserva {
 	}
 	
 
-	public void cancelarReserva(LocalDate fecha) {
-		estadoReserva = new Cancelada();
-		estadoReserva.cancelarReserva(this);
+	public void cancelarReserva() {
+	    estadoReserva.cancelarReserva(this);
 	}
 
 	public void aceptarReserva() {
