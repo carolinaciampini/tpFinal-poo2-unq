@@ -8,6 +8,7 @@ public class Aprobada extends EstadoReserva{
 	
 	public void cancelarReserva (Reserva reserva) {
 		reserva.setEstadoReserva(new Cancelada());
+		reserva.getEstadoReserva().enviarMail(reserva);
     	reserva.getInmueble().getReservas().remove(reserva);
 		reserva.getInmueble().procesarColaEspera();
 		reserva.getInmueble().calcularPenalizacion(LocalDate.now(), reserva);
