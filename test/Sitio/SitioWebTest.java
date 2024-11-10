@@ -18,7 +18,7 @@ import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Criterio;
 import filtros.Filtro;
-import filtros.FiltroHuespedes;
+import filtros.FiltroHuespedesTest;
 import filtros.FiltroPrecio;
 import inmueble.Inmueble;
 import reserva.Reserva;
@@ -98,106 +98,6 @@ class SitioWebTest {
 		verify(filterManager).filtrar(sitio.getInmuebles());
 	}
 	
-/*
-	@Test 
-	void testFiltrarInmueblesConCiudadYFechas() {
-		  sitio.agregarInmueble(inmueble2);
-		  sitio.agregarInmueble(inmueble3);
-		  sitio.agregarInmueble(inmueble4);
-		  
-		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
-	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
-	     String ciudad = "Buenos Aires";
-	        
-	     filterManager = new Filtro(fechaEntrada, fechaSalida, ciudad);
-		
-        when(inmueble2.getCiudad()).thenReturn("Buenos Aires");
-        when(inmueble2.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
 
-        when(inmueble3.getCiudad()).thenReturn("Buenos Aires");
-        when(inmueble3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
-
-        when(inmueble4.getCiudad()).thenReturn("Cordoba");
-        when(inmueble4.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
-
-        List<Inmueble> resultados = sitio.filtrarInmuebles(filterManager);
-        assertEquals(1, resultados.size());  
-        assertTrue(resultados.contains(inmueble2));  
-        assertFalse(resultados.contains(inmueble3)); 
-        assertFalse(resultados.contains(inmueble4)); 
-      
-	}
-	
-
-
-	@Test 
-	void testFiltrarInmueblesConCiudadFechasYHuespedes() {
-		  sitio.agregarInmueble(inmueble2);
-		  sitio.agregarInmueble(inmueble3);
-		  sitio.agregarInmueble(inmueble4);
-		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
-	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
-	     String ciudad = "Buenos Aires";
-	        
-	     filterManager = new Filtro(fechaEntrada, fechaSalida, ciudad);
-	     FiltroHuespedes f = new FiltroHuespedes(5);
-	     filterManager.agregarFiltro(f);
-		
-        when(inmueble2.getCiudad()).thenReturn("Buenos Aires");
-        when(inmueble2.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
-        when(inmueble2.getHuespedes()).thenReturn(5);
-
-        when(inmueble3.getCiudad()).thenReturn("Buenos Aires");
-        when(inmueble3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
-        when(inmueble3.getHuespedes()).thenReturn(3);
-
-        when(inmueble4.getCiudad()).thenReturn("Cordoba");
-        when(inmueble4.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
-        when(inmueble4.getHuespedes()).thenReturn(2);
-
-        List<Inmueble> resultados = sitio.filtrarInmuebles(filterManager);
-       
-        assertEquals(1, resultados.size());  
-        assertTrue(resultados.contains(inmueble2));  
-        assertFalse(resultados.contains(inmueble3)); 
-        assertFalse(resultados.contains(inmueble4)); 
-      
-	}
-	
-	@Test
-	void testFiltrarInmueblesConCiudadFechasYPrecios() {
-		sitio.agregarInmueble(inmueble2);
-		  sitio.agregarInmueble(inmueble3);
-		  sitio.agregarInmueble(inmueble4);
-		  
-		 LocalDate fechaEntrada = LocalDate.of(2024, 11, 10);
-	     LocalDate fechaSalida = LocalDate.of(2024, 11, 15);
-	     String ciudad = "Buenos Aires";
-	        
-	     filterManager = new Filtro(fechaEntrada, fechaSalida, ciudad);
-	     FiltroPrecio f = new FiltroPrecio(1000.00, 1500.00);
-	     filterManager.agregarFiltro(f);
-		
-       when(inmueble2.getCiudad()).thenReturn("Buenos Aires");
-       when(inmueble2.estaDisponible(fechaEntrada,fechaSalida)).thenReturn(true); 
-       when(inmueble2.precioSugeridoPara(fechaEntrada,fechaSalida)).thenReturn(1000.00);
-
-       when(inmueble3.getCiudad()).thenReturn("Buenos Aires");
-       when(inmueble3.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(false); 
-       when(inmueble3.precioSugeridoPara(fechaEntrada,fechaSalida)).thenReturn(1100.00);
-
-       when(inmueble4.getCiudad()).thenReturn("Buenos Aires");
-       when(inmueble4.estaDisponible(fechaEntrada, fechaSalida)).thenReturn(true); 
-       when(inmueble4.precioSugeridoPara(fechaEntrada,fechaSalida)).thenReturn(1490.00);
-    
-       List<Inmueble> resultados = sitio.filtrarInmuebles(filterManager);
-       
-       assertEquals(2, resultados.size());  
-       assertTrue(resultados.contains(inmueble2));  
-       assertFalse(resultados.contains(inmueble3)); 
-       //assertFalse(resultados.contains(posteo3)); 
-     
-	}
-*/
 }
 

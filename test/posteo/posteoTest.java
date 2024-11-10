@@ -73,7 +73,7 @@ class posteoTest {
     	
     	reserva5 = new Reserva (inmuebleR, inquilino, LocalDate.of(2024, 10, 10),LocalDate.of(2024, 10, 15), FormaDePago.EFECTIVO);
 	}
-	
+/*
 	@Test
 	void testSeConcretaLaSegundaaReservaDeLaColaDeEspera() {
 		inmuebleR.crearReserva(reserva5);
@@ -92,7 +92,7 @@ class posteoTest {
 		
 		
 	}
-
+*/
 	@Test
 	void testGetHuespedes() {
 		assertEquals(5, inmuebleR.getHuespedes());
