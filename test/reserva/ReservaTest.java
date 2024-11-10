@@ -71,6 +71,14 @@ public class ReservaTest {
 
     	}
     	
+    	@Test
+    	void testCancelarReserva () {
+    	reserva.setEstadoReserva(aprobado);	
+    	LocalDate fechaCancelacion = LocalDate.now();
+    	reserva.cancelarReserva(fechaCancelacion);
+    	//verify(aprobado).cancelarReserva(reserva);
+    	}
+    	
     @Test
     void testGettersDeLaReserva() {
         
