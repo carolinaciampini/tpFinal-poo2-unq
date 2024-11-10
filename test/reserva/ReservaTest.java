@@ -63,6 +63,14 @@ public class ReservaTest {
         
      } 
      
+    	@Test	
+    	void testFinalizarReserva () {
+    	reserva.setEstadoReserva(aprobado);
+    	reserva.finalizarReserva();
+    	verify(aprobado).finalizarReserva(reserva);
+
+    	}
+    	
     @Test
     void testGettersDeLaReserva() {
         
