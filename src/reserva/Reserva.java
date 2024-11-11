@@ -19,16 +19,18 @@ public class Reserva {
 	private LocalDate fechaSalida;
 	private FormaDePago formaDePago;
 	private EstadoReserva estadoReserva;
+	private MailSender mailSender;
 
 
 	
-	public Reserva(Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago) {
+	public Reserva(Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender) {
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.formaDePago = formaPago;
 		this.estadoReserva = new Solicitada();
+		this.mailSender = mailSender;
 	}
 	
 
@@ -46,6 +48,10 @@ public class Reserva {
 	
 	public void finalizarReserva() {
 		estadoReserva.finalizarReserva(this);
+	}
+	
+	public void enviarMail() {
+		estadoReserva.enviarMail(this);
 	}
 	
 	public Double getPrecioTotal() {
@@ -79,6 +85,9 @@ public class Reserva {
 	public EstadoReserva getEstadoReserva() {
 		return estadoReserva;
 	}
+	public MailSender getMailSender() {
+		return mailSender;
+	}
 	
 	public int cantidadDeDias() {
         return (int) ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
@@ -86,6 +95,12 @@ public class Reserva {
 	
 	public void setEstadoReserva(EstadoReserva estadoNuevo) {
 		this.estadoReserva = estadoNuevo;
+	}
+
+
+	public void enviarMailDeAviso(String titulo, String cuerpo) {
+		this.getMailSender().enviarMail(this.inmueble.mailPropietario(), titulo, cuerpo);
+		
 	}
 	
 }

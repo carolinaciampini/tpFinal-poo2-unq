@@ -233,6 +233,12 @@ public class Inmueble {
 		return fotos;
 	}
 
+
+
+	public String mailPropietario() {
+		return this.getPropietario().getEmail();
+	}
+
 	
 
 }

@@ -10,7 +10,13 @@ public class Solicitada extends EstadoReserva {
 	@Override
 	public void aceptarReserva(Reserva reserva) {
 		reserva.setEstadoReserva(new Aprobada());
-		reserva.getEstadoReserva().enviarMail(reserva);
+		reserva.enviarMail();
+	}
+	
+	@Override
+	public void rechazarReserva(Reserva reserva) {
+		reserva.setEstadoReserva(new Rechazada());
+		reserva.enviarMail();
 	}
 
 }
