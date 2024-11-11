@@ -110,8 +110,8 @@ public class Inmueble {
 	
 	
 
-	public Double calcularPenalizacion(LocalDate fecha, Reserva reserva) {
-		return estrategiaCancelacion.calcularPenalizacion(fecha, reserva, this);
+	public Double calcularPenalizacion(Reserva reserva) {
+		return estrategiaCancelacion.calcularPenalizacion(reserva, this);
 	}
 				
 
@@ -235,8 +235,8 @@ public class Inmueble {
 
 
 
-	public String mailPropietario() {
-		return this.getPropietario().getEmail();
+	public String getEmailPropietario() {
+		return getPropietario().getEmail();
 	}
 
 

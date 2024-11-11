@@ -33,6 +33,11 @@ public class Reserva {
 		this.mailSender = mailSender;
 	}
 	
+	public int cantidadDiasFaltantes() {
+		return (int) ChronoUnit.DAYS.between(LocalDate.now(), getFechaEntrada());
+
+	}
+	
 
 	public void cancelarReserva() {
 	    estadoReserva.cancelarReserva(this);
@@ -99,7 +104,7 @@ public class Reserva {
 
 
 	public void enviarMailDeAviso(String titulo, String cuerpo) {
-		this.getMailSender().enviarMail(this.inmueble.mailPropietario(), titulo, cuerpo);
+		getMailSender().enviarMail(inmueble.getEmailPropietario(), titulo, cuerpo);
 		
 	}
 	
@@ -113,11 +118,11 @@ public class Reserva {
 	}
 	
 	public void penalizacionDeInmueble() {
-		inmueble.calcularPenalizacion(LocalDate.now(), this);
+		inmueble.calcularPenalizacion(this);
 	}
 	
 	public void enviarMailAInquilino(String titulo, String cuerpo) {
-		this.getMailSender().enviarMail(this.inquilino.getEmail(), titulo, cuerpo);
+		getMailSender().enviarMail(inquilino.getEmail(), titulo, cuerpo);
 	}
 	
 	

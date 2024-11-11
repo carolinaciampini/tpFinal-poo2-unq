@@ -13,8 +13,6 @@ public class Aprobada extends EstadoReserva{
 		reserva.borrarReserva(reserva);
     	
 		reserva.ejecutarColaEspera();
-		
-		reserva.penalizacionDeInmueble();
 	}
 
 	public void finalizarReserva (Reserva reserva) {

@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ public class ReservaTest {
     private Cancelada cancelado;
     private MailSender mailProp;
     private Usuario propietario;
+    private Reserva reserva2;
 
     
 
@@ -57,14 +59,19 @@ public class ReservaTest {
     	
    	
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
+        reserva2 = new Reserva(inmueble, inquilino, LocalDate.of(2025, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
         when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
         when(inmueble.getPropietario()).thenReturn(propietario);
-        when(propietario.getEmail()).thenReturn("guada@gmail.com");
+        when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");
         reserva.setEstadoReserva(solicitado);
        
     }
- 
+    	@Test
+    	void testCantidadDias() {
+    		int diasFaltantes = (int) ChronoUnit.DAYS.between(LocalDate.now(), reserva.getFechaEntrada());
+    		assertEquals(diasFaltantes, reserva.cantidadDiasFaltantes());
+    	}
  
     	@Test
         void testAceptarReserva () {  	
@@ -128,20 +135,18 @@ public class ReservaTest {
     	verify(aprobado).cancelarReserva(reserva);
     	}
     	
-    	/*
+    	
     	@Test 
     	void testSeEnviaMailCuandoSeCancelaLaReserva() {
     		reserva.setEstadoReserva(cancelado);
     		reserva.enviarMail();
     		verify(cancelado).enviarMail(reserva);
-    		
-    		verify(mailProp).enviarMail(
-    				     "guada@gmail.com", 
+    		verify(mail).enviarMail(
+    					"guada@gmail.com", 
     					 "Reserva cancelada",
     					 "¡La reserva para tu Inmueble fue cancelada!"
     		);
     	}
-    	*/
     	
     	
     @Test

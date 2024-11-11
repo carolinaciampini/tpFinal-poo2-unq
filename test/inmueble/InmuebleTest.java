@@ -52,6 +52,7 @@ class InmuebleTest {
 		mail = mock(MailSender.class);
 		periodo = mock(PeriodoManager.class);
 		propietario = mock(Usuario.class);
+		when(propietario.getEmail()).thenReturn("abru@gmail.com");	
 		mailSender = mock(MailSender.class);
 		estrategia = mock(Gratuito.class);
 		periodo = mock(PeriodoManager.class);
@@ -236,6 +237,10 @@ class InmuebleTest {
 		assertEquals(1, inmueble.getFormasDePago().size());
 	}
 
+	@Test 
+	void testGetEmailPropietario() {
+		assertEquals("abru@gmail.com", inmueble.getEmailPropietario());
+	}
 	
 	
 }

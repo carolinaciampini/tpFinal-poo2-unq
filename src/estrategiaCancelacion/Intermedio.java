@@ -8,13 +8,13 @@ import reserva.Reserva;
 
 public class Intermedio implements EstrategiaCancelacion{
 	
-	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva, Inmueble posteo) {
+	public Double calcularPenalizacion(Reserva reserva, Inmueble inmueble) {
 		 
-		int diasFaltantes = (int) ChronoUnit.DAYS.between(hoy, reserva.getFechaEntrada());
+		int diasFaltantes = reserva.cantidadDiasFaltantes();
 		if (diasFaltantes < 10) {
-	            return posteo.getPrecioParaReserva(reserva) ;
+	            return inmueble.getPrecioParaReserva(reserva) ;
 	        } else {
-	            return (diasFaltantes < 20) ? posteo.getPrecioParaReserva(reserva)*0.5 : 0;
+	            return (diasFaltantes < 20) ? inmueble.getPrecioParaReserva(reserva)*0.5 : 0;
 	        }
 	    }
 	}

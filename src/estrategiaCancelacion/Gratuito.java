@@ -8,9 +8,9 @@ import reserva.Reserva;
 
 public class Gratuito implements EstrategiaCancelacion{
 	
-	public Double calcularPenalizacion(LocalDate hoy, Reserva reserva, Inmueble posteo) {
-		long diasFaltantes = ChronoUnit.DAYS.between(hoy, reserva.getFechaEntrada());
-		double precioReservaPorDia = posteo.getPrecioParaReserva(reserva) / reserva.cantidadDeDias();
+	public Double calcularPenalizacion(Reserva reserva, Inmueble inmueble) {
+		int diasFaltantes = reserva.cantidadDiasFaltantes();
+		double precioReservaPorDia = inmueble.getPrecioParaReserva(reserva) / reserva.cantidadDeDias();
 		if (diasFaltantes <= 10) {
 			return precioReservaPorDia * 2; 
 		}
