@@ -6,9 +6,7 @@ public class Cancelada extends EstadoReserva {
 	
 	
 	public void procesarReserva (Reserva reserva) {
-		// TO DO: rompe encapsulamiento 
 		reserva.ejecutarColaEspera();
-		// getInmueble().procesarColaEspera();
 	}
 	
 	@Override

@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import enums.FormaDePago;
 import enums.Servicio;
+import estadoReserva.Aprobada;
+import estadoReserva.EstadoReserva;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
@@ -38,6 +40,7 @@ class InmuebleTest {
 	private MailSender mailSender;
 	
 	private EstrategiaCancelacion estrategia;
+	private EstadoReserva estado;
 
 	private Usuario propietario;
 	private Inmueble inmueble;
@@ -52,12 +55,16 @@ class InmuebleTest {
 		mailSender = mock(MailSender.class);
 		estrategia = mock(Gratuito.class);
 		periodo = mock(PeriodoManager.class);
+	    
+		
+		
 
 		inquilino = mock(Inquilino.class);
 		when(inquilino.getEmail()).thenReturn("abru@gmail.com");
 		
 	
 		reserva2 = mock(Reserva.class);
+		// when(reserva2.getEstadoReserva()).thenReturn()
 		reserva5 = mock(Reserva.class);
 	
 		
@@ -66,6 +73,7 @@ class InmuebleTest {
 		
    			
 	}
+	
 	
 	@Test
 	void testProcesarColaDeEspera() {

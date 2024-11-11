@@ -34,6 +34,10 @@ public class ReservaTest {
     private Aprobada aprobado;
     private Solicitada solicitado;
     private MailSender mail;
+    private Rechazada rechazado;
+    private Cancelada cancelado;
+    private MailSender mailProp;
+    private Usuario propietario;
 
     
 
@@ -44,11 +48,18 @@ public class ReservaTest {
     	inmueble = mock(Inmueble.class);
    	
     	mail = mock(MailSender.class);
+    	mailProp = mock(MailSender.class);
     	solicitado = mock(Solicitada.class);
+    	propietario = mock(Usuario.class);
     	aprobado = spy(Aprobada.class);
+    	rechazado = spy(Rechazada.class);
+    	cancelado = spy(Cancelada.class);
+    	
    	
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
         when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
+        when(inmueble.getPropietario()).thenReturn(propietario);
+        when(propietario.getEmail()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");
         reserva.setEstadoReserva(solicitado);
        
@@ -86,6 +97,21 @@ public class ReservaTest {
         
     	} 
      
+    	
+    	@Test 
+    	void testSeEnviaMailCuandoSeRechazaLaReserva() {
+    		reserva.setEstadoReserva(rechazado);
+    		reserva.enviarMail();
+    		verify(rechazado).enviarMail(reserva);
+    		
+    		verify(mail).enviarMail(
+    					 "caro@gmail.com", 
+    					 "Reserva rechazada",
+    					 "¡La reserva para tu Inmueble fue rechazada!"
+    		);
+    	}
+    	
+    	
     	@Test	
     	void testFinalizarReserva () {
     	reserva.setEstadoReserva(aprobado);
@@ -101,6 +127,21 @@ public class ReservaTest {
 
     	verify(aprobado).cancelarReserva(reserva);
     	}
+    	
+    	/*
+    	@Test 
+    	void testSeEnviaMailCuandoSeCancelaLaReserva() {
+    		reserva.setEstadoReserva(cancelado);
+    		reserva.enviarMail();
+    		verify(cancelado).enviarMail(reserva);
+    		
+    		verify(mailProp).enviarMail(
+    				     "guada@gmail.com", 
+    					 "Reserva cancelada",
+    					 "¡La reserva para tu Inmueble fue cancelada!"
+    		);
+    	}
+    	*/
     	
     	
     @Test
