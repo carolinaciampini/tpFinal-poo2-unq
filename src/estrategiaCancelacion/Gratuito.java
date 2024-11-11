@@ -14,6 +14,6 @@ public class Gratuito implements EstrategiaCancelacion{
 		if (diasFaltantes <= 10) {
 			return precioReservaPorDia * 2; 
 		}
-		return (double) 0;
+		return 0.00;
 	}
 }

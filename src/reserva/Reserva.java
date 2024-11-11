@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import enums.FormaDePago;
-import estadoReserva.Cancelada;
 import estadoReserva.EstadoReserva;
-import estadoReserva.Finalizada;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import mailSender.MailSender;
@@ -33,10 +31,6 @@ public class Reserva {
 		this.mailSender = mailSender;
 	}
 	
-	public int cantidadDiasFaltantes() {
-		return (int) ChronoUnit.DAYS.between(LocalDate.now(), getFechaEntrada());
-
-	}
 	
 
 	public void cancelarReserva() {
@@ -126,6 +120,16 @@ public class Reserva {
 	}
 	
 	
+	public int cantidadDiasFaltantes() {
+		return (int) ChronoUnit.DAYS.between(LocalDate.now(), getFechaEntrada());
+		
+	}
+
+
+
+	public String getTipoInmueble() {
+		return this.inmueble.getTipoInmueble();
+	}
 }
 
 

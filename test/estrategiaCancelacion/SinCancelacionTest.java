@@ -25,9 +25,9 @@ public class SinCancelacionTest {
 	
 	@Test
 	void testCalcularPenalizacionFaltandoMenos10dias() {
-		when(inmueble.getPrecioParaReserva(reserva)).thenReturn((double) 90000);
+		when(inmueble.getPrecioParaReserva(reserva)).thenReturn(90000.00);
 		
-		assertEquals((double)90000, sinCancelacion.calcularPenalizacion(reserva, inmueble));
+		assertEquals(90000.00, sinCancelacion.calcularPenalizacion(reserva, inmueble));
 	}
 	
 }

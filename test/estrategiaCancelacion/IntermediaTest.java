@@ -25,25 +25,25 @@ public class IntermediaTest {
 		
 		@Test
 		void testCalcularPenalizacionFaltandoMasDe20dias() {
-			when(inmueble.getPrecioParaReserva(reserva)).thenReturn((double) 150000);
+			when(inmueble.getPrecioParaReserva(reserva)).thenReturn(150000.00);
 			when(reserva.cantidadDiasFaltantes()).thenReturn(25);
 			
-			assertEquals((double)0, intermedio.calcularPenalizacion(reserva, inmueble));
+			assertEquals(0.00, intermedio.calcularPenalizacion(reserva, inmueble));
 		}
 		
 		@Test
 		void testCalcularPenalizacionFaltandoEntre19Y10Dias() {
-			when(inmueble.getPrecioParaReserva(reserva)).thenReturn((double) 175000);
+			when(inmueble.getPrecioParaReserva(reserva)).thenReturn(175000.00);
 			when(reserva.cantidadDiasFaltantes()).thenReturn(14);
 			
-			assertEquals((double)87500, intermedio.calcularPenalizacion(reserva, inmueble));
+			assertEquals(87500.00, intermedio.calcularPenalizacion(reserva, inmueble));
 		}
 		
 		@Test
 		void testCalcularPenalizacionFaltandoMenos10Dias() {
-			when(inmueble.getPrecioParaReserva(reserva)).thenReturn((double) 90000);
+			when(inmueble.getPrecioParaReserva(reserva)).thenReturn( 90000.00);
 			when(reserva.cantidadDiasFaltantes()).thenReturn(6);
 			
-			assertEquals((double)90000, intermedio.calcularPenalizacion(reserva, inmueble));
+			assertEquals(90000.00, intermedio.calcularPenalizacion(reserva, inmueble));
 		}
 }

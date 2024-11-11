@@ -60,7 +60,6 @@ public class ReservaTest {
    	
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
         reserva2 = new Reserva(inmueble, inquilino, LocalDate.of(2025, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
-        when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
         when(inmueble.getPropietario()).thenReturn(propietario);
         when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");
@@ -68,7 +67,7 @@ public class ReservaTest {
        
     }
     	@Test
-    	void testCantidadDias() {
+    	void testCantidadDiasFaltantesParaQueSeConcreteLaReserva() {
     		int diasFaltantes = (int) ChronoUnit.DAYS.between(LocalDate.now(), reserva.getFechaEntrada());
     		assertEquals(diasFaltantes, reserva.cantidadDiasFaltantes());
     	}
@@ -163,14 +162,12 @@ public class ReservaTest {
    
     @Test
     void testCalcularPrecioTotalDeLaReserva() {
-    	
-    	 Double precioTotal = reserva.getPrecioTotal();
-         Double precioEsperado = 140.0; 
-         assertEquals(precioEsperado, precioTotal);
+    	when(inmueble.getPrecioParaReserva(reserva)).thenReturn(140.0);
+         assertEquals(140.0, reserva.getPrecioTotal());
     }
     
     @Test
-    void testSePisa () {
+    void testLaReservaSePisaConOtraReserva () {
     	
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }

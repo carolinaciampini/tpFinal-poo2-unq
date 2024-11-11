@@ -108,7 +108,7 @@ class InmuebleTest {
 	    when(reserva2.getFechaSalida()).thenReturn(LocalDate.of(2024, 10, 11));
 	    
 		when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true);
-		when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapará
+		when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(true); // Se solapa
 	    
 	    when(reserva2.getInquilino()).thenReturn(inquilino);
 	    when(reserva5.getInmueble()).thenReturn(inmuebleR);
@@ -145,7 +145,7 @@ class InmuebleTest {
 	    when(reserva.getFechaEntrada()).thenReturn(fechaEntrada);
 	    when(reserva.getFechaSalida()).thenReturn(fechaSalida);
 	    
-	    // Se mockea el comportamiento del PeriodoManager
+	    
 	    when(periodo.calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida)).thenReturn(18000.0); 
 
 	    Double precioCalculado = inmuebleR.getPrecioParaReserva(reserva);

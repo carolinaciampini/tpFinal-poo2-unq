@@ -25,19 +25,19 @@ public class GratuitoTest {
 		
 		@Test
 		void testCalcularPenalizacionFaltandoMenos10dias() {
-			when(inmueble.getPrecioParaReserva(reserva)).thenReturn((double) 90000);
+			when(inmueble.getPrecioParaReserva(reserva)).thenReturn(90000.00);
 			when(reserva.cantidadDeDias()).thenReturn(4);
 			when(reserva.cantidadDiasFaltantes()).thenReturn(7);
 			
-			assertEquals((double)45000, gratuito.calcularPenalizacion(reserva, inmueble));
+			assertEquals(45000.00, gratuito.calcularPenalizacion(reserva, inmueble));
 		}
 		
 		@Test
 		void testCalcularPenalizacionFaltandoMas10dias() {
-			when(inmueble.getPrecioParaReserva(reserva)).thenReturn((double) 90000);
+			when(inmueble.getPrecioParaReserva(reserva)).thenReturn(90000.00);
 			when(reserva.cantidadDeDias()).thenReturn(8);
 			when(reserva.cantidadDiasFaltantes()).thenReturn(20);
 			
-			assertEquals((double)0, gratuito.calcularPenalizacion(reserva, inmueble));
+			assertEquals(0.00, gratuito.calcularPenalizacion(reserva, inmueble));
 		}
 }
