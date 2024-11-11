@@ -3,40 +3,70 @@ package Sitio;
 import java.util.ArrayList;
 import java.util.List;
 
-import usuarios.Usuario;
+import excepciones.PropietarioNoRegistradoExcepcion;
+import excepciones.UsuarioYaExistenteException;
+import filtros.Filtro;
 import inmueble.Inmueble;
+import usuarios.Usuario;
+import reserva.Reserva;
+
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
-	private List<Inmueble> inmuebles;
+	private List <Inmueble> inmuebles;
 	
 	public SitioWeb () {
 		this.usuarios = new ArrayList <>() ;
 		this.inmuebles = new ArrayList<>();
 	}
 
-//Metodos de usuario
+
 	
 	public List<Usuario> getUsuarios() {
-		return this.usuarios;
+		return usuarios;
 	}
-	public void addUsuario (Usuario usuario) {
-		usuarios.add(usuario);
+	
+	public void addUsuario (Usuario usuario) throws UsuarioYaExistenteException{
+		 if (estaRegistrado(usuario)) {
+	            throw new UsuarioYaExistenteException();
+	        }
+		 usuarios.add(usuario);
 	}
 	
 	public void removeUsuario (Usuario usuario) {
 		usuarios.remove(usuario);
 	}
 	
-//Metodos de inmueble
 	public List<Inmueble> getInmuebles() {
-		return this.inmuebles;
-	}
-	public void addInmueble (Inmueble inmueble) {
-		inmuebles.add(inmueble);
+		return inmuebles;
 	}
 	
-	public void removeInmueble (Inmueble inmueble) {
-		inmuebles.remove(inmueble);
+	
+
+    public boolean estaRegistrado(Usuario usuario) {
+        return usuarios.stream().anyMatch(u -> u.getEmail().equals(usuario.getEmail()));
+    }
+    
+	
+    public void darDeAltaInmueble (Inmueble inmueble) throws PropietarioNoRegistradoExcepcion {
+		if (estaRegistrado(inmueble.getPropietario())) {
+            inmuebles.add(inmueble);
+        } else {
+        	throw new PropietarioNoRegistradoExcepcion();
+        }
+	}
+
+	public void agregarInmueble(Inmueble i) {
+		this.inmuebles.add(i);
+	}
+	
+	public List<Reserva> getReservasDe(Inmueble inmueble) {
+		return inmueble.getReservas();
+	}
+	
+	// FILTROS
+	
+	public List<Inmueble> filtrarInmuebles(Filtro filter){
+		return filter.filtrar(this.getInmuebles());
 	}
 }
