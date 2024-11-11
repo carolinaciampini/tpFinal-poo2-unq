@@ -17,21 +17,21 @@ public class NotificadorManager {
         listeners.remove(listener);
     }
 
-    public void notificarBajaPrecio(Inmueble propiedad) {
+    public void notificarBajaPrecio(Inmueble inmueble) {
         for (Listener listener : listeners) {
-            listener.updateBajaPrecio(propiedad);
+            listener.updateBajaPrecio(inmueble);
         }
     }
 
-    public void notificarCancelacion(Reserva propiedad) {
+    public void notificarCancelacion(Reserva inmueble) {
         for (Listener listener : listeners) {
-            listener.updateCancelacion(propiedad);
+            listener.updateCancelacion(inmueble);
         }
     }
 
-    public void notificarReserva(Reserva propiedad) {
+    public void notificarReserva(Reserva inmueble) {
         for (Listener listener : listeners) {
-            listener.updateReserva(propiedad);
+            listener.updateReserva(inmueble);
         }
     }
 }

@@ -21,6 +21,7 @@ import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import mailSender.MailSender;
+import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
 import reserva.Reserva;
 import usuarios.Inquilino;
@@ -41,7 +42,7 @@ class InmuebleTest {
 	
 	private EstrategiaCancelacion estrategia;
 	private EstadoReserva estado;
-
+	private NotificadorManager notificador;
 	private Usuario propietario;
 	private Inmueble inmueble;
 	private MailSender mail;
@@ -56,7 +57,7 @@ class InmuebleTest {
 		mailSender = mock(MailSender.class);
 		estrategia = mock(Gratuito.class);
 		periodo = mock(PeriodoManager.class);
-	    
+		notificador = mock(NotificadorManager.class);
 		
 		
 
@@ -69,8 +70,8 @@ class InmuebleTest {
 		reserva5 = mock(Reserva.class);
 	
 		
-		inmueble = new Inmueble ( 90000.0, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
-		inmuebleR = new Inmueble (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+		inmueble = new Inmueble ( 90000.0, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000, notificador);
+		inmuebleR = new Inmueble (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000, notificador);
 		
    			
 	}

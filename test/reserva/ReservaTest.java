@@ -25,6 +25,7 @@ import estadoReserva.Rechazada;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import mailSender.MailSender;
+import notificaciones.NotificadorManager;
 import usuarios.Inquilino;
 import usuarios.Usuario;
 
@@ -40,6 +41,7 @@ public class ReservaTest {
     private MailSender mailProp;
     private Usuario propietario;
     private Reserva reserva2;
+    private NotificadorManager notificador;
 
     
 
@@ -56,10 +58,11 @@ public class ReservaTest {
     	aprobado = spy(Aprobada.class);
     	rechazado = spy(Rechazada.class);
     	cancelado = spy(Cancelada.class);
+    	notificador = mock(NotificadorManager.class);
     	
    	
-        reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
-        reserva2 = new Reserva(inmueble, inquilino, LocalDate.of(2025, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail);
+        reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail, notificador);
+        reserva2 = new Reserva(inmueble, inquilino, LocalDate.of(2025, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail, notificador);
         when(inmueble.getPropietario()).thenReturn(propietario);
         when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");

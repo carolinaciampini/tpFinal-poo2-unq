@@ -12,6 +12,7 @@ import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
 import mailSender.MailSender;
+import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
 import reserva.Reserva;
 import usuarios.Usuario;
@@ -36,15 +37,16 @@ public class Inmueble {
 	private LocalTime checkout;
 	private List<FormaDePago> formasDePago;
 	private Usuario propietario;
+	private NotificadorManager notificador;
 
-	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Usuario propietario, Double precioBase) {
+	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Usuario propietario, Double precioBase,  NotificadorManager notificador) {
 		this.reservas = new ArrayList<>();
 		this.precioBase = precio;
 		this.periodoManager = periodo;
 		this.colaDeEspera = new ArrayList<>();
 		this.estrategiaCancelacion = new Gratuito();
 		this.mailSender = mailSender;
-		
+		this.notificador = notificador;
 
 		this.tipoInmueble = tipoDeInmueble;
 		this.superficie = superficie;
@@ -71,10 +73,18 @@ public class Inmueble {
 	public void crearReserva (Reserva reserva) {
 		if (estaDisponible (reserva.getFechaEntrada(), reserva.getFechaSalida())) {
 			reservas.add(reserva);
-			reserva.setEstadoReserva(new Aprobada());
+			notificador.notificarReserva(reserva);
+			
 		} else {
 			Reserva reservaPendiente = reserva;
 			colaDeEspera.addLast(reservaPendiente);
+		}
+	}
+	
+	public void seBajaElPrecioDelInmueble(Double precioNuevo) {
+		if(precioNuevo < precioBase) {
+			this.precioBase = precioNuevo;
+			notificador.notificarBajaPrecio(this);
 		}
 	}
 	

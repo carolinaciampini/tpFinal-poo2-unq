@@ -8,6 +8,7 @@ import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
 import inmueble.Inmueble;
 import mailSender.MailSender;
+import notificaciones.NotificadorManager;
 import usuarios.Usuario;
 
 public class Reserva {
@@ -18,10 +19,11 @@ public class Reserva {
 	private FormaDePago formaDePago;
 	private EstadoReserva estadoReserva;
 	private MailSender mailSender;
+	private NotificadorManager notificador;
 
 
 	
-	public Reserva(Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender) {
+	public Reserva(Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender, NotificadorManager notificador) {
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.fechaEntrada = fechaEntrada;
@@ -29,12 +31,14 @@ public class Reserva {
 		this.formaDePago = formaPago;
 		this.estadoReserva = new Solicitada();
 		this.mailSender = mailSender;
+		this.notificador = notificador;
 	}
 	
 	
 
 	public void cancelarReserva() {
 	    estadoReserva.cancelarReserva(this);
+	    notificador.notificarCancelacion(this);
 	}
 
 	public void aceptarReserva() {
