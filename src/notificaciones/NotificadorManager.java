@@ -11,6 +11,7 @@ public class NotificadorManager {
 
     public void agregarListener(Listener listener) {
         listeners.add(listener);
+        listeners.addAll(0, listeners);
     }
 
     public void removerListener(Listener listener) {
