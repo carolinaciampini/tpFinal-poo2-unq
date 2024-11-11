@@ -5,10 +5,10 @@ public class Usuario {
 	private String email;
 	private String telefono;
 
-	public Usuario(String nombre, String mail, String tel) {
+	public Usuario(String nombre, String mail, String telefono) {
 		this.nombreCompleto = nombre;
 		this.email = mail;
-		this.telefono = tel;
+		this.telefono = telefono;
 	}
 	
 	public String getNombre() {

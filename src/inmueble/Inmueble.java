@@ -93,7 +93,7 @@ public class Inmueble {
 	        Reserva siguiente = colaDeEspera.get(i);
 
 	        // Verifica si el producto está disponible
-	        if (estaDisponible(siguiente.getFechaEntrada(), siguiente.getFechaSalida())) {
+	        if ( estaDisponible(siguiente.getFechaEntrada(), siguiente.getFechaSalida())) {
 	            reservas.add(siguiente); // Agregar la reserva a la lista de reservas
 	            colaDeEspera.remove(i);  // Remover solo la reserva que se procesó correctamente
 
