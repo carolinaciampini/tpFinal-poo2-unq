@@ -7,7 +7,8 @@ public class Rechazada extends EstadoReserva {
 
 	@Override
 	public void enviarMail(Reserva reserva) {
-		reserva.getInmueble().getMailSender().enviarMail(reserva.getInquilino().getEmail(), "Reserva rechazada", "¡Tu reserva para el Inmueble fue rechazada!");
+		reserva.enviarMailAInquilino("Reserva cancelada", "¡La reserva para tu Inmueble fue cancelada!");
+		
 	}
 
 }

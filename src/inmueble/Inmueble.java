@@ -239,6 +239,5 @@ public class Inmueble {
 		return this.getPropietario().getEmail();
 	}
 
-	
 
 }

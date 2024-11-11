@@ -6,7 +6,5 @@ import usuarios.Propietario;
 
 public class Finalizada extends EstadoReserva {
 	
-	public void realizarRanking(Reserva reserva, Inquilino inquilino, Propietario propietario) {
-		
-	}
+	public void realizarRanking(Reserva reserva, Inquilino inquilino, Propietario propietario) {}
 }

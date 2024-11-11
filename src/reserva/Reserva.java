@@ -103,5 +103,30 @@ public class Reserva {
 		
 	}
 	
+	public void ejecutarColaEspera() {
+		inmueble.procesarColaEspera();
+	}
+	
+	public void borrarReserva(Reserva reserva) {
+		inmueble.eliminarReserva(reserva);
+    	
+	}
+	
+	public void penalizacionDeInmueble() {
+		inmueble.calcularPenalizacion(LocalDate.now(), this);
+	}
+	
+	public void enviarMailAInquilino(String titulo, String cuerpo) {
+		this.getMailSender().enviarMail(this.inquilino.getEmail(), titulo, cuerpo);
+	}
+	
+	
 }
+
+
+
+
+
+
+
 

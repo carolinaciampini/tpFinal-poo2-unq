@@ -10,14 +10,11 @@ public class Aprobada extends EstadoReserva{
 		reserva.setEstadoReserva(new Cancelada());
 		reserva.enviarMail();
 		
-		// TO DO: rompe encapsulamiento 
-    	reserva.getInmueble().getReservas().remove(reserva);
+		reserva.borrarReserva(reserva);
     	
-    	// TO DO: rompe encapsulamiento 
-		reserva.getInmueble().procesarColaEspera();
+		reserva.ejecutarColaEspera();
 		
-		// TO DO: rompe encapsulamiento 
-		//reserva.getInmueble().calcularPenalizacion(fech, reserva);
+		reserva.penalizacionDeInmueble();
 	}
 
 	public void finalizarReserva (Reserva reserva) {
@@ -27,8 +24,7 @@ public class Aprobada extends EstadoReserva{
 	
 	@Override
 	public void enviarMail(Reserva reserva) {
-		// TO DO: rompe encapsulamiento 
-		reserva.getMailSender().enviarMail(reserva.getInquilino().getEmail(), "Tu reserva ha sido aprobada", "¡Felicitaciones! tu reserva fue aprobada");
+		reserva.enviarMailAInquilino("Tu reserva ha sido aprobada", "¡Felicitaciones! tu reserva fue aprobada");
 	}
 
 }
