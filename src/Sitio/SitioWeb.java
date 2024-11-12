@@ -43,6 +43,10 @@ public class SitioWeb {
 		return obtenerReservasDeUsuario(usuario).size();
 	}
 	
+	public List<Usuario> topTenInquilinos() {
+		return getUsuarios(); //.stream(). 
+	}
+	
 	
 	public List<Usuario> getUsuarios() {
 		return usuarios;
