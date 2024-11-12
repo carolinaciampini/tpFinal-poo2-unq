@@ -22,6 +22,7 @@ import filtros.Filtro;
 import filtros.FiltroPrecio;
 import inmueble.Inmueble;
 import reserva.Reserva;
+import tipoInmueble.TipoInmueble;
 import usuarios.Inquilino;
 import usuarios.Propietario;
 import usuarios.Usuario;
@@ -39,6 +40,8 @@ class SitioWebTest {
 	private Reserva reserva1;
 	private Reserva reserva2;
 	private Reserva reserva3;
+	private TipoInmueble tipo1;
+	private TipoInmueble tipo2;
 
 	
 
@@ -63,8 +66,25 @@ class SitioWebTest {
         inmueble3 = mock(Inmueble.class);
         inmueble4 = mock(Inmueble.class);
 
-
+        tipo1 = mock(TipoInmueble.class);
+        tipo2 = mock(TipoInmueble.class);
         
+	}
+	@Test
+	void testSacarTipos () {
+		sitio.agregarTipoDeInmueble(tipo1);
+		sitio.sacarTipoDeInmueble(tipo1);
+		
+		assertEquals(0, sitio.getTiposInmuebles().size());
+	}
+	
+	
+	@Test
+	void testAgregarTipos () {
+		sitio.agregarTipoDeInmueble(tipo1);
+		sitio.agregarTipoDeInmueble(tipo2);
+		
+		assertEquals(2, sitio.getTiposInmuebles().size());
 	}
 	
 	@Test

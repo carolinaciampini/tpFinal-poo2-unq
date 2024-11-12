@@ -12,20 +12,34 @@ import filtros.Filtro;
 import inmueble.Inmueble;
 import usuarios.Usuario;
 import reserva.Reserva;
+import tipoInmueble.TipoInmueble;
 
 
 public class SitioWeb {
 	private List<Usuario> usuarios;
 	private List <Inmueble> inmuebles;
 	private Map<Usuario, LocalDate> usuariosFechaRegistro;
+	private List<TipoInmueble> tiposInmuebles;
 	
 	public SitioWeb () {
 		this.usuarios = new ArrayList <>() ;
 		this.inmuebles = new ArrayList<>();
 		this.usuariosFechaRegistro = new HashMap<>();
+		this.tiposInmuebles = new ArrayList<>();
 	}
-
-
+	public void sacarTipoDeInmueble (TipoInmueble tipo) {
+		tiposInmuebles.remove(tipo);
+	}
+	
+	public void agregarTipoDeInmueble(TipoInmueble tipo) {
+		tiposInmuebles.add(tipo);
+	}
+	
+	public List <TipoInmueble> getTiposInmuebles() {
+		return tiposInmuebles;
+	}
+	
+	
 	public List<Reserva> obtenerReservasDeUsuario(Usuario usuario) {
 	    List<Reserva> reservasDelUsuario = new ArrayList<>();
 	    
