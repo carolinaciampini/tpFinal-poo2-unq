@@ -7,7 +7,7 @@ import reserva.Reserva;
 public class Aprobada extends EstadoReserva{
 	
 	@Override
-	public boolean estaAprobada (Reserva reserva) {
+	public boolean estaAprobada () {
 		return true;
 	}
 	

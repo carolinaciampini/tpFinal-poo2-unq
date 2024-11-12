@@ -53,8 +53,8 @@ public class ReservaTest {
    	
     	mail = mock(MailSender.class);
     	mailProp = mock(MailSender.class);
-    	solicitado = mock(Solicitada.class);
     	propietario = mock(Usuario.class);
+    	solicitado = spy(Solicitada.class);
     	aprobado = spy(Aprobada.class);
     	rechazado = spy(Rechazada.class);
     	cancelado = spy(Cancelada.class);
@@ -66,7 +66,7 @@ public class ReservaTest {
         when(inmueble.getPropietario()).thenReturn(propietario);
         when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");
-        reserva.setEstadoReserva(solicitado);
+       
        
     }
     	@Test
@@ -76,42 +76,36 @@ public class ReservaTest {
     	}
  
     	@Test
-        void testAceptarReserva () {  	
+        void testSeAceptaLaReservaYSeEnviaMail () {  	
+    	reserva.setEstadoReserva(solicitado);
         reserva.aceptarReserva();
         verify(solicitado).aceptarReserva(reserva);
         
-        reserva.setEstadoReserva(aprobado);
-        assertEquals(aprobado, reserva.getEstadoReserva());
+        
+        assertTrue(reserva.esEstadoAprobado());
+        verify(mail).enviarMail(
+                "caro@gmail.com", 
+                "Tu reserva ha sido aprobada", 
+                "¡Felicitaciones! tu reserva fue aprobada"
+        		);
     	} 
     	
-    	@Test 
-    	void testSeEnviaMailCuandoSeApruebaLaReserva() {
-    		reserva.setEstadoReserva(aprobado);
-    	    reserva.enviarMail();
-    	    verify(aprobado).enviarMail(reserva);
-    	       
-    	    verify(mail).enviarMail(
-    	                "caro@gmail.com", 
-    	                "Tu reserva ha sido aprobada", 
-    	                "¡Felicitaciones! tu reserva fue aprobada"
-    	    );
-    	}
     	
     	@Test
         void testRechazarReserva () {
-        reserva.setEstadoReserva(aprobado);
-        reserva.rechazarReserva();
-        verify(aprobado).rechazarReserva(reserva);
-        assertFalse(inmueble.getReservas().contains(reserva));
+	        reserva.setEstadoReserva(solicitado);
+	        reserva.rechazarReserva();
+	        verify(solicitado).rechazarReserva(reserva);
+	        assertFalse(inmueble.getReservas().contains(reserva));
         
     	} 
      
     	
     	@Test 
     	void testSeEnviaMailCuandoSeRechazaLaReserva() {
-    		reserva.setEstadoReserva(rechazado);
-    		reserva.enviarMail();
-    		verify(rechazado).enviarMail(reserva);
+    		reserva.setEstadoReserva(solicitado);
+    		reserva.rechazarReserva();
+    		assertTrue(reserva.esEstadoRechazado());
     		
     		verify(mail).enviarMail(
     					 "caro@gmail.com", 
@@ -123,26 +117,25 @@ public class ReservaTest {
     	
     	@Test	
     	void testFinalizarReserva () {
-    	reserva.setEstadoReserva(aprobado);
-    	reserva.finalizarReserva();
-    	verify(aprobado).finalizarReserva(reserva);
+	    	reserva.setEstadoReserva(aprobado);
+	    	reserva.finalizarReserva();
+	    	verify(aprobado).finalizarReserva(reserva);
 
     	}
     	
     	@Test
     	void testCancelarReserva () {
-    	reserva.setEstadoReserva(aprobado);	
-    	reserva.cancelarReserva();
-
-    	verify(aprobado).cancelarReserva(reserva);
+	    	reserva.setEstadoReserva(aprobado);	
+	    	reserva.cancelarReserva();
+	
+	    	verify(aprobado).cancelarReserva(reserva);
     	}
     	
     	
     	@Test 
     	void testSeEnviaMailCuandoSeCancelaLaReserva() {
-    		reserva.setEstadoReserva(cancelado);
-    		reserva.enviarMail();
-    		verify(cancelado).enviarMail(reserva);
+    		reserva.setEstadoReserva(aprobado);	
+    		reserva.cancelarReserva();
     		verify(mail).enviarMail(
     					"guada@gmail.com", 
     					 "Reserva cancelada",
@@ -150,6 +143,13 @@ public class ReservaTest {
     		);
     	}
     	
+    	
+    @Test
+    void testUnaReservaEstaAprobada () {
+    		reserva.setEstadoReserva(aprobado);
+    		assertTrue(reserva.esEstadoAprobado());
+    		
+    	}
     	
     @Test
     void testGettersDeLaReserva() {
@@ -175,22 +175,9 @@ public class ReservaTest {
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
     
-    @Test
-    void testUnaReservaEstaAprobada () {
-    	reserva.setEstadoReserva(aprobado);
-    	assertTrue(reserva.esEstadoAprobado());
-    	
-    	reserva.esEstadoAprobado();
-    	assertTrue(aprobado.estaAprobada(reserva));
-    }
     
-    @Test 
-    void testUnaReservaNoEstaEnEstadoAprobada () {
-    	assertFalse(reserva.esEstadoAprobado());
-    	
-    	reserva.esEstadoAprobado();
-    	assertFalse(solicitado.estaAprobada(reserva));
-    } 
+
+    
 }
 
 

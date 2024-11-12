@@ -130,10 +130,12 @@ public class Reserva {
 	}
 	
 	public boolean esEstadoAprobado(){
-		return estadoReserva.estaAprobada(this);
+		return estadoReserva.estaAprobada();
 	}
 
-
+	public boolean esEstadoRechazado(){
+		return estadoReserva.estaRechazada();
+		}
 
 	public String getTipoInmueble() {
 		return this.inmueble.getTipoInmueble();

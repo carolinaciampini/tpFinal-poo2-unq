@@ -10,5 +10,9 @@ public class Rechazada extends EstadoReserva {
 		reserva.enviarMailAInquilino("Reserva rechazada", "¡La reserva para tu Inmueble fue rechazada!");
 		
 	}
+	
+	public boolean estaRechazada () {
+		return true;
+	}
 
 }
