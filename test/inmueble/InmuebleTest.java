@@ -92,7 +92,9 @@ class InmuebleTest {
 		
 	    inmuebleR.crearReserva(reserva5); 
 	    inmuebleR.crearReserva(reserva2);
-	   
+	    when(reserva5.esEstadoAprobado()).thenReturn(true);
+	    when(reserva2.esEstadoAprobado()).thenReturn(true);
+
 	    // mockeo comportamiento para que se cancele una reserva
 	    when(reserva5.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false);
 	    when(reserva2.sePisa(any(LocalDate.class), any(LocalDate.class))).thenReturn(false); 
@@ -100,6 +102,7 @@ class InmuebleTest {
 	    verify(mailSender).enviarMail("abru@gmail.com", "Tu reserva fue procesada",
 	            "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
 	}
+	
 	
 	@Test
 	void testSePuedenEncolarReservas() {

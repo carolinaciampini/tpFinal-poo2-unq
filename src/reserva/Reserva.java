@@ -128,6 +128,10 @@ public class Reserva {
 		return (int) ChronoUnit.DAYS.between(LocalDate.now(), getFechaEntrada());
 		
 	}
+	
+	public boolean esEstadoAprobado(){
+		return estadoReserva.estaAprobada(this);
+	}
 
 
 
