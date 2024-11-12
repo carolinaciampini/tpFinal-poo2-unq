@@ -43,10 +43,36 @@ public class SitioWeb {
 		return obtenerReservasDeUsuario(usuario).size();
 	}
 	
-	public List<Usuario> topTenInquilinos() {
-		return getUsuarios(); //.stream(). 
+	//public List<Usuario> topTenInquilinos() {
+	 
+		//return getUsuarios().stream().ma
+	//}
+	
+	public List<Inmueble> inmueblesLibres(){
+		List<Inmueble> libres = new ArrayList<>();
+		
+		for (Inmueble inmueble : inmuebles) {
+			if (inmueble.getReservas().isEmpty()) {
+				libres.add(inmueble);
+			}
+		}
+		return libres;
 	}
 	
+	
+	public double tasaDeOcupacion() {
+		return this.cantidadDeInmueblesAlquilados() / this.getInmuebles().size();
+	}
+	
+	public int cantidadDeInmueblesAlquilados() {
+		int inmueblesAlquilados = 0;
+        for (Inmueble inmueble : inmuebles) {
+            if (!inmueble.getReservas().isEmpty()) {
+                inmueblesAlquilados++;
+            }
+        }
+        return inmueblesAlquilados;
+	}
 	
 	public List<Usuario> getUsuarios() {
 		return usuarios;
