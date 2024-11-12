@@ -174,6 +174,26 @@ public class ReservaTest {
     	
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
-
     
+    @Test
+    void testUnaReservaEstaAprobada () {
+    	reserva.setEstadoReserva(aprobado);
+    	assertTrue(reserva.esEstadoAprobado());
+    	
+    	reserva.esEstadoAprobado();
+    	assertTrue(aprobado.estaAprobada(reserva));
+    }
+    
+    @Test 
+    void testUnaReservaNoEstaEnEstadoAprobada () {
+    	assertFalse(reserva.esEstadoAprobado());
+    	
+    	reserva.esEstadoAprobado();
+    	assertFalse(solicitado.estaAprobada(reserva));
+    } 
 }
+
+
+
+
+
