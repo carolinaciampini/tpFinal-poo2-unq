@@ -66,6 +66,22 @@ class SitioWebTest {
 
         
 	}
+	
+	@Test
+	void testInmueblesLibres() {
+		when(inmueble2.getReservas()).thenReturn(List.of());
+		when(inmueble3.getReservas()).thenReturn(List.of());
+		when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+
+		sitio.agregarInmueble(inmueble2);
+		sitio.agregarInmueble(inmueble3);
+		sitio.agregarInmueble(inmueble4);
+
+		List<Inmueble> inmueblesEsperados = Arrays.asList(inmueble2, inmueble3);
+	        assertEquals(inmueblesEsperados, sitio.inmueblesLibres() );
+
+	}
+	
 	@Test
 	void testReservasDeUnUsuario() {
 		when(reserva1.getInquilino()).thenReturn(usuarioI);
