@@ -3,6 +3,7 @@ package inmueble;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -138,7 +139,8 @@ class InmuebleTest {
 		 when(reserva.sePisa(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11))).thenReturn(true);
 
 	    inmuebleR.crearReserva(reserva);
-	   
+	    
+	    verify(notificador).notificarReserva(reserva);
 	    assertEquals(1, inmuebleR.getReservas().size());
 	    assertFalse(inmuebleR.estaDisponible(LocalDate.of(2024, 10, 8), LocalDate.of(2024, 10, 11)));
 	    assertTrue(inmuebleR.estaDisponible(LocalDate.of(2024, 10, 11), LocalDate.of(2024, 10, 17)));
@@ -161,6 +163,20 @@ class InmuebleTest {
 	    Double precioCalculado = inmuebleR.getPrecioParaReserva(reserva);
 	    assertEquals(18000.0, precioCalculado);
 	    verify(periodo).calcularPrecioPorDia(9000.0, fechaEntrada, fechaSalida);
+	}
+	
+	@Test
+	void testSeBajaElPrecioDeUnInmueble() {
+		inmueble.seBajaElPrecioDelInmueble(600.00);
+		verify(notificador).notificarBajaPrecio(inmueble);
+		assertEquals(600.00, inmueble.getPrecioBase());
+	}
+	
+	@Test
+	void testNoSeBajaElPrecioDeUnInmueble() {
+		inmueble.seBajaElPrecioDelInmueble(100000.00);
+		verify(notificador, times(0)).notificarBajaPrecio(inmueble);
+		assertEquals(90000.00, inmueble.getPrecioBase()); // no baja porque el precio pasado por parametro no es menor al precioBase que tenia el inmjueble
 	}
 
 	@Test

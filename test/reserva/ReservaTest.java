@@ -42,7 +42,7 @@ public class ReservaTest {
     private Usuario propietario;
     private Reserva reserva2;
     private NotificadorManager notificador;
-
+    private Aprobada aprobado2;
     
 
 
@@ -82,12 +82,16 @@ public class ReservaTest {
         verify(solicitado).aceptarReserva(reserva);
         
         
+        
         assertTrue(reserva.esEstadoAprobado());
+        assertFalse(reserva.esEstadoRechazado());
         verify(mail).enviarMail(
                 "caro@gmail.com", 
                 "Tu reserva ha sido aprobada", 
                 "¡Felicitaciones! tu reserva fue aprobada"
         		);
+        
+        
     	} 
     	
     	
@@ -97,10 +101,14 @@ public class ReservaTest {
 	        reserva.rechazarReserva();
 	        verify(solicitado).rechazarReserva(reserva);
 	        assertFalse(inmueble.getReservas().contains(reserva));
+	        assertTrue(reserva.esEstadoRechazado());
+	        assertFalse(reserva.esEstadoAprobado());
+	        
+	        
         
     	} 
-     
-    	
+
+  
     	@Test 
     	void testSeEnviaMailCuandoSeRechazaLaReserva() {
     		reserva.setEstadoReserva(solicitado);
@@ -129,6 +137,7 @@ public class ReservaTest {
 	    	reserva.cancelarReserva();
 	
 	    	verify(aprobado).cancelarReserva(reserva);
+	    	verify(notificador).notificarCancelacion(reserva);
     	}
     	
     	
