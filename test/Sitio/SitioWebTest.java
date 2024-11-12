@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Sitio.SitioWeb;
+import categoria.Categoria;
+import enums.Servicio;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Criterio;
@@ -42,6 +44,10 @@ class SitioWebTest {
 	private Reserva reserva3;
 	private TipoInmueble tipo1;
 	private TipoInmueble tipo2;
+	private Servicio agua;
+	private Servicio gas;
+	private Categoria categoriaU;
+	private Categoria categoriaI;
 
 	
 
@@ -69,7 +75,60 @@ class SitioWebTest {
         tipo1 = mock(TipoInmueble.class);
         tipo2 = mock(TipoInmueble.class);
         
+        agua = Servicio.AGUA;
+        gas = Servicio.GAS;
+        
+        categoriaU = mock(Categoria.class);
+        categoriaI = mock(Categoria.class);
+        
 	}
+	
+	@Test
+	void testSacarCategoriaInmueble () {
+		sitio.agregarCategoriaInmueble(categoriaI);
+		sitio.sacarCategoriaInmueble(categoriaI);
+		
+		assertEquals(0, sitio.getInmueblesCategoria().size());
+	}
+	
+	@Test
+	void testAgregarCategoriaInmueble() {
+		sitio.agregarCategoriaInmueble(categoriaI);
+		
+		assertEquals(1, sitio.getInmueblesCategoria().size());
+	} 
+	
+	@Test
+	void testSacarCategoriaUsuario () {
+		sitio.agregarCategoriaUsuario(categoriaU);
+		sitio.sacarCategoriaUsuario(categoriaU);
+		
+		assertEquals(0, sitio.getUsuariosCategoria().size());
+	}
+	
+	@Test
+	void testAgregarCategoriaUsuario () {
+		sitio.agregarCategoriaUsuario(categoriaU);
+		
+		assertEquals(1, sitio.getUsuariosCategoria().size());
+	}
+	
+	@Test
+	void testSacarServicios () {
+		sitio.agregarServicio(agua);
+		sitio.sacarServicio(agua);
+		
+		assertEquals(0, sitio.getServicios().size());
+	}
+	
+	@Test
+	void testAgregarServicio () {
+		sitio.agregarServicio(agua);
+		sitio.agregarServicio(gas);
+		
+		assertEquals(2, sitio.getServicios().size());
+	}
+	
 	@Test
 	void testSacarTipos () {
 		sitio.agregarTipoDeInmueble(tipo1);
@@ -77,7 +136,6 @@ class SitioWebTest {
 		
 		assertEquals(0, sitio.getTiposInmuebles().size());
 	}
-	
 	
 	@Test
 	void testAgregarTipos () {

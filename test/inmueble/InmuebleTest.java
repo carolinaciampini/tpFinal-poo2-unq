@@ -76,6 +76,12 @@ class InmuebleTest {
    			
 	}
 	
+	@Test 
+	void testSeteoEstrategia() {
+		inmueble.setEstrategiaCancelacion(estrategia);
+		
+		assertEquals(estrategia, inmueble.getEstrategia());
+	}
 	
 	@Test
 	void testProcesarColaDeEspera() {

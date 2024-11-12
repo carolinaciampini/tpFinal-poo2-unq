@@ -63,7 +63,9 @@ public class Inmueble {
 
 	}
 	
-
+	public EstrategiaCancelacion getEstrategia () {
+		return estrategiaCancelacion;
+	}
 	
 	public void setEstrategiaCancelacion(EstrategiaCancelacion estrategia) {
 		this.estrategiaCancelacion = estrategia;

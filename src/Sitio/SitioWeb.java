@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import categoria.Categoria;
+import enums.Servicio;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Filtro;
@@ -20,13 +22,63 @@ public class SitioWeb {
 	private List <Inmueble> inmuebles;
 	private Map<Usuario, LocalDate> usuariosFechaRegistro;
 	private List<TipoInmueble> tiposInmuebles;
+	private List<Servicio> serviciosInmueble;
+	private List<Categoria> usuariosCategoria;
+	private List<Categoria> inmueblesCategoria;
+
 	
 	public SitioWeb () {
 		this.usuarios = new ArrayList <>() ;
 		this.inmuebles = new ArrayList<>();
 		this.usuariosFechaRegistro = new HashMap<>();
 		this.tiposInmuebles = new ArrayList<>();
+		this.serviciosInmueble = new ArrayList<>();
+		this.inmueblesCategoria = new ArrayList<>();
+		this.usuariosCategoria = new ArrayList<>();
+
+
 	}
+	
+	public List<Categoria> getUsuariosCategoria() {
+		return usuariosCategoria;
+	}
+	
+	public void agregarCategoriaUsuario (Categoria categoria) {
+		usuariosCategoria.add(categoria);
+	}
+	
+	public void sacarCategoriaUsuario (Categoria categoria) {
+		usuariosCategoria.remove(categoria);
+	}
+	
+	public List<Categoria> getUsuarioCategoria() {
+		return usuariosCategoria;
+	}
+	
+	public List<Categoria> getInmueblesCategoria() {
+		return inmueblesCategoria;
+	}
+	
+	public void agregarCategoriaInmueble (Categoria categoria) {
+		inmueblesCategoria.add(categoria);
+	}
+	
+	public void sacarCategoriaInmueble (Categoria categoria) {
+		inmueblesCategoria.remove(categoria);
+	}
+	
+	public void sacarServicio (Servicio servicio) {
+		serviciosInmueble.remove(servicio);
+	}
+	
+	public void agregarServicio(Servicio servicio) {
+		serviciosInmueble.add(servicio);
+	}
+	
+	public List <Servicio> getServicios() {
+		return serviciosInmueble;
+	}
+	
 	public void sacarTipoDeInmueble (TipoInmueble tipo) {
 		tiposInmuebles.remove(tipo);
 	}
