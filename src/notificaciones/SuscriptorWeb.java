@@ -14,7 +14,10 @@ public class SuscriptorWeb implements Listener {
 	@Override
 	public void updateBajaPrecio(Inmueble inmueble) {
 
-		this.homePage.publish("No te pierdas esta oferta: Un inmueble"+ inmueble.getTipoInmueble() +  "a tan sólo" + inmueble.getPrecioBase());
+		  this.homePage.publish("No te pierdas esta oferta: Un inmueble " + 
+                  inmueble.getTipoInmueble() + 
+                  " a tan sólo " + 
+                  inmueble.getPrecioBase());
 		
 	}
 

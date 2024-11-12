@@ -11,7 +11,6 @@ public class NotificadorManager {
 
     public void agregarListener(Listener listener) {
         listeners.add(listener);
-        listeners.addAll(0, listeners);
     }
 
     public void removerListener(Listener listener) {
@@ -30,9 +29,9 @@ public class NotificadorManager {
         }
     }
 
-    public void notificarReserva(Reserva inmueble) {
+    public void notificarReserva(Reserva reserva) {
         for (Listener listener : listeners) {
-            listener.updateReserva(inmueble);
+            listener.updateReserva(reserva);
         }
     }
 }
