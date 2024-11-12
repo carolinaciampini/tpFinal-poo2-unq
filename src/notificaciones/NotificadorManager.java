@@ -29,9 +29,9 @@ public class NotificadorManager {
         }
     }
 
-    public void notificarReserva(Reserva inmueble) {
+    public void notificarReserva(Reserva reserva) {
         for (Listener listener : listeners) {
-            listener.updateReserva(inmueble);
+            listener.updateReserva(reserva);
         }
     }
 }
