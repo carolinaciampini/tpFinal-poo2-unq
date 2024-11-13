@@ -248,7 +248,7 @@ class InmuebleTest {
 		assertEquals(90000.00, inmueble.getPrecioBase()); // no baja porque el precio pasado por parametro no es menor al precioBase que tenia el inmjueble
 	}
 
-	/*
+
 	@Test
 	void testGetFotos() throws LimiteFotosAlcanzado  {
 		inmuebleR.addFoto("foto1");
@@ -257,10 +257,9 @@ class InmuebleTest {
 		String[] expectedFotos = {"foto1", "foto2", null, null, null};
 
         // Compara el resultado de getFotos() con el arreglo esperado
-        assertArrayEquals(expectedFotos, inmueble.getFotos());
+        assertArrayEquals(expectedFotos, inmuebleR.getFotos());
 		}
-	*/	
-
+	
 	@Test 
 	void testAddFotosSinTenerLugar() throws LimiteFotosAlcanzado{
 		inmuebleR.addFoto("foto1");
