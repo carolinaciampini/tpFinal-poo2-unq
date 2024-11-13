@@ -188,15 +188,76 @@ public class SitioWeb {
         }
 	}
 
-	public void agregarInmueble(Inmueble i) {
-		this.inmuebles.add(i);
-	}
 	
 	public List<Reserva> getReservasDe(Inmueble inmueble) {
 		return inmueble.getReservas();
+		
+		
 	}
 	
-	// FILTROS
+	
+	
+	public List<Reserva> getReservasFuturasDe(Usuario usuario){
+		List<Reserva> reservasFuturas = new ArrayList<>();
+	    LocalDate hoy = LocalDate.now();
+	    
+	    
+	    for (Inmueble inmueble : inmuebles) {
+	       
+	        reservasFuturas.addAll(inmueble.getReservas().stream()
+	            .filter(reserva -> reserva.esMismoInquilino(usuario) && reserva.getFechaEntrada().isAfter(hoy))
+	            .toList());
+	    }
+	    return reservasFuturas;
+		
+	}
+	
+	
+	
+	public List<Reserva> getTodasLasReservasRealizadasDe(Usuario usuario) {
+		
+		List<Reserva> todasLasReservas = new ArrayList<>();
+	    
+	    for (Inmueble inmueble : inmuebles) {
+	    	 todasLasReservas.addAll(inmueble.getReservas().stream()
+	            .filter(reserva -> reserva.esMismoInquilino(usuario))
+	            .toList());  
+	        ;
+	    }
+	    
+	    return todasLasReservas;
+	}
+	
+	public List<Reserva> getReservasDelUsuarioEnCiudad(Usuario usuario, String ciudad){
+		 List<Reserva> reservasEnCiudad = new ArrayList<>();
+		    
+		    for (Inmueble inmueble : inmuebles) {
+		        reservasEnCiudad.addAll(inmueble.getReservas().stream()
+		            .filter(reserva -> reserva.esMismoInquilino(usuario) && inmueble.getCiudad().equals(ciudad))
+		            .toList());
+		    }
+		    return reservasEnCiudad;
+		
+	}
+	
+	public List<String> getCiudadesDeReservasDel(Usuario usuario){
+		List<String> ciudades = new ArrayList<>();
+	    
+	    for (Inmueble inmueble : inmuebles) {
+	        List<String> ciudadesReservadas = inmueble.getReservas().stream()
+	            .filter(reserva -> reserva.esMismoInquilino(usuario)) 
+	            .map(reserva -> inmueble.getCiudad()) 
+	            .distinct()  
+	            .toList(); 
+	        
+	        ciudades.addAll(ciudadesReservadas); 
+	    }
+	    
+	    return ciudades;
+		
+	}
+	
+	
 	
 	public List<Inmueble> filtrarInmuebles(Filtro filter){
 		return filter.filtrar(this.getInmuebles());

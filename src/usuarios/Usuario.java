@@ -39,7 +39,7 @@ public class Usuario {
 		this.rankingsComoInquilino.add(ranking);
 		
 	}
-	
+
 	public List<Ranking> getRankingsComoPropietario() {
 		return this.rankingsComoPropietario;
 	}
@@ -73,7 +73,10 @@ public class Usuario {
 	}
 	
 	
+	public boolean esMismoUsuarioQue(Usuario usuario) {
+	    return this.getEmail().equals(usuario.getEmail());
+	}
+
 	
-	
-	
+
 }

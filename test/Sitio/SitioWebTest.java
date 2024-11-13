@@ -31,7 +31,7 @@ import usuarios.Usuario;
 
 class SitioWebTest {
 	private SitioWeb sitio;
-	private Propietario usuario1;
+	private Usuario usuario1;
 	private Usuario usuarioI;
 	private Usuario usuarioI2;
 	private Inmueble inmueble;
@@ -54,12 +54,17 @@ class SitioWebTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		sitio = new SitioWeb();
-		inmueble = mock(Inmueble.class);
-		usuario1 = mock(Propietario.class);
+		
+		usuario1 = mock(Usuario.class);
 		 when(usuario1.getEmail()).thenReturn("abru@gmail.com");
+		 inmueble = mock(Inmueble.class);
 		 when(inmueble.getPropietario()).thenReturn(usuario1); 
+		 
 		usuarioI = mock(Usuario.class);
+		when(usuarioI.getEmail()).thenReturn("caaro@gmail.com");
+		
 		usuarioI2 = mock(Usuario.class);
+		when(usuarioI2.getEmail()).thenReturn("gua@gmail.com");
 
 	     
 		reserva1 = mock(Reserva.class);
@@ -76,6 +81,10 @@ class SitioWebTest {
         inmueble3 = mock(Inmueble.class);
 
         inmueble4 = mock(Inmueble.class);
+        
+        when(inmueble2.getPropietario()).thenReturn(usuario1);
+        when(inmueble3.getPropietario()).thenReturn(usuario1);
+        when(inmueble4.getPropietario()).thenReturn(usuario1);
         
         tipo1 = mock(TipoInmueble.class);
         tipo2 = mock(TipoInmueble.class);
@@ -117,31 +126,46 @@ class SitioWebTest {
 	}
  	
 	@Test
-	void testGetReservasDe() {
+	void testGetReservasDe() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
 		when(reserva1.getInquilino()).thenReturn(usuarioI);
 	    when(reserva2.getInquilino()).thenReturn(usuarioI);
 	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
 	    
+	    
 	    when(inmueble2.getReservas()).thenReturn(Arrays.asList(reserva1, reserva2));
         when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+        when(inmueble2.getPropietario()).thenReturn(usuario1); 
+        when(inmueble4.getPropietario()).thenReturn(usuario1); 
+        when(inmueble3.getPropietario()).thenReturn(usuario1); 
         
-     // Agrega los inmuebles al sitio
-        sitio.agregarInmueble(inmueble2);
-        sitio.agregarInmueble(inmueble3);
-        sitio.agregarInmueble(inmueble4);
+     
+        sitio.addUsuario(usuario1);
+        sitio.darDeAltaInmueble(inmueble2);
+        sitio.darDeAltaInmueble(inmueble3);
+        sitio.darDeAltaInmueble(inmueble4);
         
         assertEquals(2, sitio.getReservasDe(inmueble2).size());
 	}
 	
 	@Test
-	void testTasaOcupacion() {
-	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
+	void testTasaOcupacion() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
+		when(inmueble2.getPropietario()).thenReturn(usuario1); 
+		when(inmueble2.getPropietario()).thenReturn(usuario1); 
+		when(inmueble2.getPropietario()).thenReturn(usuario1); 
+
+		when(reserva3.getInquilino()).thenReturn(usuarioI2);
+        
+		when(inmueble4.getPropietario()).thenReturn(usuario1); 
+        when(inmueble4.getPropietario()).thenReturn(usuario1); 
+       
 	    
         when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
         
-     // Agrega los inmuebles al sitio
-        sitio.agregarInmueble(inmueble2);
-        sitio.agregarInmueble(inmueble4);
+    
+        sitio.addUsuario(usuario1);
+        sitio.addUsuario(usuarioI2);
+        sitio.darDeAltaInmueble(inmueble2);
+        sitio.darDeAltaInmueble(inmueble4);
         
         assertEquals(1, sitio.cantidadDeInmueblesAlquilados());
         assertEquals(2, sitio.getInmuebles().size());
@@ -149,17 +173,22 @@ class SitioWebTest {
 	}
 	
 	@Test
-	void testCantidadInmueblesAlquilados() {
+	void testCantidadInmueblesAlquilados() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
 	    when(reserva2.getInquilino()).thenReturn(usuarioI);
 	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
 	    
         when(inmueble3.getReservas()).thenReturn(Arrays.asList(reserva2));
         when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
         
-     // Agrega los inmuebles al sitio
-        sitio.agregarInmueble(inmueble2);
-        sitio.agregarInmueble(inmueble3);
-        sitio.agregarInmueble(inmueble4);
+      
+        
+        sitio.addUsuario(usuario1);
+        sitio.addUsuario(usuarioI2);
+        sitio.addUsuario(usuarioI);
+        
+        sitio.darDeAltaInmueble(inmueble2);
+        sitio.darDeAltaInmueble(inmueble3);
+        sitio.darDeAltaInmueble(inmueble4);
         
 	
         assertEquals(2, sitio.cantidadDeInmueblesAlquilados());
@@ -227,22 +256,24 @@ class SitioWebTest {
 	}
 	
 	@Test
-	void testInmueblesLibres() {
-		when(inmueble2.getReservas()).thenReturn(List.of());
-		when(inmueble3.getReservas()).thenReturn(List.of());
-		when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+	void testInmueblesLibres() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
+		
+	    sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble2);
+        sitio.darDeAltaInmueble(inmueble3);
+        sitio.darDeAltaInmueble(inmueble4);
 
-		sitio.agregarInmueble(inmueble2);
-		sitio.agregarInmueble(inmueble3);
-		sitio.agregarInmueble(inmueble4);
-
+        when(inmueble2.getReservas()).thenReturn(List.of());
+        when(inmueble3.getReservas()).thenReturn(List.of());
+        when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+        
 		List<Inmueble> inmueblesEsperados = Arrays.asList(inmueble2, inmueble3);
 	        assertEquals(inmueblesEsperados, sitio.inmueblesLibres() );
 
 	}
 	
 	@Test
-	void testReservasDeUnUsuario() {
+	void testReservasDeUnUsuario() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
 		when(reserva1.getInquilino()).thenReturn(usuarioI);
 	    when(reserva2.getInquilino()).thenReturn(usuarioI);
 	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
@@ -250,11 +281,12 @@ class SitioWebTest {
 	    when(inmueble2.getReservas()).thenReturn(Arrays.asList(reserva1));
         when(inmueble3.getReservas()).thenReturn(Arrays.asList(reserva2));
         when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
-        
-     // Agrega los inmuebles al sitio
-        sitio.agregarInmueble(inmueble2);
-        sitio.agregarInmueble(inmueble3);
-        sitio.agregarInmueble(inmueble4);
+       
+	     
+	    sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble2);
+		sitio.darDeAltaInmueble(inmueble3);
+		sitio.darDeAltaInmueble(inmueble4);
         
 		List<Reserva> reservasEsperadas = Arrays.asList(reserva1, reserva2);
         assertEquals(reservasEsperadas, sitio.obtenerReservasDeUsuario(usuarioI));
@@ -262,11 +294,13 @@ class SitioWebTest {
 	}
 	
 	@Test
-	void testReservasDeUnUsuarioNoExistiendoReservas() {
+	void testReservasDeUnUsuarioNoExistiendoReservas() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
         
-        sitio.agregarInmueble(inmueble2);
-        sitio.agregarInmueble(inmueble3);
-        sitio.agregarInmueble(inmueble4);
+	     
+	    sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble2);
+		sitio.darDeAltaInmueble(inmueble3);
+		sitio.darDeAltaInmueble(inmueble4);
         
 		List<Reserva> reservasEsperadas = Arrays.asList();
         assertEquals(reservasEsperadas, sitio.obtenerReservasDeUsuario(usuarioI));
@@ -315,10 +349,13 @@ class SitioWebTest {
         }
 	
 	@Test
-	void testFiltrosObligatorios(){
-		sitio.agregarInmueble(inmueble2);
-		sitio.agregarInmueble(inmueble3);
-		sitio.agregarInmueble(inmueble4);
+	void testFiltrosObligatorios() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion{
+	     
+	    sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble2);
+		sitio.darDeAltaInmueble(inmueble3);
+		sitio.darDeAltaInmueble(inmueble4);
+		
 		filterManager = mock(Filtro.class);
 		sitio.filtrarInmuebles(filterManager);
 		
