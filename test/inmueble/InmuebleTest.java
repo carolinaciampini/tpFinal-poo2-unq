@@ -20,15 +20,20 @@ import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
 import excepciones.PropietarioNoRegistradoExcepcion;
+<<<<<<< Updated upstream
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
 import reserva.Reserva;
 import usuarios.Inquilino;
+=======
+import inmuebless.InmueblessREEMPLAZO;
+>>>>>>> Stashed changes
 import usuarios.Propietario;
 import usuarios.Usuario;
 
 class InmuebleTest {
+<<<<<<< Updated upstream
 	private Usuario inquilino;
 
 	
@@ -47,6 +52,10 @@ class InmuebleTest {
 	private Inmueble inmueble;
 	private MailSender mail;
 
+=======
+	private Propietario propietario;
+	private InmueblessREEMPLAZO inmuebleR;
+>>>>>>> Stashed changes
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -61,9 +70,13 @@ class InmuebleTest {
 		
 		
 
+<<<<<<< Updated upstream
 		inquilino = mock(Inquilino.class);
 		when(inquilino.getEmail()).thenReturn("abru@gmail.com");
 		
+=======
+		inmuebleR = new Inmueble ("Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000);
+>>>>>>> Stashed changes
 	
 		reserva2 = mock(Reserva.class);
 		// when(reserva2.getEstadoReserva()).thenReturn()
@@ -159,8 +172,8 @@ class InmuebleTest {
 
 	@Test
 	void testGetFotos() throws LimiteFotosAlcanzado  {
-		inmueble.addFoto("foto1");
-		inmueble.addFoto("foto2");
+		inmuebleR.addFoto("foto1");
+		inmuebleR.addFoto("foto2");
 		String[] expectedFotos = {"foto1", "foto2", null, null, null};
 
         // Compara el resultado de getFotos() con el arreglo esperado
@@ -169,76 +182,76 @@ class InmuebleTest {
 
 	@Test 
 	void testAddFotosSinTenerLugar() throws LimiteFotosAlcanzado{
-		inmueble.addFoto("foto1");
-		inmueble.addFoto("foto2");
-		inmueble.addFoto("foto3");
-		inmueble.addFoto("foto4");
-		inmueble.addFoto("foto5");
+		inmuebleR.addFoto("foto1");
+		inmuebleR.addFoto("foto2");
+		inmuebleR.addFoto("foto3");
+		inmuebleR.addFoto("foto4");
+		inmuebleR.addFoto("foto5");
 		
 		String[] expectedFotos = {"foto1", "foto2", "foto3", "foto4", "foto5"};
 
         // Compara el resultado de getFotos() con el arreglo esperado
-        assertArrayEquals(expectedFotos, inmueble.getFotos());
-        assertThrows(LimiteFotosAlcanzado.class, () ->  inmueble.addFoto("Foto 6"));
+        assertArrayEquals(expectedFotos, inmuebleR.getFotos());
+        assertThrows(LimiteFotosAlcanzado.class, () ->  inmuebleR.addFoto("Foto 6"));
 	}
 	
 	
 	@Test
 	void testGetCapacidad() {
-		assertEquals(5, inmueble.getCapacidad());
+		assertEquals(5, inmuebleR.getCapacidad());
 	}
 	@Test
 	void testGetPropietario() {
-		assertEquals(propietario, inmueble.getPropietario());	
+		assertEquals(propietario, inmuebleR.getPropietario());	
 		}
 	
 	@Test
 	void testTipoInmueble() {
-		assertEquals( "Quinta", inmueble.getTipoInmueble());	
+		assertEquals( "Quinta", inmuebleR.getTipoInmueble());	
 		}
 	
 	@Test
 	void testSuperficie() {
-		assertEquals((double)123, inmueble.getSuperficie());	
+		assertEquals((double)123, inmuebleR.getSuperficie());	
 		}
 	
 	
 	@Test
 	void testPais() {
-		assertEquals("Argentina", inmueble.getPais());	
+		assertEquals("Argentina", inmuebleR.getPais());	
 		}
 	
 	@Test
 	void testCiudad() {
-		assertEquals("Hudson", inmueble.getCiudad());	
+		assertEquals("Hudson", inmuebleR.getCiudad());	
 		}
 	
 	@Test
 	void testDireccion() {
-		assertEquals("Calle 163 123", inmueble.getDireccion());	
+		assertEquals("Calle 163 123", inmuebleR.getDireccion());	
 		}
 	
 	@Test
 	void testCheckin() {
-		assertEquals(LocalTime.of(14,0), inmueble.getCheckin());	
+		assertEquals(LocalTime.of(14,0), inmuebleR.getCheckin());	
 		}
 	
 	@Test
 	void testCheckOut() {
-		assertEquals(LocalTime.of(10,0), inmueble.getCheckout());	
+		assertEquals(LocalTime.of(10,0), inmuebleR.getCheckout());	
 		}
 	
 	
 	@Test
 	void testServicios() {
-		inmueble.addServicio(Servicio.AGUA);
-		assertEquals(1, inmueble.getServicios().size());
+		inmuebleR.addServicio(Servicio.AGUA);
+		assertEquals(1, inmuebleR.getServicios().size());
 	}
 	
 	@Test
 	void testFormasDePagos() {
-		inmueble.addFormaDePago(FormaDePago.EFECTIVO);
-		assertEquals(1, inmueble.getFormasDePago().size());
+		inmuebleR.addFormaDePago(FormaDePago.EFECTIVO);
+		assertEquals(1, inmuebleR.getFormasDePago().size());
 	}
 
 	@Test 
