@@ -94,8 +94,98 @@ class SitioWebTest {
         
         categoriaU = mock(Categoria.class);
         categoriaI = mock(Categoria.class);
+      
         
 	}
+	
+	@Test 
+	
+	    public void testGetTodasLasReservasRealizadasDe() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
+			sitio.addUsuario(usuario1);
+			sitio.darDeAltaInmueble(inmueble);
+			sitio.darDeAltaInmueble(inmueble2);
+			
+	        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+	        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+	        
+	        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
+	        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+
+	       
+	        List<Reserva> todasLasReservas = sitio.getTodasLasReservasRealizadasDe(usuario1);
+
+	        
+	        assertEquals(2, todasLasReservas.size());
+	        assertTrue(todasLasReservas.contains(reserva1));
+	        assertTrue(todasLasReservas.contains(reserva2));
+	    }
+	
+	@Test 
+	public void testGetReservasDelUsuarioEnCiudad() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble);
+		sitio.darDeAltaInmueble(inmueble2);
+        when(inmueble.getCiudad()).thenReturn("Madrid");
+        when(inmueble2.getCiudad()).thenReturn("Barcelona");
+
+        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+
+        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
+        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+ 
+        List<Reserva> reservasEnMadrid = sitio.getReservasDelUsuarioEnCiudad(usuario1, "Madrid");
+        
+        assertEquals(1, reservasEnMadrid.size());
+        assertTrue(reservasEnMadrid.contains(reserva1));
+        assertFalse(reservasEnMadrid.contains(reserva2));
+       
+    }
+
+	
+	@Test
+	 public void testGetCiudadesDeReservasDel() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble);
+		sitio.darDeAltaInmueble(inmueble2);
+		when(inmueble.getCiudad()).thenReturn("Madrid");
+        when(inmueble2.getCiudad()).thenReturn("Barcelona");
+
+        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+        
+        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
+        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+       
+        List<String> ciudades = sitio.getCiudadesDeReservasDel(usuario1);
+
+        assertEquals(2, ciudades.size());
+        assertTrue(ciudades.contains("Madrid"));
+        assertTrue(ciudades.contains("Barcelona"));
+    }
+	
+	 @Test
+	    public void testGetReservasFuturasDe() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
+		 	sitio.addUsuario(usuario1);
+			sitio.darDeAltaInmueble(inmueble);
+			sitio.darDeAltaInmueble(inmueble2);
+	      
+	        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+	        when(reserva1.getFechaEntrada()).thenReturn(LocalDate.now().plusDays(5));
+	        
+	        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+	        when(reserva2.getFechaEntrada()).thenReturn(LocalDate.now().minusDays(5));
+
+	        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
+	        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+
+	        
+	        List<Reserva> reservasFuturas = sitio.getReservasFuturasDe(usuario1);
+
+	        
+	        assertEquals(1, reservasFuturas.size());
+	        assertTrue(reservasFuturas.contains(reserva1));
+	    }
 	
 	@Test 
 	void testTopTenInquilinos() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
