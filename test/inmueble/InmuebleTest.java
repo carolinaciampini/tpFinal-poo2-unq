@@ -71,10 +71,41 @@ class InmuebleTest {
 		reserva5 = mock(Reserva.class);
 	
 		
-		inmueble = new Inmueble ( 90000.0, mail, periodo, "Quinta", (double) 123, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000, notificador);
-		inmuebleR = new Inmueble (9000.0, mailSender, periodo, "Quinta", (double) 123, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, (double) 90000, notificador);
+		inmueble = new Inmueble ( 90000.0, mail, periodo, "Quinta", 1.23, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, 90.000, notificador);
+		inmuebleR = new Inmueble (9000.0, mailSender, periodo, "Quinta", 1.23, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, 90.000, notificador);
 		
    			
+	}
+	
+	@Test
+	void testGetMailSender() {
+		assertEquals(mail, inmueble.getMailSender());
+	}
+	@Test
+	void testCalcularPrecioPorDia() {
+		inmuebleR.precioSugeridoPara(LocalDate.of(2024, 11, 12), LocalDate.of(2024, 11, 15));
+		verify(periodo).calcularPrecioPorDia(9000.0,LocalDate.of(2024, 11, 12), LocalDate.of(2024, 11, 15));
+	}
+	
+	@Test
+	void testGetHuespedes() {
+		assertEquals(5, inmuebleR.getHuespedes());
+	}
+	
+	@Test
+	void testCalcularPenalizacion() {
+		inmuebleR.setEstrategiaCancelacion(estrategia);
+		inmuebleR.calcularPenalizacion(reserva2);
+		verify(estrategia).calcularPenalizacion(reserva2, inmuebleR);
+	}
+	
+	@Test
+	void testEliminarReserva() {
+		inmuebleR.crearReserva(reserva2);
+	    assertEquals(1, inmuebleR.getReservas().size());
+	    
+	    inmuebleR.eliminarReserva(reserva2);
+	    assertEquals(0, inmuebleR.getReservas().size());
 	}
 	
 	@Test 
@@ -221,7 +252,7 @@ class InmuebleTest {
 	
 	@Test
 	void testSuperficie() {
-		assertEquals((double)123, inmueble.getSuperficie());	
+		assertEquals(1.23, inmueble.getSuperficie());	
 		}
 	
 	

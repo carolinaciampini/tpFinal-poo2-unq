@@ -127,7 +127,7 @@ public class SitioWeb {
 	
 	
 	public double tasaDeOcupacion() {
-		return this.cantidadDeInmueblesAlquilados() / this.getInmuebles().size();
+		return (double) cantidadDeInmueblesAlquilados() / getInmuebles().size();
 	}
 	
 	public int cantidadDeInmueblesAlquilados() {

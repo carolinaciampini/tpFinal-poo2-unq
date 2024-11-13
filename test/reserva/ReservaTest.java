@@ -66,9 +66,30 @@ public class ReservaTest {
         when(inmueble.getPropietario()).thenReturn(propietario);
         when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");
+        when(inmueble.getTipoInmueble()).thenReturn("Casa");
        
        
     }
+    
+    	@Test
+    	void testPenalizacion() {
+    		reserva.penalizacionDeInmueble();
+    		verify(inmueble).calcularPenalizacion(reserva);
+    	}
+    	
+    	
+    	@Test
+    	void testGetTipoInmueble() {
+    		assertEquals("Casa", reserva.getTipoInmueble());
+    	}
+    
+    	@Test
+    	void testGetEstadoReserva() {
+    		reserva.setEstadoReserva(aprobado);
+    		assertEquals(aprobado, reserva.getEstadoReserva());
+    	}
+    	
+    	
     	@Test
     	void testCantidadDiasFaltantesParaQueSeConcreteLaReserva() {
     		int diasFaltantes = (int) ChronoUnit.DAYS.between(LocalDate.now(), reserva.getFechaEntrada());
@@ -180,7 +201,7 @@ public class ReservaTest {
     
     @Test
     void testLaReservaSePisaConOtraReserva () {
-    	
+    	assertFalse(reserva.sePisa(LocalDate.of(2023, 01, 28), LocalDate.of(2024, 01, 5)));
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
     

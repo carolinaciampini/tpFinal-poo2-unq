@@ -84,6 +84,62 @@ class SitioWebTest {
 	}
 	
 	@Test
+	void testGetUsuariosCategorias() {
+		sitio.agregarCategoriaUsuario(categoriaU);
+		
+		List<Categoria> categoriasEsperadas = Arrays.asList(categoriaU);
+        assertEquals(categoriasEsperadas, sitio.getUsuariosCategoria());
+	}
+ 	
+	@Test
+	void testGetReservasDe() {
+		when(reserva1.getInquilino()).thenReturn(usuarioI);
+	    when(reserva2.getInquilino()).thenReturn(usuarioI);
+	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
+	    
+	    when(inmueble2.getReservas()).thenReturn(Arrays.asList(reserva1, reserva2));
+        when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+        
+     // Agrega los inmuebles al sitio
+        sitio.agregarInmueble(inmueble2);
+        sitio.agregarInmueble(inmueble3);
+        sitio.agregarInmueble(inmueble4);
+        
+        assertEquals(2, sitio.getReservasDe(inmueble2).size());
+	}
+	
+	@Test
+	void testTasaOcupacion() {
+	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
+	    
+        when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+        
+     // Agrega los inmuebles al sitio
+        sitio.agregarInmueble(inmueble2);
+        sitio.agregarInmueble(inmueble4);
+        
+        assertEquals(1, sitio.cantidadDeInmueblesAlquilados());
+        assertEquals(2, sitio.getInmuebles().size());
+        assertEquals(0.5, sitio.tasaDeOcupacion());
+	}
+	
+	@Test
+	void testCantidadInmueblesAlquilados() {
+	    when(reserva2.getInquilino()).thenReturn(usuarioI);
+	    when(reserva3.getInquilino()).thenReturn(usuarioI2);
+	    
+        when(inmueble3.getReservas()).thenReturn(Arrays.asList(reserva2));
+        when(inmueble4.getReservas()).thenReturn(Arrays.asList(reserva3));
+        
+     // Agrega los inmuebles al sitio
+        sitio.agregarInmueble(inmueble2);
+        sitio.agregarInmueble(inmueble3);
+        sitio.agregarInmueble(inmueble4);
+        
+	
+        assertEquals(2, sitio.cantidadDeInmueblesAlquilados());
+	}
+	@Test
 	void testSacarCategoriaInmueble () {
 		sitio.agregarCategoriaInmueble(categoriaI);
 		sitio.sacarCategoriaInmueble(categoriaI);
@@ -178,6 +234,18 @@ class SitioWebTest {
 		List<Reserva> reservasEsperadas = Arrays.asList(reserva1, reserva2);
         assertEquals(reservasEsperadas, sitio.obtenerReservasDeUsuario(usuarioI));
         assertEquals(2, sitio.obtenerCantidadReservasDeUsuario(usuarioI));
+	}
+	
+	@Test
+	void testReservasDeUnUsuarioNoExistiendoReservas() {
+        
+        sitio.agregarInmueble(inmueble2);
+        sitio.agregarInmueble(inmueble3);
+        sitio.agregarInmueble(inmueble4);
+        
+		List<Reserva> reservasEsperadas = Arrays.asList();
+        assertEquals(reservasEsperadas, sitio.obtenerReservasDeUsuario(usuarioI));
+        assertEquals(0, sitio.obtenerCantidadReservasDeUsuario(usuarioI));
 	}
 	
 	
