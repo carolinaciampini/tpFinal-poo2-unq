@@ -2,6 +2,7 @@ package Sitio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,10 +110,17 @@ public class SitioWeb {
 		return obtenerReservasDeUsuario(usuario).size();
 	}
 	
-	//public List<Usuario> topTenInquilinos() {
-	 
-		//return getUsuarios().stream().ma
-	//}
+	
+	public List<Usuario> topTenInquilinos() {
+	    return inmuebles.stream()
+	        .flatMap(inmueble -> inmueble.getReservas().stream())
+	        .map(Reserva::getInquilino)
+	        .distinct()
+	        .sorted(Comparator.comparingInt(this::obtenerCantidadReservasDeUsuario).reversed())
+	        .limit(10)
+	        .toList();
+	}
+	
 	
 	public List<Inmueble> inmueblesLibres(){
 		List<Inmueble> libres = new ArrayList<>();

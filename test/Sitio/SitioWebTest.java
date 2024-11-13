@@ -32,8 +32,8 @@ import usuarios.Usuario;
 class SitioWebTest {
 	private SitioWeb sitio;
 	private Propietario usuario1;
-	private Inquilino usuarioI;
-	private Inquilino usuarioI2;
+	private Usuario usuarioI;
+	private Usuario usuarioI2;
 	private Inmueble inmueble;
 	private Filtro filterManager;
 	private Inmueble inmueble2;
@@ -58,20 +58,25 @@ class SitioWebTest {
 		usuario1 = mock(Propietario.class);
 		 when(usuario1.getEmail()).thenReturn("abru@gmail.com");
 		 when(inmueble.getPropietario()).thenReturn(usuario1); 
-		usuarioI = mock(Inquilino.class);
-		usuarioI2 = mock(Inquilino.class);
+		usuarioI = mock(Usuario.class);
+		usuarioI2 = mock(Usuario.class);
 
 	     
 		reserva1 = mock(Reserva.class);
         reserva2 = mock(Reserva.class);
         reserva3 = mock(Reserva.class);
+        when(reserva1.getInquilino()).thenReturn(usuario1);
+        when(reserva2.getInquilino()).thenReturn(usuarioI);
+        when(reserva3.getInquilino()).thenReturn(usuario1);
 
 
         // Mocks de inmuebles con sus respectivas reservas
         inmueble2 = mock(Inmueble.class);
+        
         inmueble3 = mock(Inmueble.class);
-        inmueble4 = mock(Inmueble.class);
 
+        inmueble4 = mock(Inmueble.class);
+        
         tipo1 = mock(TipoInmueble.class);
         tipo2 = mock(TipoInmueble.class);
         
@@ -82,6 +87,26 @@ class SitioWebTest {
         categoriaI = mock(Categoria.class);
         
 	}
+	
+	@Test 
+	void testTopTenInquilinos() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
+		when(inmueble3.getReservas()).thenReturn(List.of(reserva1, reserva2));
+		when(inmueble3.getPropietario()).thenReturn(usuario1); 
+		
+		when(inmueble2.getPropietario()).thenReturn(usuario1); 
+		when(inmueble2.getReservas()).thenReturn(List.of(reserva3));
+		
+		sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble3);
+		sitio.darDeAltaInmueble(inmueble2);
+		List<Usuario> topInquilinos = sitio.topTenInquilinos();
+		
+		assertEquals(2, topInquilinos.size());
+        assertEquals(usuario1, topInquilinos.get(0));
+        assertEquals(usuarioI, topInquilinos.get(1));
+		
+	}
+	
 	
 	@Test
 	void testGetUsuariosCategorias() {
