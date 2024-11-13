@@ -97,7 +97,7 @@ class InmuebleTest {
 		
 		when(ranking1.getComentario()).thenReturn("Increible patio!");
 		when(ranking2.getComentario()).thenReturn("Hermosa quinta");
-		when(ranking2.getComentario()).thenReturn("No es tan espaciosa");
+		when(ranking3.getComentario()).thenReturn("No es tan espaciosa");
 		
 		when(ranking1.getPuntaje()).thenReturn(4);
 		when(ranking2.getPuntaje()).thenReturn(3);
@@ -346,7 +346,8 @@ class InmuebleTest {
 	void testGetEmailPropietario() {
 		assertEquals("abru@gmail.com", inmueble.getEmailPropietario());
 	}
-	/*
+	
+	
 	@Test 
 	void testVisualizarComentarios() {
 		inmueble.recibirRanking(ranking1);
@@ -358,7 +359,6 @@ class InmuebleTest {
 	    assertEquals(expectedComentarios, inmueble.visualizarComentarios());
 
 	}
-	*/
 	@Test
 	void testGetRankings() {
 		inmueble.recibirRanking(ranking1);
