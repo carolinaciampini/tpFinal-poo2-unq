@@ -71,6 +71,10 @@ public class Usuario {
 		
 		return (total / rankingsComoInquilino.size());
 	}
+
+	public boolean esMismoUsuarioQue(Usuario usuario) {
+		 return this.getEmail().equals(usuario.getEmail());
+	}
 	
 	
 }
