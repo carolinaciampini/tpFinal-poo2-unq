@@ -124,7 +124,7 @@ public class Inmueble {
 	}
 	
 	public Double precioSugeridoPara(LocalDate fechaEntrada, LocalDate fechaSalida) {
-		return this.getPeiodoManager().calcularPrecioPorDia(precioBase, fechaEntrada, fechaSalida);
+		return this.getPeriodoManager().calcularPrecioPorDia(precioBase, fechaEntrada, fechaSalida);
 	}
 	
 	
@@ -167,12 +167,12 @@ public class Inmueble {
 		return this.precioBase; 
 	}
 	
-	public PeriodoManager getPeiodoManager() {
+	public PeriodoManager getPeriodoManager() {
 		return this.periodoManager;
 	}
 	
 	public Double getPrecioParaReserva(Reserva r) {
-		return this.getPeiodoManager()
+		return this.getPeriodoManager()
 				.calcularPrecioPorDia(precioBase, r.getFechaEntrada(), r.getFechaSalida());
 	}
 	
