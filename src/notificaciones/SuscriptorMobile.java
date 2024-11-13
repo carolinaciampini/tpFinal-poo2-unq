@@ -19,13 +19,13 @@ public class SuscriptorMobile  implements Listener{
 	}
 
 	@Override
-	public void updateBajaPrecio(Inmueble inmueble) {
+	public void bajaDePrecio(Inmueble inmueble) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateCancelacion(Reserva reserva) {
+	public void cancelacionDeReserva(Reserva reserva) {
 		if(reserva.getFechaEntrada().isAfter(this.fechaEntrada) && reserva.getFechaSalida().isBefore(this.fechaSalida)) {
 			this.popUp.popUp("El " + reserva.getTipoInmueble() + " que te interesa se ha liberado. ¡Corre a reservarlo!", "blue", 14);
 		}
@@ -34,7 +34,7 @@ public class SuscriptorMobile  implements Listener{
 
 
 	@Override
-	public void updateReserva(Reserva reserva) {
+	public void altaDeReserva(Reserva reserva) {
 		// TODO Auto-generated method stub
 		
 	}

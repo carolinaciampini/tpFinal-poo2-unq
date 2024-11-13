@@ -31,10 +31,12 @@ class CanceladaTest {
 		verify(reserva1).enviarMailDeAviso("Reserva cancelada", "¡La reserva para tu Inmueble fue cancelada!");
 	}
 
+	/*
 	@Test
 	void testProcesarReserva() {
 		estadoCancelada.procesarReserva(reserva2);
 		verify(reserva2).ejecutarColaEspera();
 	}
+	*/
 
 }

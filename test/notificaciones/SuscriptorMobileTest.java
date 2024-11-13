@@ -39,7 +39,7 @@ public class SuscriptorMobileTest {
         when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 11, 10));
         when(reserva.getTipoInmueble()).thenReturn("Duplex");
         
-        suscriptorMobile.updateCancelacion(reserva);
+        suscriptorMobile.cancelacionDeReserva(reserva);
         
         
         verify(popUpWindow).popUp(
@@ -56,7 +56,7 @@ public class SuscriptorMobileTest {
         when(reserva.getFechaEntrada()).thenReturn(LocalDate.of(2024, 12, 1));
         when(reserva.getFechaSalida()).thenReturn(LocalDate.of(2024, 12, 10));
         
-        suscriptorMobile.updateCancelacion(reserva);
+        suscriptorMobile.cancelacionDeReserva(reserva);
         
         verifyNoInteractions(popUpWindow);
     }
@@ -64,8 +64,8 @@ public class SuscriptorMobileTest {
     @Test
     public void testElSuscriptorNoHaceUpdate() {
 
-    	suscriptorMobile.updateReserva(reserva);
-    	suscriptorMobile.updateBajaPrecio(inmueble);
+    	suscriptorMobile.altaDeReserva(reserva);
+    	suscriptorMobile.bajaDePrecio(inmueble);
         verifyNoInteractions(popUpWindow);
         
     }

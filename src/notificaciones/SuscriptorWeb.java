@@ -12,7 +12,7 @@ public class SuscriptorWeb implements Listener {
 	}
 
 	@Override
-	public void updateBajaPrecio(Inmueble inmueble) {
+	public void bajaDePrecio(Inmueble inmueble) {
 
 		  this.homePage.publish("No te pierdas esta oferta: Un inmueble " + 
                   inmueble.getTipoInmueble() + 
@@ -22,13 +22,13 @@ public class SuscriptorWeb implements Listener {
 	}
 
 	@Override
-	public void updateCancelacion(Reserva reserva) {
+	public void cancelacionDeReserva(Reserva reserva) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateReserva(Reserva reserva) {
+	public void altaDeReserva(Reserva reserva) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -17,39 +17,27 @@ public class NotificadorManager implements Listener{
         listeners.remove(listener);
     }
 
-    public void notificarBajaPrecio(Inmueble inmueble) {
+    @Override
+    public void bajaDePrecio(Inmueble inmueble) {
         for (Listener listener : listeners) {
-            listener.updateBajaPrecio(inmueble);
+            listener.bajaDePrecio(inmueble);
         }
     }
 
-    public void notificarCancelacion(Reserva inmueble) {
+    @Override
+    public void cancelacionDeReserva(Reserva inmueble) {
         for (Listener listener : listeners) {
-            listener.updateCancelacion(inmueble);
+            listener.cancelacionDeReserva(inmueble);
         }	
     }
 
-    public void notificarReserva(Reserva reserva) {
+    @Override
+    public void altaDeReserva(Reserva reserva) {
         for (Listener listener : listeners) {
-            listener.updateReserva(reserva);
+            listener.altaDeReserva(reserva);
         }
     }
 
-	@Override
-	public void updateBajaPrecio(Inmueble inmueble) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void updateCancelacion(Reserva reserva) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateReserva(Reserva reserva) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

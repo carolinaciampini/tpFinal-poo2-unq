@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import categoria.Categoria;
 import enums.FormaDePago;
 import enums.Servicio;
 import estadoReserva.Aprobada;
@@ -14,6 +15,7 @@ import excepciones.LimiteFotosAlcanzado;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
+import ranking.Ranking;
 import reserva.Reserva;
 import usuarios.Usuario;
 
@@ -38,6 +40,7 @@ public class Inmueble {
 	private List<FormaDePago> formasDePago;
 	private Usuario propietario;
 	private NotificadorManager notificador;
+	private List<Ranking> rankings;
 
 	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Usuario propietario, Double precioBase,  NotificadorManager notificador) {
 		this.reservas = new ArrayList<>();
@@ -60,6 +63,7 @@ public class Inmueble {
 		this.checkout = checkout;
 		this.formasDePago = new ArrayList<>();
 		this.propietario = propietario;
+		this.rankings = new ArrayList<>();
 
 	}
 	
@@ -75,7 +79,7 @@ public class Inmueble {
 	public void crearReserva (Reserva reserva) {
 		if (estaDisponible (reserva.getFechaEntrada(), reserva.getFechaSalida())) {
 			reservas.add(reserva);
-			notificador.notificarReserva(reserva);
+			notificador.altaDeReserva(reserva);
 			
 		} else {
 			Reserva reservaPendiente = reserva;
@@ -86,7 +90,7 @@ public class Inmueble {
 	public void seBajaElPrecioDelInmueble(Double precioNuevo) {
 		if(precioNuevo < precioBase) {
 			this.precioBase = precioNuevo;
-			notificador.notificarBajaPrecio(this);
+			notificador.bajaDePrecio(this);
 		}
 	}
 	
@@ -249,6 +253,11 @@ public class Inmueble {
 
 	public String getEmailPropietario() {
 		return getPropietario().getEmail();
+	}
+
+	public void recibirRanking(Ranking ranking) {
+		rankings.add(ranking);
+		
 	}
 
 

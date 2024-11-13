@@ -6,9 +6,11 @@ import java.time.temporal.ChronoUnit;
 import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
+import excepciones.EstadoInvalidoParaRankear;
 import inmueble.Inmueble;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
+import ranking.Ranking;
 import usuarios.Usuario;
 
 public class Reserva {
@@ -38,7 +40,7 @@ public class Reserva {
 
 	public void cancelarReserva() {
 	    estadoReserva.cancelarReserva(this);
-	    notificador.notificarCancelacion(this);
+	    notificador.cancelacionDeReserva(this);
 	}
 
 	public void aceptarReserva() {
@@ -115,7 +117,7 @@ public class Reserva {
     	
 	}
 	
-	public void penalizacionDeInmueble() {
+	public void ejecutarPenalizacionPorCancelacion() {
 		inmueble.calcularPenalizacion(this);
 	}
 	
@@ -129,6 +131,18 @@ public class Reserva {
 		
 	}
 	
+	public void rankearInmueble(Ranking ranking) throws EstadoInvalidoParaRankear {
+		this.estadoReserva.rankearInmueble(ranking, this);
+	}
+	
+	public void rankearPropietario(Ranking ranking) throws EstadoInvalidoParaRankear {
+		this.estadoReserva.rankearPropietario(ranking, this);
+	}
+	
+	public void rankearInquilino(Ranking ranking) throws EstadoInvalidoParaRankear {
+		this.estadoReserva.rankearInquilino(ranking, this);
+	}
+	
 	public boolean esEstadoAprobado(){
 		return estadoReserva.estaAprobada();
 	}
@@ -139,6 +153,12 @@ public class Reserva {
 
 	public String getTipoInmueble() {
 		return this.inmueble.getTipoInmueble();
+	}
+
+
+
+	public Usuario getPropietario() {
+		return this.inmueble.getPropietario();
 	}
 }
 

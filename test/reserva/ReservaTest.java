@@ -2,6 +2,7 @@ package reserva;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -23,9 +24,11 @@ import estadoReserva.EstadoReserva;
 import estadoReserva.Finalizada;
 import estadoReserva.Rechazada;
 import estadoReserva.Solicitada;
+import excepciones.EstadoInvalidoParaRankear;
 import inmueble.Inmueble;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
+import ranking.Ranking;
 import usuarios.Inquilino;
 import usuarios.Usuario;
 
@@ -34,6 +37,7 @@ public class ReservaTest {
     private Reserva reserva;
     private Usuario inquilino;
     private Aprobada aprobado;
+    private Finalizada finalizado;
     private Solicitada solicitado;
     private MailSender mail;
     private Rechazada rechazado;
@@ -43,6 +47,7 @@ public class ReservaTest {
     private Reserva reserva2;
     private NotificadorManager notificador;
     private Aprobada aprobado2;
+    private Ranking ranking;
     
 
 
@@ -57,11 +62,14 @@ public class ReservaTest {
     	solicitado = spy(Solicitada.class);
     	aprobado = spy(Aprobada.class);
     	rechazado = spy(Rechazada.class);
+    	finalizado = spy(Finalizada.class);
     	cancelado = spy(Cancelada.class);
     	notificador = mock(NotificadorManager.class);
-    	
+    	ranking = mock(Ranking.class);
    	
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail, notificador);
+        when (reserva.getPropietario()).thenReturn(propietario);
+        
         reserva2 = new Reserva(inmueble, inquilino, LocalDate.of(2025, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail, notificador);
         when(inmueble.getPropietario()).thenReturn(propietario);
         when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
@@ -71,24 +79,43 @@ public class ReservaTest {
        
     }
     
+ 
     	@Test
-    	void testPenalizacion() {
-    		reserva.penalizacionDeInmueble();
+    	void testAlCancelarUnaReservaSeDeterminaUnaPenalizacion() {
+    		reserva.setEstadoReserva(aprobado);
+    		reserva.cancelarReserva();
     		verify(inmueble).calcularPenalizacion(reserva);
     	}
     	
     	
-    	@Test
-    	void testGetTipoInmueble() {
-    		assertEquals("Casa", reserva.getTipoInmueble());
-    	}
     
     	@Test
-    	void testGetEstadoReserva() {
-    		reserva.setEstadoReserva(aprobado);
-    		assertEquals(aprobado, reserva.getEstadoReserva());
+    	void testRankear_LanzaExcepcionSiNoEstaFinalizada() {
+    		assertThrows(EstadoInvalidoParaRankear.class, () -> reserva.rankearInmueble(ranking));
+    		assertThrows(EstadoInvalidoParaRankear.class, () -> reserva.rankearPropietario(ranking));
+    		assertThrows(EstadoInvalidoParaRankear.class, () -> reserva.rankearInquilino(ranking));
     	}
     	
+    	@Test
+        void testRankearInmueble_CuandoEstaFinalizada() throws EstadoInvalidoParaRankear {
+            reserva.setEstadoReserva(finalizado);
+            reserva.rankearInmueble(ranking);
+            verify(inmueble).recibirRanking(ranking);
+        }
+    	
+    	@Test
+        void testRankearPropietario_CuandoEstaFinalizada() throws EstadoInvalidoParaRankear {
+    		reserva.setEstadoReserva(finalizado);
+            reserva.rankearPropietario(ranking);
+            verify(propietario).recibirRankingComoPropietario(ranking);
+        }
+    	
+    	@Test
+        void testRankearInquilino_CuandoEstaFinalizada() throws EstadoInvalidoParaRankear {
+            reserva.setEstadoReserva(finalizado);
+            reserva.rankearInquilino(ranking);
+            verify(inquilino).recibirRankingComoInquilino(ranking);
+        }
     	
     	@Test
     	void testCantidadDiasFaltantesParaQueSeConcreteLaReserva() {
@@ -120,13 +147,11 @@ public class ReservaTest {
         void testRechazarReserva () {
 	        reserva.setEstadoReserva(solicitado);
 	        reserva.rechazarReserva();
+	        
 	        verify(solicitado).rechazarReserva(reserva);
 	        assertFalse(inmueble.getReservas().contains(reserva));
 	        assertTrue(reserva.esEstadoRechazado());
-	        assertFalse(reserva.esEstadoAprobado());
-	        
-	        
-        
+	        assertFalse(reserva.esEstadoAprobado());        
     	} 
 
   
@@ -158,7 +183,7 @@ public class ReservaTest {
 	    	reserva.cancelarReserva();
 	
 	    	verify(aprobado).cancelarReserva(reserva);
-	    	verify(notificador).notificarCancelacion(reserva);
+	    	verify(notificador).cancelacionDeReserva(reserva);
     	}
     	
     	
@@ -205,7 +230,16 @@ public class ReservaTest {
     	assertTrue(reserva.sePisa(LocalDate.of(2023, 10, 28), LocalDate.of(2024, 11, 5)));
     }
     
+    @Test
+    void testGetTipoInmueble() {
+    	assertEquals("Casa", reserva.getTipoInmueble());
+    }
     
+    @Test
+    void testGetEstadoReserva() {
+    	reserva.setEstadoReserva(aprobado);
+    	assertEquals(aprobado, reserva.getEstadoReserva());
+    }
 
     
 }

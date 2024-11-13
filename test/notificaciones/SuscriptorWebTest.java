@@ -30,7 +30,7 @@ public class SuscriptorWebTest {
 	        when(inmueble.getTipoInmueble()).thenReturn("Departamento");
 	        when(inmueble.getPrecioBase()).thenReturn(1000.0);
 	        
-	        suscriptorWeb.updateBajaPrecio(inmueble);
+	        suscriptorWeb.bajaDePrecio(inmueble);
 	        
 	        
 	        verify(homePagePublisher).publish(
@@ -42,8 +42,8 @@ public class SuscriptorWebTest {
 	 @Test
 	    public void testElSuscriptorNoHaceUpdate() {
 
-	        suscriptorWeb.updateCancelacion(reserva);
-	        suscriptorWeb.updateReserva(reserva);
+	        suscriptorWeb.cancelacionDeReserva(reserva);
+	        suscriptorWeb.altaDeReserva(reserva);
 	        verifyNoInteractions(homePagePublisher);
 	        
 	        

@@ -1,4 +1,6 @@
 package estadoReserva;
+import excepciones.EstadoInvalidoParaRankear;
+import ranking.Ranking;
 import reserva.Reserva;
 
 
@@ -15,4 +17,14 @@ public abstract class EstadoReserva {
 	public boolean estaRechazada () {
 		return false;
 	}
+	public void rankearInmueble(Ranking ranking, Reserva reserva) throws EstadoInvalidoParaRankear {	
+		throw new EstadoInvalidoParaRankear();
+	}
+	public void rankearPropietario(Ranking ranking, Reserva reserva) throws EstadoInvalidoParaRankear {
+		throw new EstadoInvalidoParaRankear();
+	}
+	public void rankearInquilino(Ranking ranking, Reserva reserva) throws EstadoInvalidoParaRankear {
+        throw new EstadoInvalidoParaRankear();
+    }
+	
 }

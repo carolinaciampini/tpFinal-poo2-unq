@@ -16,8 +16,8 @@ public class Aprobada extends EstadoReserva{
 		reserva.enviarMail();
 		
 		reserva.borrarReserva(reserva);
-    	
 		reserva.ejecutarColaEspera();
+		reserva.ejecutarPenalizacionPorCancelacion();
 	}
 
 	public void finalizarReserva (Reserva reserva) {

@@ -30,16 +30,16 @@ public class NotificadorManagerTest {
 	 @Test
 	    public void testAgregarListener() {
 		 notificador.agregarListener(listener1);
-		 notificador.notificarBajaPrecio(inmueble);
-	       verify(listener1, times(1)).updateBajaPrecio(inmueble);
+		 notificador.bajaDePrecio(inmueble);
+	       verify(listener1, times(1)).bajaDePrecio(inmueble);
 	    }
 	
 	 @Test
 	    public void testRemoverListener() {
 		 notificador.agregarListener(listener1);
 		 notificador.removerListener(listener1);
-		 notificador.notificarBajaPrecio(inmueble);
-	        verify(listener1, never()).updateBajaPrecio(inmueble);
+		 notificador.bajaDePrecio(inmueble);
+	        verify(listener1, never()).bajaDePrecio(inmueble);
 	    }
 	 
 	 @Test
@@ -47,10 +47,10 @@ public class NotificadorManagerTest {
 		 notificador.agregarListener(listener1);
 		 notificador.agregarListener(listener2);
 	        
-		 notificador.notificarBajaPrecio(inmueble);
+		 notificador.bajaDePrecio(inmueble);
 	        
-	       verify(listener1, times(1)).updateBajaPrecio(inmueble);
-	       verify(listener2, times(1)).updateBajaPrecio(inmueble);
+	       verify(listener1, times(1)).bajaDePrecio(inmueble);
+	       verify(listener2, times(1)).bajaDePrecio(inmueble);
 	    }
 	
 	 @Test
@@ -58,10 +58,10 @@ public class NotificadorManagerTest {
 		 notificador.agregarListener(listener1);
 		 notificador.agregarListener(listener2);
 	        
-		 notificador.notificarCancelacion(reserva);
+		 notificador.cancelacionDeReserva(reserva);
 	        
-	        verify(listener1, times(1)).updateCancelacion(reserva);
-	        verify(listener2, times(1)).updateCancelacion(reserva);
+	        verify(listener1, times(1)).cancelacionDeReserva(reserva);
+	        verify(listener2, times(1)).cancelacionDeReserva(reserva);
 	    }
 	 
 	 @Test
@@ -69,9 +69,9 @@ public class NotificadorManagerTest {
 		 notificador.agregarListener(listener1);
 		 notificador.agregarListener(listener2);
 	        
-		 notificador.notificarReserva(reserva);
+		 notificador.altaDeReserva(reserva);
 	        
-	        verify(listener1, times(1)).updateReserva(reserva);
-	        verify(listener2, times(1)).updateReserva(reserva);
+	        verify(listener1, times(1)).altaDeReserva(reserva);
+	        verify(listener2, times(1)).altaDeReserva(reserva);
 	    }
 }
