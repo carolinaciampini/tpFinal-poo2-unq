@@ -38,4 +38,8 @@ public class Usuario {
 		this.rankingsComoInquilino.add(ranking);
 		
 	}
+
+	public boolean esMismoUsuarioQue(Usuario usuario) {
+	    return this.getEmail().equals(usuario.getEmail());
+	}
 }

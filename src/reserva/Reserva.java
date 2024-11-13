@@ -160,6 +160,10 @@ public class Reserva {
 	public Usuario getPropietario() {
 		return this.inmueble.getPropietario();
 	}
+	
+	public boolean esMismoInquilino(Usuario usuario) {
+	    return this.getInquilino().esMismoUsuarioQue(usuario);
+	}
 }
 
 
