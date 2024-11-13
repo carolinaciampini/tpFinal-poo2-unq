@@ -11,7 +11,7 @@ public class FiltroCiudad implements Criterio {
     }
     
     @Override
-    public Boolean cumple(Inmueble p, Filtro f) {
-        return p.getCiudad().equals(ciudad);
+    public Boolean cumple(Inmueble inmueble, Filtro filtro) {
+        return inmueble.getCiudad().equals(ciudad);
     }
 }

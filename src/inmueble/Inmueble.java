@@ -7,7 +7,6 @@ import java.util.List;
 
 import categoria.Categoria;
 import enums.FormaDePago;
-import enums.Servicio;
 import estadoReserva.Aprobada;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
@@ -17,6 +16,7 @@ import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
 import ranking.Ranking;
 import reserva.Reserva;
+import servicio.Servicio;
 import usuarios.Usuario;
 
 public class Inmueble {
@@ -156,7 +156,7 @@ public class Inmueble {
 		}
 	
 	
-	public int getHuespedes() {
+	public Integer getHuespedes() {
 		return capacidad;
 	}
 
@@ -222,8 +222,12 @@ public class Inmueble {
 	
 	
 
-	public void addServicio(Servicio servicio) {
+	public void addServicioo(Servicio servicio) {
 		this.servicios.add(servicio);
+	}
+	
+	public void sacarServicio(Servicio servicio) {
+		servicios.remove(servicio);
 	}
 //--
 
@@ -259,6 +263,8 @@ public class Inmueble {
 		rankings.add(ranking);
 		
 	}
+
+
 
 
 }

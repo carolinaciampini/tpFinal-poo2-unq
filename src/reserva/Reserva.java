@@ -126,7 +126,7 @@ public class Reserva {
 	}
 	
 	
-	public int cantidadDiasFaltantes() {
+	public Integer cantidadDiasFaltantes() {
 		return (int) ChronoUnit.DAYS.between(LocalDate.now(), getFechaEntrada());
 		
 	}

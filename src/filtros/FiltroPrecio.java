@@ -16,8 +16,8 @@ public class FiltroPrecio implements Criterio  {
 	    }
 	 
 	 @Override
-	    public Boolean cumple(Inmueble inmueble, Filtro f) {
-	        Double precio = inmueble.precioSugeridoPara(f.getFechaEntrada(), f.getFechaSalida());
+	    public Boolean cumple(Inmueble inmueble, Filtro filtro) {
+	        Double precio = inmueble.precioSugeridoPara(filtro.getFechaEntrada(), filtro.getFechaSalida());
 	        boolean cumpleMin =  precio >= precioMin;
 	        boolean cumpleMax =  precio <= precioMax;
 	        return cumpleMin && cumpleMax;

@@ -29,9 +29,9 @@ public class NotificadorManager implements Listener{
     }
 
     @Override
-    public void cancelacionDeReserva(Reserva inmueble) {
+    public void cancelacionDeReserva(Reserva reserva) {
         for (Listener listener : listeners) {
-            listener.cancelacionDeReserva(inmueble);
+            listener.cancelacionDeReserva(reserva);
         }	
     }
 

@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import categoria.Categoria;
-import enums.Servicio;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Filtro;
 import inmueble.Inmueble;
 import usuarios.Usuario;
 import reserva.Reserva;
+import servicio.Servicio;
 import tipoInmueble.TipoInmueble;
 
 
@@ -106,7 +106,7 @@ public class SitioWeb {
 		return reservasDelUsuario;
 	}
 	
-	public int obtenerCantidadReservasDeUsuario (Usuario usuario) {
+	public Integer obtenerCantidadReservasDeUsuario (Usuario usuario) {
 		return obtenerReservasDeUsuario(usuario).size();
 	}
 	
@@ -134,7 +134,7 @@ public class SitioWeb {
 	}
 	
 	
-	public double tasaDeOcupacion() {
+	public Double tasaDeOcupacion() {
 		return (double) cantidadDeInmueblesAlquilados() / getInmuebles().size();
 	}
 	

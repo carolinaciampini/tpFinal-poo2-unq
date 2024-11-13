@@ -11,7 +11,7 @@ public class FiltroHuespedes implements Criterio {
     }
 
     @Override
-    public Boolean cumple(Inmueble p, Filtro f) {
-        return p.getHuespedes() >= minHuespedes;
+    public Boolean cumple(Inmueble inmueble, Filtro filtro) {
+        return inmueble.getHuespedes() >= minHuespedes;
     }
 }

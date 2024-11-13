@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import Sitio.SitioWeb;
 import categoria.Categoria;
-import enums.Servicio;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Criterio;
@@ -24,6 +23,7 @@ import filtros.Filtro;
 import filtros.FiltroPrecio;
 import inmueble.Inmueble;
 import reserva.Reserva;
+import servicio.Servicio;
 import tipoInmueble.TipoInmueble;
 import usuarios.Inquilino;
 import usuarios.Propietario;
@@ -80,8 +80,8 @@ class SitioWebTest {
         tipo1 = mock(TipoInmueble.class);
         tipo2 = mock(TipoInmueble.class);
         
-        agua = Servicio.AGUA;
-        gas = Servicio.GAS;
+        agua = mock(Servicio.class);
+        gas = mock(Servicio.class);
         
         categoriaU = mock(Categoria.class);
         categoriaI = mock(Categoria.class);

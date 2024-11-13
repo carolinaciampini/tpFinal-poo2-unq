@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import enums.FormaDePago;
-import enums.Servicio;
 import estadoReserva.Aprobada;
 import estadoReserva.EstadoReserva;
 import estrategiaCancelacion.EstrategiaCancelacion;
@@ -26,6 +25,7 @@ import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
 import reserva.Reserva;
+import servicio.Servicio;
 import usuarios.Inquilino;
 import usuarios.Propietario;
 import usuarios.Usuario;
@@ -48,11 +48,13 @@ class InmuebleTest {
 	private Usuario propietario;
 	private Inmueble inmueble;
 	private MailSender mail;
-
+	
+	private Servicio agua;
 
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		agua = mock(Servicio.class);
 		mail = mock(MailSender.class);
 		periodo = mock(PeriodoManager.class);
 		propietario = mock(Usuario.class);
@@ -289,8 +291,15 @@ class InmuebleTest {
 	
 	@Test
 	void testServicios() {
-		inmuebleR.addServicio(Servicio.AGUA);
+		inmuebleR.addServicioo(agua);
 		assertEquals(1, inmuebleR.getServicios().size());
+	}
+	
+	@Test
+	void testSacarServicios() {
+		inmuebleR.addServicioo(agua);
+		inmuebleR.sacarServicio(agua);
+		assertEquals(0, inmuebleR.getServicios().size());
 	}
 	
 	@Test
