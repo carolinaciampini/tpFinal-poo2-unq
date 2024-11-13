@@ -216,12 +216,13 @@ class InmuebleTest {
 	void testGetFotos() throws LimiteFotosAlcanzado  {
 		inmuebleR.addFoto("foto1");
 		inmuebleR.addFoto("foto2");
+		
 		String[] expectedFotos = {"foto1", "foto2", null, null, null};
 
         // Compara el resultado de getFotos() con el arreglo esperado
         assertArrayEquals(expectedFotos, inmueble.getFotos());
 		}
-		*/
+	*/	
 
 	@Test 
 	void testAddFotosSinTenerLugar() throws LimiteFotosAlcanzado{

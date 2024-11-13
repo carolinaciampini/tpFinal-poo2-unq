@@ -7,6 +7,12 @@ public class Ranking {
 	private String comentario;
 	private Categoria categoria;
 	
+	public Ranking(int puntaje, String comentario, Categoria categoria){
+		this.puntaje = puntaje;
+		this.comentario = comentario;
+		this.categoria = categoria;
+	}
+	
 	public int getPuntaje() {
 		return puntaje;
 	}
@@ -18,7 +24,5 @@ public class Ranking {
 	public Categoria getCategoria() {
 		return categoria;
 	}
-	
-	
 	
 }
