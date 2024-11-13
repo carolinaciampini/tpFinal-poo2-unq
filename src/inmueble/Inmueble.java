@@ -11,6 +11,9 @@ import estadoReserva.Aprobada;
 import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import excepciones.LimiteFotosAlcanzado;
+import excepciones.NoHayPuntajesParaEstaCategoria;
+import excepciones.NoHayPuntajesSobreEsteInmueble;
+import excepciones.NoHayPuntajesSobreEsteUsuario;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
@@ -264,7 +267,54 @@ public class Inmueble {
 		
 	}
 
+	public List<String> visualizarComentarios() {
+		List<String> comentarios = new ArrayList<>();
+		for (Ranking ranking : rankings) {
+			comentarios.add(ranking.getComentario());
+		}
+		return comentarios;
+	}
 
-
+	public List<Ranking> getRankings() {
+		return this.rankings;
+	}
+	
+	public Integer promedioPuntajeTotal() throws NoHayPuntajesSobreEsteInmueble{
+		if (rankings.isEmpty()) {
+			throw new NoHayPuntajesSobreEsteInmueble();
+		}
+		Integer total = 0;
+		for (Ranking ranking : rankings) {
+			total += ranking.getPuntaje();
+		}
+		
+		return (total / rankings.size());
+	}
+	
+	public Integer promedioPorCategoria(Categoria categoria) throws NoHayPuntajesParaEstaCategoria {
+		Integer total = 0;
+		Integer rankingsDeCategoria = 0;
+		for (Ranking ranking : rankings) {
+			if (ranking.getCategoria().equals(categoria)){
+				total += ranking.getPuntaje();
+				rankingsDeCategoria ++;
+			}
+		}
+		if (rankingsDeCategoria == 0) {
+			throw new NoHayPuntajesParaEstaCategoria();
+		}
+		
+		return (total / rankingsDeCategoria); 
+	}
+	
+	public Integer visualizarPromedioDePropietario() throws NoHayPuntajesSobreEsteUsuario {
+		return (this.propietario.puntajePromedioComoPropietario());
+	}
+	
+	public List<Ranking> visualizarPuntajesDePropietario() {
+		return (this.propietario.getRankingsComoPropietario());
+	}
+	
+	
 
 }
