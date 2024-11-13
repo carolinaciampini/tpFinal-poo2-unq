@@ -34,8 +34,8 @@ public class Filtro {
 	
 	}
 	
-	public List<Inmueble> filtrar(List<Inmueble> posteos) {
-	    return posteos.stream()
+	public List<Inmueble> filtrar(List<Inmueble> inmueble) {
+	    return inmueble.stream()
 	            .filter(posteo -> criterios.stream().allMatch(c -> c.cumple(posteo, this)))  
 	            .toList();
 	}

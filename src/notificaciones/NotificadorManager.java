@@ -7,7 +7,11 @@ import inmueble.Inmueble;
 import reserva.Reserva;
 
 public class NotificadorManager implements Listener{
-	private List<Listener> listeners = new ArrayList<>();
+	private List<Listener> listeners;
+	
+	public NotificadorManager() {
+		this.listeners = new ArrayList<>();
+	}
 
     public void agregarListener(Listener listener) {
         listeners.add(listener);
