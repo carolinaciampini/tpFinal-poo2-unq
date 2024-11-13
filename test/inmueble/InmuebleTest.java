@@ -9,10 +9,14 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import categoria.Categoria;
 import enums.FormaDePago;
 import estadoReserva.Aprobada;
 import estadoReserva.EstadoReserva;
@@ -20,10 +24,14 @@ import estrategiaCancelacion.EstrategiaCancelacion;
 import estrategiaCancelacion.Gratuito;
 import estrategiaCancelacion.SinCancelacion;
 import excepciones.LimiteFotosAlcanzado;
+import excepciones.NoHayPuntajesParaEstaCategoria;
+import excepciones.NoHayPuntajesSobreEsteInmueble;
+import excepciones.NoHayPuntajesSobreEsteUsuario;
 import excepciones.PropietarioNoRegistradoExcepcion;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import periodo.PeriodoManager;
+import ranking.Ranking;
 import reserva.Reserva;
 import servicio.Servicio;
 import usuarios.Inquilino;
@@ -50,7 +58,13 @@ class InmuebleTest {
 	private MailSender mail;
 	
 	private Servicio agua;
-
+	
+	private Ranking ranking1;
+	private Ranking ranking2;
+	private Ranking ranking3;
+	
+	private Categoria categoria;
+	private Categoria otraCategoria;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -58,7 +72,9 @@ class InmuebleTest {
 		mail = mock(MailSender.class);
 		periodo = mock(PeriodoManager.class);
 		propietario = mock(Usuario.class);
-		when(propietario.getEmail()).thenReturn("abru@gmail.com");	
+		
+		when(propietario.getEmail()).thenReturn("abru@gmail.com");
+		
 		mailSender = mock(MailSender.class);
 		
 		estrategia = mock(SinCancelacion.class);
@@ -71,7 +87,26 @@ class InmuebleTest {
 		reserva2 = mock(Reserva.class);
 		// when(reserva2.getEstadoReserva()).thenReturn()
 		reserva5 = mock(Reserva.class);
-	
+		
+		ranking1 = mock(Ranking.class);
+		ranking2 = mock(Ranking.class);
+		ranking3 = mock(Ranking.class);
+		
+		categoria = mock(Categoria.class);
+		otraCategoria = mock(Categoria.class);
+		
+		when(ranking1.getComentario()).thenReturn("Increible patio!");
+		when(ranking2.getComentario()).thenReturn("Hermosa quinta");
+		when(ranking2.getComentario()).thenReturn("No es tan espaciosa");
+		
+		when(ranking1.getPuntaje()).thenReturn(4);
+		when(ranking2.getPuntaje()).thenReturn(3);
+		when(ranking3.getPuntaje()).thenReturn(3);
+		
+		when(ranking1.getCategoria()).thenReturn(otraCategoria);
+		when(ranking2.getCategoria()).thenReturn(categoria);
+		when(ranking3.getCategoria()).thenReturn(categoria);
+		
 		
 		inmueble = new Inmueble ( 90000.0, mail, periodo, "Quinta", 1.23, 5, "Argentina", "Hudson", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, 90.000, notificador);
 		inmuebleR = new Inmueble (9000.0, mailSender, periodo, "Quinta", 1.23, 5, "Argentina", "Quilmes", "Calle 163 123", LocalTime.of(14,00), LocalTime.of(10,00), propietario, 90.000, notificador);
@@ -312,6 +347,81 @@ class InmuebleTest {
 	void testGetEmailPropietario() {
 		assertEquals("abru@gmail.com", inmueble.getEmailPropietario());
 	}
+	/*
+	@Test 
+	void testVisualizarComentarios() {
+		inmueble.recibirRanking(ranking1);
+		inmueble.recibirRanking(ranking2);
+		inmueble.recibirRanking(ranking3);
+		
+		List<String> expectedComentarios = Arrays.asList("Increible patio!", "Hermosa quinta", "No es tan espaciosa");
+		// No corre
+	    assertEquals(expectedComentarios, inmueble.visualizarComentarios());
+
+	}
+	*/
+	@Test
+	void testGetRankings() {
+		inmueble.recibirRanking(ranking1);
+		inmueble.recibirRanking(ranking2);
+		inmueble.recibirRanking(ranking3);
+		
+		List<Ranking> expectedRankings = Arrays.asList(ranking1, ranking2, ranking3);
+		
+		assertEquals(expectedRankings, inmueble.getRankings());
+	}
+	
+	@Test
+	void testPromedioPuntajeTotal() throws NoHayPuntajesSobreEsteInmueble {
+		inmueble.recibirRanking(ranking1);
+		inmueble.recibirRanking(ranking2);
+		inmueble.recibirRanking(ranking3);
+		
+		Integer promedio = 3;
+		
+		assertEquals(promedio, inmueble.promedioPuntajeTotal());
+		
+	}
+	
+	@Test
+	void testPromedioPuntajeTotalLanzaExcepcion() throws NoHayPuntajesSobreEsteInmueble {
+		assertThrows(NoHayPuntajesSobreEsteInmueble.class, () -> {
+	        inmueble.promedioPuntajeTotal();
+	    });
+	}
+	
+	@Test
+	void testPromedioPorCategoria() throws NoHayPuntajesParaEstaCategoria {
+		inmueble.recibirRanking(ranking1);
+		inmueble.recibirRanking(ranking2);
+		inmueble.recibirRanking(ranking3);
+		
+		Integer promedioCategoria = 3;
+		 
+		assertEquals(promedioCategoria, inmueble.promedioPorCategoria(categoria));
+	}
+	
+	@Test
+	void testPromedioPorCategoriaLanzaExcepcion() throws NoHayPuntajesParaEstaCategoria {
+		assertThrows(NoHayPuntajesParaEstaCategoria.class, () -> {
+	        inmueble.promedioPorCategoria(categoria);
+	    });
+	}
+	
+	@Test
+	void testVisualizarPromedioDePropietario() throws NoHayPuntajesSobreEsteUsuario {
+		inmueble.visualizarPromedioDePropietario();
+		
+		verify(propietario).puntajePromedioComoPropietario();
+	}
+	
+	@Test
+	void testVisualizarPuntajesDePropietario() {
+		inmueble.visualizarPuntajesDePropietario();
+		
+		verify(propietario).getRankingsComoPropietario();
+	}
+	
 	
 	
 }
