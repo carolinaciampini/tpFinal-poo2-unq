@@ -43,11 +43,11 @@ public class Inmueble {
 	private LocalTime checkin;
 	private LocalTime checkout;
 	private List<FormaDePago> formasDePago;
-	private Usuario propietario;
+	private IPropietario propietario;
 	private NotificadorManager notificador;
 	private List<Ranking> rankings;
 
-	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, Usuario propietario, Double precioBase,  NotificadorManager notificador) {
+	public Inmueble(Double precio, MailSender mailSender, PeriodoManager periodo, String tipoDeInmueble, Double superficie, Integer capacidad, String pais, String ciudad, String direccion, LocalTime checkin, LocalTime checkout, IPropietario propietario, Double precioBase,  NotificadorManager notificador) {
 		this.reservas = new ArrayList<>();
 		this.precioBase = precio;
 		this.periodoManager = periodo;
@@ -119,7 +119,7 @@ public class Inmueble {
 		reservas.remove(reserva);
 	}
 	
-	public void notificarAInquilinoEnEspera(Usuario inquilino) {
+	public void notificarAInquilinoEnEspera(IInquilino inquilino) {
 		mailSender.enviarMail(inquilino.getEmail(),
                 "Tu reserva fue procesada",
                 "Felicitaciones, como hubo una cancelación, tu reserva pudo ser realizada");
@@ -187,7 +187,7 @@ public class Inmueble {
 	}
 	
 	
-	public Usuario getPropietario () {
+	public IPropietario getPropietario () {
 		return this.propietario;
 	}
 

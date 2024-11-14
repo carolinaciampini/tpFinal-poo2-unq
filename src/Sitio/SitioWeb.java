@@ -1,5 +1,6 @@
 package Sitio;
 
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import excepciones.PropietarioNoRegistradoExcepcion;
 import excepciones.UsuarioYaExistenteException;
 import filtros.Filtro;
 import inmueble.Inmueble;
+import usuarios.IInquilino;
+import usuarios.IPropietario;
 import usuarios.Usuario;
 import reserva.Reserva;
 import servicio.Servicio;
@@ -48,7 +51,7 @@ public class SitioWeb {
 		 return diasDeDiferencia;
 	 	}
 	 	
-	 	public Integer vecesQueAlquiloInmueble(Usuario usuario, Inmueble inmueble) {
+	 	public Integer vecesQueAlquiloInmueble(IInquilino usuario, Inmueble inmueble) {
 	 	Integer contador = 0;
 	 	for (Reserva reserva : obtenerReservasDeUsuario(usuario)) {
 	 			if (reserva.getInmueble().equals(inmueble)) {
@@ -59,12 +62,12 @@ public class SitioWeb {
 	 }
 	 	
 	 
-	 public Integer vecesQueAlquilo(Usuario usuario) {
+	 public Integer vecesQueAlquilo(IInquilino usuario) {
 	 	return obtenerReservasDeUsuario(usuario).size();
 	 }
 	 
 	 
-	 public List <Inmueble> inmueblesAlquiladosPor (Usuario usuario) {
+	 public List <Inmueble> inmueblesAlquiladosPor (IInquilino usuario) {
 	 	List <Inmueble> inmueblesAlq = new ArrayList <>();
 	 	for (Reserva reserva : obtenerReservasDeUsuario(usuario)) {
 	 		inmueblesAlq.add(reserva.getInmueble());
@@ -127,7 +130,7 @@ public class SitioWeb {
 	}
 	
 	
-	public List<Reserva> obtenerReservasDeUsuario(Usuario usuario) {
+	public List<Reserva> obtenerReservasDeUsuario(IInquilino usuario) {
 	    List<Reserva> reservasDelUsuario = new ArrayList<>();
 	    
 	    for (Inmueble inmueble : inmuebles) {
@@ -144,17 +147,16 @@ public class SitioWeb {
 		return obtenerReservasDeUsuario(usuario).size();
 	}
 	
-	
+
 	public List<Usuario> topTenInquilinos() {
 	    return inmuebles.stream()
 	        .flatMap(inmueble -> inmueble.getReservas().stream())
-	        .map(Reserva::getInquilino)
+	        .map(reserva -> (Usuario) reserva.getInquilino())
 	        .distinct()
 	        .sorted(Comparator.comparingInt(this::obtenerCantidadReservasDeUsuario).reversed())
 	        .limit(10)
 	        .toList();
 	}
-	
 	
 	public List<Inmueble> inmueblesLibres(){
 		List<Inmueble> libres = new ArrayList<>();
@@ -209,7 +211,7 @@ public class SitioWeb {
 	}
 	
 	
-    public boolean estaRegistrado(Usuario usuario) {
+    public boolean estaRegistrado(IPropietario usuario) {
         return usuarios.stream().anyMatch(u -> u.getEmail().equals(usuario.getEmail()));
     }
     

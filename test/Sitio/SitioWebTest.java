@@ -27,8 +27,6 @@ import inmueble.Inmueble;
 import reserva.Reserva;
 import servicio.Servicio;
 import tipoInmueble.TipoInmueble;
-import usuarios.Inquilino;
-import usuarios.Propietario;
 import usuarios.Usuario;
 
 class SitioWebTest {
@@ -101,7 +99,24 @@ class SitioWebTest {
         
 	}
 	
-	
+	@Test 
+	void testTopTenInquilinos() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
+		when(inmueble3.getReservas()).thenReturn(List.of(reserva1, reserva2));
+		when(inmueble3.getPropietario()).thenReturn(usuario1); 
+		
+		when(inmueble2.getPropietario()).thenReturn(usuario1); 
+		when(inmueble2.getReservas()).thenReturn(List.of(reserva3));
+		
+		sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble3);
+		sitio.darDeAltaInmueble(inmueble2);
+		List<Usuario> topInquilinos = sitio.topTenInquilinos();
+		
+		assertEquals(2, topInquilinos.size());
+        assertEquals(usuario1, topInquilinos.get(0));
+        assertEquals(usuarioI, topInquilinos.get(1));
+		
+	}
 	
 	@Test
 	 void testInmueblesAlquiladosPorUsuario() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
@@ -263,24 +278,7 @@ class SitioWebTest {
 	        assertTrue(reservasFuturas.contains(reserva1));
 	    }
 	
-	@Test 
-	void testTopTenInquilinos() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
-		when(inmueble3.getReservas()).thenReturn(List.of(reserva1, reserva2));
-		when(inmueble3.getPropietario()).thenReturn(usuario1); 
-		
-		when(inmueble2.getPropietario()).thenReturn(usuario1); 
-		when(inmueble2.getReservas()).thenReturn(List.of(reserva3));
-		
-		sitio.addUsuario(usuario1);
-		sitio.darDeAltaInmueble(inmueble3);
-		sitio.darDeAltaInmueble(inmueble2);
-		List<Usuario> topInquilinos = sitio.topTenInquilinos();
-		
-		assertEquals(2, topInquilinos.size());
-        assertEquals(usuario1, topInquilinos.get(0));
-        assertEquals(usuarioI, topInquilinos.get(1));
-		
-	}
+	
 	
 	
 	@Test

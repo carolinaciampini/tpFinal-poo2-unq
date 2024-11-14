@@ -80,10 +80,12 @@ public class Usuario implements IPropietario, IInquilino {
 		
 		return (total / rankingsComoInquilino.size());
 	}
-
+	
+	@Override
 	public boolean esMismoUsuarioQue(Usuario usuario) {
 		 return this.getEmail().equals(usuario.getEmail());
 	}
+
 	
 	
 }

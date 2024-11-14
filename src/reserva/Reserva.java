@@ -11,11 +11,13 @@ import inmueble.Inmueble;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import ranking.Ranking;
+import usuarios.IInquilino;
+import usuarios.IPropietario;
 import usuarios.Usuario;
 
 public class Reserva {
 	private Inmueble inmueble;
-	private Usuario inquilino;
+	private IInquilino inquilino;
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
 	private FormaDePago formaDePago;
@@ -25,7 +27,7 @@ public class Reserva {
 
 
 	
-	public Reserva(Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender, NotificadorManager notificador) {
+	public Reserva(Inmueble inmueble, IInquilino inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender, NotificadorManager notificador) {
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.fechaEntrada = fechaEntrada;
@@ -71,7 +73,7 @@ public class Reserva {
 		return inmueble;
 	}
 
-	public Usuario getInquilino() {
+	public IInquilino getInquilino() {
 		return inquilino;
 	}
 
@@ -157,7 +159,7 @@ public class Reserva {
 
 
 
-	public Usuario getPropietario() {
+	public IPropietario getPropietario() {
 		return this.inmueble.getPropietario();
 	}
 	

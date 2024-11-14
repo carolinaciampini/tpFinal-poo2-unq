@@ -34,13 +34,13 @@ import periodo.PeriodoManager;
 import ranking.Ranking;
 import reserva.Reserva;
 import servicio.Servicio;
-import usuarios.Inquilino;
-import usuarios.Propietario;
+import usuarios.IInquilino;
+import usuarios.IPropietario;
 import usuarios.Usuario;
 
 class InmuebleTest {
 
-	private Usuario inquilino;
+	private IInquilino inquilino;
 
 	
 	private Reserva reserva;
@@ -53,7 +53,7 @@ class InmuebleTest {
 
 	private SinCancelacion estrategia;
 	private NotificadorManager notificador;
-	private Usuario propietario;
+	private IPropietario propietario;
 	private Inmueble inmueble;
 	private MailSender mail;
 	
@@ -71,7 +71,7 @@ class InmuebleTest {
 		agua = mock(Servicio.class);
 		mail = mock(MailSender.class);
 		periodo = mock(PeriodoManager.class);
-		propietario = mock(Usuario.class);
+		propietario = mock(IPropietario.class);
 		
 		when(propietario.getEmail()).thenReturn("abru@gmail.com");
 		
@@ -81,7 +81,7 @@ class InmuebleTest {
 		periodo = mock(PeriodoManager.class);
 		notificador = mock(NotificadorManager.class);
 	
-		inquilino = mock(Inquilino.class);
+		inquilino = mock(IInquilino.class);
 		when(inquilino.getEmail()).thenReturn("abru@gmail.com");
 	
 		reserva2 = mock(Reserva.class);

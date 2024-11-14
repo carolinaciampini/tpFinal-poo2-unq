@@ -14,10 +14,10 @@ import excepciones.NoHayPuntajesSobreEsteUsuario;
 import ranking.Ranking;
 
 public class UsuarioTest {
-	private Propietario prop1;
-	private Propietario prop2;
-	private Inquilino inq2;
-	private Inquilino inq1;
+	private IPropietario prop1;
+	private IPropietario prop2;
+	private IInquilino inq2;
+	private IInquilino inq1;
 	
 	private Ranking ranking1;
 	private Ranking ranking2;
@@ -29,8 +29,8 @@ public class UsuarioTest {
 
 	@BeforeEach
 	void setUp() {
-		prop1 = new Propietario("carolina", "caro@gmail.com", "1111111");
-		inq1 = new Inquilino("abril", "abril@gmail.com", "1111111");
+		prop1 = new Usuario("carolina", "caro@gmail.com", "1111111");
+		inq1 = new Usuario("abril", "abril@gmail.com", "1111111");
 		
 		ranking1 = mock(Ranking.class);
 		ranking2 = mock(Ranking.class);

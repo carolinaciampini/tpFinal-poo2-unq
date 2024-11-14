@@ -29,48 +29,40 @@ import inmueble.Inmueble;
 import mailSender.MailSender;
 import notificaciones.NotificadorManager;
 import ranking.Ranking;
-import usuarios.Inquilino;
+import usuarios.IInquilino;
+import usuarios.IPropietario;
 import usuarios.Usuario;
 
 public class ReservaTest {
     private Inmueble inmueble;
     private Reserva reserva;
-    private Usuario inquilino;
+    private IInquilino inquilino;
     private Aprobada aprobado;
     private Finalizada finalizado;
     private Solicitada solicitado;
     private MailSender mail;
-    private Rechazada rechazado;
-    private Cancelada cancelado;
-    private MailSender mailProp;
-    private Usuario propietario;
-    private Reserva reserva2;
+    private IPropietario propietario;
     private NotificadorManager notificador;
-    private Aprobada aprobado2;
     private Ranking ranking;
     
 
 
     @BeforeEach
     void setUp() {
-    	inquilino = mock(Inquilino.class);
+    	inquilino = mock(IInquilino.class);
     	inmueble = mock(Inmueble.class);
    	
     	mail = mock(MailSender.class);
-    	mailProp = mock(MailSender.class);
-    	propietario = mock(Usuario.class);
+    	propietario = mock(IPropietario.class);
     	solicitado = spy(Solicitada.class);
     	aprobado = spy(Aprobada.class);
-    	rechazado = spy(Rechazada.class);
     	finalizado = spy(Finalizada.class);
-    	cancelado = spy(Cancelada.class);
     	notificador = mock(NotificadorManager.class);
     	ranking = mock(Ranking.class);
    	
         reserva = new Reserva(inmueble, inquilino, LocalDate.of(2024, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail, notificador);
         when (reserva.getPropietario()).thenReturn(propietario);
         
-        reserva2 = new Reserva(inmueble, inquilino, LocalDate.of(2025, 11, 1), LocalDate.of(2024, 11, 2), FormaDePago.EFECTIVO, mail, notificador);
         when(inmueble.getPropietario()).thenReturn(propietario);
         when(inmueble.getEmailPropietario()).thenReturn("guada@gmail.com");
         when(inquilino.getEmail()).thenReturn("caro@gmail.com");

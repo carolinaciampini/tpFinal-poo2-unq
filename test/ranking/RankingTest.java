@@ -18,18 +18,6 @@ class RankingTest {
 		
 		ranking = new Ranking(4, "Excelente servicio", limpieza);
 		
-		/*
-		@BeforeEach
-		void setUp() {
-			tipo = new Categoria("Limpieza");
-		}
-		
-		@Test
-		void testGetNombre() {
-			assertEquals("Limpieza", tipo.getNombre());
-		}
-	   }
-		 */
 		
 	}
 
