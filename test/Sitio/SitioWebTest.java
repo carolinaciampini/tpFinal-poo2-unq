@@ -43,6 +43,7 @@ class SitioWebTest {
 	private Inmueble inmueble4;
 	private Reserva reserva1;
 	private Reserva reserva2;
+	private Reserva reserva4;
 	private Reserva reserva3;
 	private TipoInmueble tipo1;
 	private TipoInmueble tipo2;
@@ -102,44 +103,44 @@ class SitioWebTest {
 	
 	
 	
-	/*
-	 * no corre, me devuelve (inmueble) en vez de (inmueble, inmueble2)
 	@Test
 	 void testInmueblesAlquiladosPorUsuario() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		reserva4 = mock(Reserva.class);
+		when(reserva4.getInquilino()).thenReturn(usuarioI);
+		
 		sitio.addUsuario(usuario1);
 	    sitio.darDeAltaInmueble(inmueble);
 	    sitio.darDeAltaInmueble(inmueble2);
 
-	    when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
-	    when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
 
 	    when(reserva1.getInmueble()).thenReturn(inmueble);
-	    when(reserva2.getInmueble()).thenReturn(inmueble2);
+	    when(reserva4.getInmueble()).thenReturn(inmueble2);
 
-	    when(inmueble.getReservas()).thenReturn(List.of(reserva1));  // Una reserva para inmueble
-	    when(inmueble2.getReservas()).thenReturn(List.of(reserva2)); // Otra reserva para inmueble2
+	    when(inmueble.getReservas()).thenReturn(List.of(reserva1));  // este no es alquilado por el usuarioI
+	    when(inmueble2.getReservas()).thenReturn(List.of(reserva4)); // este si
 
-	    List<Inmueble> esperado = Arrays.asList(inmueble, inmueble2);
-	    assertEquals(esperado, sitio.inmueblesAlquiladosPor(usuario1));
+	    List<Inmueble> esperado = Arrays.asList( inmueble2);
+	    assertEquals(esperado, sitio.inmueblesAlquiladosPor(usuarioI));
 	 }
 	 
 	
-	 * no corre, no da bien el resultado
+	 
 	 @Test
 	 void testVecesQueAlquiloUnInmueble() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		 	reserva4 = mock(Reserva.class);
+			when(reserva4.getInquilino()).thenReturn(usuario1);
+			
 		 	sitio.addUsuario(usuario1);
 			sitio.darDeAltaInmueble(inmueble);
 			sitio.darDeAltaInmueble(inmueble2);
 			
-	        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
-	        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
 	        
 	        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
-	        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+	        when(inmueble2.getReservas()).thenReturn(List.of(reserva4));
 
 	        assertEquals(2, sitio.vecesQueAlquilo(usuario1));
 	 }
-	 */
+	 
 	
 	@Test
 	void testVecesQueAlquiloEsteInmueble() throws UsuarioYaExistenteException, 	PropietarioNoRegistradoExcepcion {
