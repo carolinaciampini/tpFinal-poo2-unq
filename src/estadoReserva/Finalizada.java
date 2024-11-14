@@ -1,10 +1,22 @@
 package estadoReserva;
 
+import ranking.Ranking;
 import reserva.Reserva;
-import usuarios.Inquilino;
-import usuarios.Propietario;
+
 
 public class Finalizada extends EstadoReserva {
 	
-	public void realizarRanking(Reserva reserva, Inquilino inquilino, Propietario propietario) {}
+	public void rankearInmueble(Ranking ranking, Reserva reserva) {
+		reserva.getInmueble().recibirRanking(ranking);
+	}
+	
+	public void rankearPropietario(Ranking ranking, Reserva reserva) {
+		reserva.getPropietario().recibirRankingComoPropietario(ranking);
+	}
+	
+	public void rankearInquilino(Ranking ranking, Reserva reserva) {
+		reserva.getInquilino().recibirRankingComoInquilino(ranking);
+	}
+	
+	
 }

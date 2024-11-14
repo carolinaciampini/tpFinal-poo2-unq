@@ -6,8 +6,12 @@ import java.util.List;
 import inmueble.Inmueble;
 import reserva.Reserva;
 
-public class NotificadorManager {
-	private List<Listener> listeners = new ArrayList<>();
+public class NotificadorManager implements Listener{
+	private List<Listener> listeners;
+	
+	public NotificadorManager() {
+		this.listeners = new ArrayList<>();
+	}
 
     public void agregarListener(Listener listener) {
         listeners.add(listener);
@@ -17,21 +21,27 @@ public class NotificadorManager {
         listeners.remove(listener);
     }
 
-    public void notificarBajaPrecio(Inmueble propiedad) {
+    @Override
+    public void bajaDePrecio(Inmueble inmueble) {
         for (Listener listener : listeners) {
-            listener.updateBajaPrecio(propiedad);
+            listener.bajaDePrecio(inmueble);
         }
     }
 
-    public void notificarCancelacion(Reserva propiedad) {
+    @Override
+    public void cancelacionDeReserva(Reserva reserva) {
         for (Listener listener : listeners) {
-            listener.updateCancelacion(propiedad);
+            listener.cancelacionDeReserva(reserva);
+        }	
+    }
+
+    @Override
+    public void altaDeReserva(Reserva reserva) {
+        for (Listener listener : listeners) {
+            listener.altaDeReserva(reserva);
         }
     }
 
-    public void notificarReserva(Reserva propiedad) {
-        for (Listener listener : listeners) {
-            listener.updateReserva(propiedad);
-        }
-    }
+
+	
 }

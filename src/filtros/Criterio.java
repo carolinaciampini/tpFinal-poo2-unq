@@ -4,7 +4,7 @@ import inmueble.Inmueble;
 
 public interface Criterio {
 		
-	public Boolean cumple(Inmueble p, Filtro f);
+	public Boolean cumple(Inmueble inmueble, Filtro filtro);
 		
 }
 

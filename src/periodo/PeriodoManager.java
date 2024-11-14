@@ -31,7 +31,7 @@ public class PeriodoManager {
         return fecha.plusDays(1);
     }
     
-    public void agregarPeriodoEspecial(Periodo p) {
-    	this.periodosDelAño.add(p);
+    public void agregarPeriodoEspecial(Periodo periodo) {
+    	this.periodosDelAño.add(periodo);
     }
 }

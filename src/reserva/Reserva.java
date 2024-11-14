@@ -6,22 +6,28 @@ import java.time.temporal.ChronoUnit;
 import enums.FormaDePago;
 import estadoReserva.EstadoReserva;
 import estadoReserva.Solicitada;
+import excepciones.EstadoInvalidoParaRankear;
 import inmueble.Inmueble;
 import mailSender.MailSender;
+import notificaciones.NotificadorManager;
+import ranking.Ranking;
+import usuarios.IInquilino;
+import usuarios.IPropietario;
 import usuarios.Usuario;
 
 public class Reserva {
 	private Inmueble inmueble;
-	private Usuario inquilino;
+	private IInquilino inquilino;
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
 	private FormaDePago formaDePago;
 	private EstadoReserva estadoReserva;
 	private MailSender mailSender;
+	private NotificadorManager notificador;
 
 
 	
-	public Reserva(Inmueble inmueble, Usuario inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender) {
+	public Reserva(Inmueble inmueble, IInquilino inquilino, LocalDate fechaEntrada, LocalDate fechaSalida, FormaDePago formaPago, MailSender mailSender, NotificadorManager notificador) {
 		this.inmueble = inmueble;
 		this.inquilino = inquilino;
 		this.fechaEntrada = fechaEntrada;
@@ -29,12 +35,14 @@ public class Reserva {
 		this.formaDePago = formaPago;
 		this.estadoReserva = new Solicitada();
 		this.mailSender = mailSender;
+		this.notificador = notificador;
 	}
 	
 	
 
 	public void cancelarReserva() {
 	    estadoReserva.cancelarReserva(this);
+	    notificador.cancelacionDeReserva(this);
 	}
 
 	public void aceptarReserva() {
@@ -65,7 +73,7 @@ public class Reserva {
 		return inmueble;
 	}
 
-	public Usuario getInquilino() {
+	public IInquilino getInquilino() {
 		return inquilino;
 	}
 
@@ -111,7 +119,7 @@ public class Reserva {
     	
 	}
 	
-	public void penalizacionDeInmueble() {
+	public void ejecutarPenalizacionPorCancelacion() {
 		inmueble.calcularPenalizacion(this);
 	}
 	
@@ -120,15 +128,43 @@ public class Reserva {
 	}
 	
 	
-	public int cantidadDiasFaltantes() {
+	public Integer cantidadDiasFaltantes() {
 		return (int) ChronoUnit.DAYS.between(LocalDate.now(), getFechaEntrada());
 		
+	}
+	
+	public void rankearInmueble(Ranking ranking) throws EstadoInvalidoParaRankear {
+		this.estadoReserva.rankearInmueble(ranking, this);
+	}
+	
+	public void rankearPropietario(Ranking ranking) throws EstadoInvalidoParaRankear {
+		this.estadoReserva.rankearPropietario(ranking, this);
+	}
+	
+	public void rankearInquilino(Ranking ranking) throws EstadoInvalidoParaRankear {
+		this.estadoReserva.rankearInquilino(ranking, this);
+	}
+	
+	public boolean esEstadoAprobado(){
+		return estadoReserva.estaAprobada();
+	}
+
+	public boolean esEstadoRechazado(){
+		return estadoReserva.estaRechazada();
+		}
+
+	public String getTipoInmueble() {
+		return this.inmueble.getTipoInmueble();
 	}
 
 
 
-	public String getTipoInmueble() {
-		return this.inmueble.getTipoInmueble();
+	public IPropietario getPropietario() {
+		return this.inmueble.getPropietario();
+	}
+	
+	public boolean esMismoInquilino(Usuario usuario) {
+	    return this.getInquilino().esMismoUsuarioQue(usuario);
 	}
 }
 

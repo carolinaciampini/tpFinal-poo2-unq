@@ -1,5 +1,0 @@
-package enums;
-
-public enum Servicio {
-	AGUA, GAS, ELECTRICIDAD, BAÑO_PRIVADO, BAÑO_COMPARTIDO, CALEFACCION, AIRE_ACONDICIONADO, WIFI;
-}

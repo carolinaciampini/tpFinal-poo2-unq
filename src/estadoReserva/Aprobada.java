@@ -6,13 +6,18 @@ import reserva.Reserva;
 
 public class Aprobada extends EstadoReserva{
 	
+	@Override
+	public boolean estaAprobada () {
+		return true;
+	}
+	
 	public void cancelarReserva (Reserva reserva) {
 		reserva.setEstadoReserva(new Cancelada());
 		reserva.enviarMail();
 		
 		reserva.borrarReserva(reserva);
-    	
 		reserva.ejecutarColaEspera();
+		reserva.ejecutarPenalizacionPorCancelacion();
 	}
 
 	public void finalizarReserva (Reserva reserva) {

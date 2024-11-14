@@ -18,7 +18,7 @@ public class FiltroFecha implements Criterio{
     }
 
     @Override
-    public Boolean cumple(Inmueble posteo, Filtro f) {
-        return posteo.estaDisponible(fechaEntrada, fechaSalida);
+    public Boolean cumple(Inmueble inmueble, Filtro filtro) {
+        return inmueble.estaDisponible(fechaEntrada, fechaSalida);
     }
 }

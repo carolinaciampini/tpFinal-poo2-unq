@@ -4,7 +4,7 @@ import inmueble.Inmueble;
 import reserva.Reserva;
 
 public interface Listener {
-	void updateBajaPrecio(Inmueble inmueble);
-    void updateCancelacion(Reserva reserva);
-    void updateReserva(Reserva reserva);
+	void bajaDePrecio(Inmueble inmueble);
+    void cancelacionDeReserva(Reserva reserva);
+    void altaDeReserva(Reserva reserva);
 }
