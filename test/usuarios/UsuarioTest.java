@@ -60,7 +60,7 @@ public class UsuarioTest {
 		assertEquals("1111111",inq1.getTelefono());
 	}
 	
-/*	
+	
 	@Test 
 	void getRankingsComoPropietario(){
 		prop1.recibirRankingComoPropietario(ranking1);
@@ -106,5 +106,4 @@ public class UsuarioTest {
 		assertEquals(promedio, prop1.puntajePromedioComoPropietario());
 		
 	}
-	*/
 }

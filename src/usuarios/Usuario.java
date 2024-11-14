@@ -1,5 +1,6 @@
 package usuarios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import excepciones.NoHayPuntajesSobreEsteUsuario;
@@ -16,6 +17,8 @@ public class Usuario {
 		this.nombreCompleto = nombre;
 		this.email = mail;
 		this.telefono = telefono;
+        this.rankingsComoPropietario = new ArrayList<>();
+        this.rankingsComoInquilino = new ArrayList<>(); 
 	}
 	
 	public String getNombre() {
