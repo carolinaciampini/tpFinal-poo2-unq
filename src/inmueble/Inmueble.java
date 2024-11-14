@@ -20,6 +20,8 @@ import periodo.PeriodoManager;
 import ranking.Ranking;
 import reserva.Reserva;
 import servicio.Servicio;
+import usuarios.IInquilino;
+import usuarios.IPropietario;
 import usuarios.Usuario;
 
 public class Inmueble {

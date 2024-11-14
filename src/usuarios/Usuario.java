@@ -6,7 +6,7 @@ import java.util.List;
 import excepciones.NoHayPuntajesSobreEsteUsuario;
 import ranking.Ranking;
 
-public class Usuario {
+public class Usuario implements IPropietario, IInquilino {
 	private String nombreCompleto;
 	private String email;
 	private String telefono;
@@ -32,21 +32,25 @@ public class Usuario {
 	public String getTelefono() {
 		return telefono;
 	}
-
+	
+	@Override
 	public void recibirRankingComoPropietario(Ranking ranking) {
 		this.rankingsComoPropietario.add(ranking);
 		
 	}
-
+	
+	@Override
 	public void recibirRankingComoInquilino(Ranking ranking) {
 		this.rankingsComoInquilino.add(ranking);
 		
 	}
 	
+	@Override
 	public List<Ranking> getRankingsComoPropietario() {
 		return this.rankingsComoPropietario;
 	}
 	
+	@Override
 	public Integer puntajePromedioComoPropietario() throws NoHayPuntajesSobreEsteUsuario {
 		if (rankingsComoPropietario.isEmpty()) {
 			throw new NoHayPuntajesSobreEsteUsuario();
@@ -59,10 +63,12 @@ public class Usuario {
 		return (total / rankingsComoPropietario.size());
 	}
 	
+	@Override
 	public List<Ranking> getRankingsComoInquilino() {
 		return this.rankingsComoInquilino;
 	}
 	
+	@Override
 	public Integer puntajePromedioComoInquilino() throws NoHayPuntajesSobreEsteUsuario {
 		if (rankingsComoInquilino.isEmpty()) {
 			throw new NoHayPuntajesSobreEsteUsuario();

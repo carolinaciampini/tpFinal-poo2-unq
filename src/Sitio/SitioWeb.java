@@ -1,6 +1,7 @@
 package Sitio;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -40,6 +41,39 @@ public class SitioWeb {
 
 	}
 	
+	 public Integer tiempoQueEsUsuario(Usuario usuario) {
+		 LocalDate fecha1 = usuarioFechaRegistro(usuario);
+		 LocalDate fecha2 = LocalDate.now();
+		 int diasDeDiferencia = (int) ChronoUnit.DAYS.between(fecha1, fecha2);
+		 return diasDeDiferencia;
+	 	}
+	 	
+	 	public Integer vecesQueAlquiloInmueble(Usuario usuario, Inmueble inmueble) {
+	 	Integer contador = 0;
+	 	for (Reserva reserva : obtenerReservasDeUsuario(usuario)) {
+	 			if (reserva.getInmueble().equals(inmueble)) {
+	 			contador ++;
+	 		}	
+	 	}
+		return contador;
+	 }
+	 	
+	 
+	 public Integer vecesQueAlquilo(Usuario usuario) {
+	 	return obtenerReservasDeUsuario(usuario).size();
+	 }
+	 
+	 
+	 public List <Inmueble> inmueblesAlquiladosPor (Usuario usuario) {
+	 	List <Inmueble> inmueblesAlq = new ArrayList <>();
+	 	for (Reserva reserva : obtenerReservasDeUsuario(usuario)) {
+	 		inmueblesAlq.add(reserva.getInmueble());
+	 	}
+	 	return inmueblesAlq;
+	 }
+	 
+	  
+	 
 	public List<Categoria> getUsuariosCategoria() {
 		return usuariosCategoria;
 	}

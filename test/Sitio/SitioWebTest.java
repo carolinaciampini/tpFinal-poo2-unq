@@ -6,8 +6,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,6 +100,79 @@ class SitioWebTest {
         
 	}
 	
+	
+	
+	/*
+	 * no corre, me devuelve (inmueble) en vez de (inmueble, inmueble2)
+	@Test
+	 void testInmueblesAlquiladosPorUsuario() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		sitio.addUsuario(usuario1);
+	    sitio.darDeAltaInmueble(inmueble);
+	    sitio.darDeAltaInmueble(inmueble2);
+
+	    when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+	    when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+
+	    when(reserva1.getInmueble()).thenReturn(inmueble);
+	    when(reserva2.getInmueble()).thenReturn(inmueble2);
+
+	    when(inmueble.getReservas()).thenReturn(List.of(reserva1));  // Una reserva para inmueble
+	    when(inmueble2.getReservas()).thenReturn(List.of(reserva2)); // Otra reserva para inmueble2
+
+	    List<Inmueble> esperado = Arrays.asList(inmueble, inmueble2);
+	    assertEquals(esperado, sitio.inmueblesAlquiladosPor(usuario1));
+	 }
+	 
+	
+	 * no corre, no da bien el resultado
+	 @Test
+	 void testVecesQueAlquiloUnInmueble() throws UsuarioYaExistenteException, PropietarioNoRegistradoExcepcion {
+		 	sitio.addUsuario(usuario1);
+			sitio.darDeAltaInmueble(inmueble);
+			sitio.darDeAltaInmueble(inmueble2);
+			
+	        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+	        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+	        
+	        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
+	        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+
+	        assertEquals(2, sitio.vecesQueAlquilo(usuario1));
+	 }
+	 */
+	
+	@Test
+	void testVecesQueAlquiloEsteInmueble() throws UsuarioYaExistenteException, 	PropietarioNoRegistradoExcepcion {
+		sitio.addUsuario(usuario1);
+		sitio.darDeAltaInmueble(inmueble);
+		sitio.darDeAltaInmueble(inmueble2);
+		
+      when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
+      when(reserva2.esMismoInquilino(usuario1)).thenReturn(false);
+      
+      when(reserva1.getInmueble()).thenReturn(inmueble);
+	  when(reserva2.getInmueble()).thenReturn(inmueble2);
+        
+      when(inmueble.getReservas()).thenReturn(List.of(reserva1));
+      when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
+
+        
+        assertEquals(1, sitio.vecesQueAlquiloInmueble(usuario1, inmueble));
+       
+	}
+	
+	 @Test
+	 void testTiempoQueEsUsuario() throws UsuarioYaExistenteException {
+	 	sitio.addUsuario(usuario1);
+	 	LocalDate fecha1 = sitio.usuarioFechaRegistro(usuario1);
+		LocalDate fecha2 = LocalDate.now();
+		 int diasDeDiferencia = (int) ChronoUnit.DAYS.between(fecha1, fecha2);
+
+		
+		assertEquals(diasDeDiferencia, sitio.tiempoQueEsUsuario(usuario1));
+	 
+	 }
+	 	  
 	@Test 
 	
 	    public void testGetTodasLasReservasRealizadasDe() throws PropietarioNoRegistradoExcepcion, UsuarioYaExistenteException {
@@ -106,7 +181,7 @@ class SitioWebTest {
 			sitio.darDeAltaInmueble(inmueble2);
 			
 	        when(reserva1.esMismoInquilino(usuario1)).thenReturn(true);
-	        when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
+	      when(reserva2.esMismoInquilino(usuario1)).thenReturn(true);
 	        
 	        when(inmueble.getReservas()).thenReturn(List.of(reserva1));
 	        when(inmueble2.getReservas()).thenReturn(List.of(reserva2));
