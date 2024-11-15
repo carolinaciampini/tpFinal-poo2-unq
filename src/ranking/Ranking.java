@@ -12,7 +12,7 @@ public class Ranking {
 		this.comentario = comentario;
 		this.categoria = categoria;
 	}
-	
+	 
 	public Integer getPuntaje() {
 		return puntaje;
 	}

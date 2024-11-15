@@ -17,6 +17,6 @@ public class Finalizada extends EstadoReserva {
 	public void rankearInquilino(Ranking ranking, Reserva reserva) {
 		reserva.getInquilino().recibirRankingComoInquilino(ranking);
 	}
-	
+	 
 	
 }

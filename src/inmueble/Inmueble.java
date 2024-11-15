@@ -138,7 +138,7 @@ public class Inmueble {
 
 	public boolean estaDisponible(LocalDate fechaEntrada, LocalDate fechaSalida) {
 	    for (Reserva reserva : reservas) {
-	        if (reserva.sePisa(fechaEntrada, fechaSalida)) {
+	        if (reserva.sePisa(fechaEntrada, fechaSalida ) && reserva.esEstadoAprobado()) {
 	            return false; 
 	        }
 	    }

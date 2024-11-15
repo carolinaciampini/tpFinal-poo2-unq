@@ -121,7 +121,7 @@ public class Reserva {
 	
 	public void ejecutarPenalizacionPorCancelacion() {
 		inmueble.calcularPenalizacion(this);
-	}
+	} 
 	
 	public void enviarMailAInquilino(String titulo, String cuerpo) {
 		getMailSender().enviarMail(inquilino.getEmail(), titulo, cuerpo);

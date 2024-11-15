@@ -17,3 +17,4 @@ public class Gratuito implements EstrategiaCancelacion{
 		return 0.00;
 	}
 }
+ 

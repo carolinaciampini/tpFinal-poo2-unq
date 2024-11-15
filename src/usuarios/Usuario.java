@@ -54,7 +54,7 @@ public class Usuario implements IPropietario, IInquilino {
 	public Integer puntajePromedioComoPropietario() throws NoHayPuntajesSobreEsteUsuario {
 		if (rankingsComoPropietario.isEmpty()) {
 			throw new NoHayPuntajesSobreEsteUsuario();
-		}
+		} 
 		Integer total = 0;
 		for (Ranking ranking : rankingsComoPropietario) {
 			total += ranking.getPuntaje();
